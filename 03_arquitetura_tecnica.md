@@ -12,7 +12,7 @@ Documento mais técnico dos fundamentos. É a base que o Claude Code mais vai co
 
 - **Engine:** **Godot 4** — multiplataforma de graça (Windows/Linux/Mac), export nativo, editor de cenas encaixa bem com o mapa e a UI, e escala melhor pro porte grande do projeto (12 eras, 4 escalas de mapa) do que uma stack montada à mão.
 - **Linguagem:** **GDScript** para a maior parte do jogo (produtivo, tipado opcionalmente); partes de simulação muito pesadas (população em massa) podem migrar pra **C#** ou um **GDExtension** (C++/Rust) mais adiante, se o perfilamento pedir — não é decisão do dia 1.
-- **Render 2D:** nativo do Godot — `TileMapLayer` pro terreno, `Sprite2D`/`AnimatedSprite2D` pra cidades, exércitos e ícones, `Camera2D` pra pan/zoom.
+- **Render 2D:** nativo do Godot — `TileMapLayer` pro terreno (alvo, quando os assets placeholder entrarem — PDF 24 §5), `Sprite2D`/`AnimatedSprite2D` pra cidades, exércitos e ícones, `Camera2D` pra pan/zoom. **No M0**, o terreno usa desenho imediato (`Node2D._draw()`) como interino — mais simples de validar sem editor gráfico à mão; migra pra `TileMapLayer` (que já traz culling nativo, PDF 24 §3) junto com a arte real.
 - **Empacotamento:** exportadores nativos do Godot (Windows, Linux, Mac) — sem PyInstaller, sem gambiarra de bundling.
 - **LLM/rede:** nó `HTTPRequest` do Godot — assíncrono por natureza (baseado em sinal), chama Ollama local (`localhost:11434`) e, futuramente, a API da Anthropic.
 - **Save:** `FileAccess` do Godot + serialização própria (JSON pra estado de alto nível, binário compacto pra população agregada).

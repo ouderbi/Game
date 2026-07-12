@@ -21,7 +21,9 @@ static func gerar(semente: int, largura: int, altura: int) -> EstadoDoMundo:
 
 	for y in range(altura):
 		# 0.0 no equador (meio do mapa), 1.0 nos polos (topo/base).
-		var latitude := absf(float(y) / float(altura) - 0.5) * 2.0
+		# Amostra no centro do pixel (+0.5) pra as duas bordas ficarem
+		# simetricamente distantes do equador.
+		var latitude := absf((float(y) + 0.5) / float(altura) - 0.5) * 2.0
 		for x in range(largura):
 			var elevacao := ruido.get_noise_2d(x, y)  # -1..1
 			estado.biomas[y * largura + x] = _classificar_bioma(elevacao, latitude)
@@ -36,7 +38,7 @@ static func _classificar_bioma(elevacao: float, latitude: float) -> int:
 		return Bioma.Tipo.MONTANHA
 	if latitude > 0.7:
 		return Bioma.Tipo.TUNDRA
-	if latitude < 0.25 and elevacao < 0.05:
+	if latitude > 0.12 and latitude < 0.35 and elevacao < 0.05:
 		return Bioma.Tipo.DESERTO
 	if elevacao > 0.15:
 		return Bioma.Tipo.FLORESTA

@@ -10,7 +10,7 @@ var _arrastando: bool = false
 
 
 func _ready() -> void:
-	current = true
+	enabled = true  # no Godot 4, Camera2D usa "enabled" (não "current", que era Godot 3.x)
 
 
 ## Centraliza a câmera no mapa e escolhe um zoom que mostre o mapa inteiro.
@@ -19,7 +19,9 @@ func ajustar_para_mapa(largura_tiles: int, altura_tiles: int, tamanho_tile: int)
 	var altura_px := altura_tiles * tamanho_tile
 	position = Vector2(largura_px, altura_px) / 2.0
 
-	var tamanho_viewport := get_viewport_rect().size
+	# get_viewport_rect() é método de Control, não de Camera2D — o caminho
+	# universal (qualquer Node) é get_viewport().get_visible_rect().
+	var tamanho_viewport := get_viewport().get_visible_rect().size
 	var fator := maxf(float(largura_px) / tamanho_viewport.x, float(altura_px) / tamanho_viewport.y)
 	fator = clampf(fator, _zoom_minimo, _zoom_maximo)
 	zoom = Vector2(fator, fator)

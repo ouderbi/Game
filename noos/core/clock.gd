@@ -1,8 +1,11 @@
 ## Relógio da simulação — PDF 03 §4, PDF 02 §2.
-## Autoload global (ver project.godot [autoload]). Acumula tempo real e emite
-## um "tick" em intervalos fixos, multiplicados pela velocidade escolhida
-## (1x/2x/3x). Pausar não avança nenhum tick.
-class_name Relogio
+## Autoload global "Relogio" (ver project.godot [autoload]). SEM class_name
+## de propósito: o Godot 4 recusa um autoload cujo nome colide com uma
+## classe global de mesmo nome ("Can't add Autoload: Invalid name..."),
+## e ninguém no projeto usa este script como type hint — só como o
+## singleton "Relogio" mesmo. Acumula tempo real e emite um "tick" em
+## intervalos fixos, multiplicados pela velocidade escolhida (1x/2x/3x).
+## Pausar não avança nenhum tick.
 extends Node
 
 signal tick
