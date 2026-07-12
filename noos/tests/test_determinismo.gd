@@ -2,7 +2,21 @@
 ## PDF 20 §4. Rodar (sem editor, sem janela):
 ##   godot4 --headless --path noos --script res://tests/test_determinismo.gd
 ## Sai com código 0 se tudo passar, 1 se algo falhar (útil pra CI).
+##
+## Se o Godot nunca abriu este projeto no editor ainda, o cache de
+## class_name globais (.godot/global_script_class_cache.cfg, gitignored
+## de propósito) pode não existir num checkout novo. Por isso este script
+## usa preload() explícito abaixo em vez de depender só do class_name
+## global — funciona mesmo sem esse cache. Se preferir "aquecer" o cache
+## de qualquer forma (deixa outros scripts mais rápidos de checar), rode
+## uma vez antes: godot4 --headless --path noos --editor --quit-after 2
 extends SceneTree
+
+const GeradorDeMapa = preload("res://world/map_generator.gd")
+const Simulacao = preload("res://core/sim.gd")
+const GeradorDeRegioes = preload("res://world/region_generator.gd")
+const Regiao = preload("res://world/region.gd")
+const SimulacaoPopulacional = preload("res://world/populacao.gd")
 
 
 func _initialize() -> void:

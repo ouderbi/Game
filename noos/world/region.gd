@@ -18,3 +18,4 @@ var populacao_total: float = 0.0
 var humor_medio: float = 0.6
 var saude_media: float = 0.7
 var riqueza_media: float = 0.1
+var idade_media: float = 25.0
