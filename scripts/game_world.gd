@@ -17,6 +17,9 @@ var building_system: BuildingSystem
 var building_placer: BuildingPlacer
 var unit_system: UnitSystem
 var combat_system: CombatSystem
+var diplomacy_system: DiplomacySystem
+var save_load_system: SaveLoadSystem
+var tech_tree_ui: TechTreeUI
 
 # Game state
 var game_speed: float = 1.0  # 1x, 2x, 3x
@@ -61,6 +64,16 @@ func _ready():
 	combat_system = CombatSystem.new()
 	add_child(combat_system)
 	
+	diplomacy_system = DiplomacySystem.new()
+	add_child(diplomacy_system)
+	
+	save_load_system = SaveLoadSystem.new()
+	add_child(save_load_system)
+	
+	tech_tree_ui = TechTreeUI.new()
+	tech_tree_ui.era_manager = era_manager
+	add_child(tech_tree_ui)
+	
 	# Wait for systems to initialize
 	await get_tree().process_frame
 	
@@ -86,6 +99,8 @@ func _ready():
 	print("  F4: Military Coup Risk")
 	print("  F5: Recruit Hunter (costs food)")
 	print("  F6: Declare War")
+	print("  S: Save Game | L: Load Game")
+	print("  T: Toggle Tech Tree | D: Diplomacy Panel")
 	print("  Arrows: Move camera | Scroll: Zoom | 1/2/3: Speed | ESC: Pause")
 	print("============================\n")
 
@@ -168,6 +183,22 @@ func _handle_input():
 			combat_system.declare_war(strength, strength * 0.8)
 		else:
 			print("Cannot declare war - no military units!")
+	
+	# Save/Load
+	if Input.is_key_pressed(KEY_S):
+		save_load_system.save_game("save1", self)
+	if Input.is_key_pressed(KEY_L):
+		save_load_system.load_game("save1", self)
+	
+	# Diplomacy
+	if Input.is_key_pressed(KEY_D):
+		print("\n=== DIPLOMACY STATUS ===")
+		for npc_status in diplomacy_system.get_npc_status():
+			print(npc_status)
+		var summary = diplomacy_system.get_diplomatic_summary()
+		print("Wars: ", summary["wars"])
+		print("Trade Routes: ", summary["trades"])
+		print("Avg Tension: ", summary["avg_tension"])
 
 func _update_systems(delta: float):
 	"""Update all game systems each frame"""
@@ -185,12 +216,21 @@ func _update_systems(delta: float):
 	# Update wars
 	combat_system.update_wars(unit_system, population_system, delta * game_speed)
 	
+	# Update diplomacy
+	diplomacy_system.update_npc_ai(delta * game_speed)
+	
+	# Update tech research
+	tech_tree_ui.update_research(delta * game_speed, 1.0)
+	
 	var world_state = get_world_state()
 	
 	# Update war pressure if at war
 	if combat_system.is_at_war():
 		world_state["is_at_war"] = true
 		event_system.pressures["war"] = 0.9  # Keep war pressure high
+	
+	# NPC AI makes decisions
+	diplomacy_system.simulate_npc_decisions(world_state)
 	
 	event_system.update_pressures(world_state, delta * game_speed)
 	
