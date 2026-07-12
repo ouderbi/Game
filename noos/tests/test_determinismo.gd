@@ -26,6 +26,8 @@ const SimulacaoPolitica = preload("res://world/simulacao_politica.gd")
 const Decisor = preload("res://brains/decider.gd")
 const DecisorHeuristico = preload("res://brains/heuristic.gd")
 const Manutencao = preload("res://world/manutencao.gd")
+const EstadoDoMundo = preload("res://world/world_state.gd")
+const TransicaoDeGoverno = preload("res://world/transicao_governo.gd")
 
 
 func _initialize() -> void:
@@ -41,6 +43,9 @@ func _initialize() -> void:
 	ok = _testar_ruido_da_heuristica_e_deterministico() and ok
 	ok = _testar_catalogo_cobre_todas_eras() and ok
 	ok = _testar_manutencao_falhando_desestabiliza() and ok
+	ok = _testar_colapso_vira_estado_falido() and ok
+	ok = _testar_transicao_e_deterministica() and ok
+	ok = _testar_transicao_respeita_era() and ok
 
 	if ok:
 		print("OK: todos os testes passaram")
@@ -296,4 +301,109 @@ func _testar_simulacao_politica_nao_quebra() -> bool:
 		print("FALHA: estabilidade fora de [0,1] (%f)" % polity.estabilidade)
 		return false
 	print("OK: SimulacaoPolitica roda 10 ticks sem produzir estado inválido")
+	return true
+
+
+## Monta um EstadoDoMundo com uma polity Tribo em crise profunda (baixa
+## estabilidade/legitimidade, alta corrupção, moral péssima) — usado
+## pelos testes de transição de governo abaixo.
+func _construir_estado_em_crise(semente: int, tick: int) -> EstadoDoMundo:
+	var estado := EstadoDoMundo.new()
+	estado.semente = semente
+	estado.tick_atual = tick
+
+	var regiao := Regiao.new()
+	regiao.id = 0
+	regiao.tiles = [Vector2i(0, 0)]
+	regiao.capacidade_alimento = 10.0
+	regiao.populacao_total = 5.0
+	regiao.humor_medio = 0.05
+	regiao.owner_polity_id = 0
+	estado.regioes = [regiao]
+
+	var polity := Polity.new()
+	polity.id = 0
+	polity.tipo_governo_id = "tribo"
+	polity.era = "pedra"
+	polity.estabilidade = 0.15  # baixa, mas acima do limiar de colapso (0.08)
+	polity.legitimidade = 0.1
+	polity.corrupcao = 0.9
+	polity.region_ids = [0]
+	estado.polities[0] = polity
+
+	return estado
+
+
+func _testar_colapso_vira_estado_falido() -> bool:
+	var estado := _construir_estado_em_crise(99, 5)
+	var polity: Polity = estado.polities[0]
+	polity.estabilidade = 0.02  # abaixo do LIMIAR_COLAPSO (0.08)
+	var tipo_governo: TipoDeGoverno = CatalogoDeGovernos.catalogo()["tribo"]
+
+	TransicaoDeGoverno.avaliar_e_aplicar(estado, polity, tipo_governo)
+
+	if polity.tipo_governo_id != "estado_falido":
+		var msg := "FALHA: estabilidade abaixo do limiar de colapso não virou estado_falido ('%s')"
+		print(msg % polity.tipo_governo_id)
+		return false
+	print("OK: colapso total (estabilidade < limiar) sempre vira estado_falido")
+	return true
+
+
+func _testar_transicao_e_deterministica() -> bool:
+	var tipo: TipoDeGoverno = CatalogoDeGovernos.catalogo()["tribo"]
+	for tick in range(1, 200):
+		var estado_a := _construir_estado_em_crise(123, tick)
+		var polity_a: Polity = estado_a.polities[0]
+		TransicaoDeGoverno.avaliar_e_aplicar(estado_a, polity_a, tipo)
+
+		if polity_a.tipo_governo_id == "tribo":
+			continue  # não disparou nesse tick, tenta o próximo
+
+		var estado_b := _construir_estado_em_crise(123, tick)
+		var polity_b: Polity = estado_b.polities[0]
+		TransicaoDeGoverno.avaliar_e_aplicar(estado_b, polity_b, tipo)
+
+		if polity_a.tipo_governo_id != polity_b.tipo_governo_id:
+			var msg := "FALHA: mesma semente/tick produziu transições diferentes (%s vs %s)"
+			print(msg % [polity_a.tipo_governo_id, polity_b.tipo_governo_id])
+			return false
+		print(
+			(
+				"OK: transição é determinística (tick %d: tribo -> %s reproduzido)"
+				% [tick, polity_a.tipo_governo_id]
+			)
+		)
+		return true
+	print("FALHA: nenhuma transição disparou em 200 ticks de crise — não deu pra testar")
+	return false
+
+
+func _testar_transicao_respeita_era() -> bool:
+	var tipo: TipoDeGoverno = CatalogoDeGovernos.catalogo()["tribo"]
+	var catalogo := CatalogoDeGovernos.catalogo()
+	var achou_transicao := false
+
+	for tick in range(1, 300):
+		var estado := _construir_estado_em_crise(456, tick)
+		var polity: Polity = estado.polities[0]
+		TransicaoDeGoverno.avaliar_e_aplicar(estado, polity, tipo)
+
+		if polity.tipo_governo_id == "tribo":
+			continue
+		achou_transicao = true
+
+		var alvo: TipoDeGoverno = catalogo.get(polity.tipo_governo_id)
+		if alvo == null:
+			print("FALHA: transição foi pra um id inexistente '%s'" % polity.tipo_governo_id)
+			return false
+		if alvo.era != "pedra" and alvo.era != "qualquer":
+			var msg := "FALHA: transição foi pra um governo da era '%s' (polity era 'pedra')"
+			print(msg % alvo.era)
+			return false
+
+	if not achou_transicao:
+		print("FALHA: nenhuma transição disparou em 300 ticks — não deu pra testar o filtro de era")
+		return false
+	print("OK: transições respeitam a era da polity")
 	return true

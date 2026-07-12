@@ -13,6 +13,7 @@ var _rotulo_tick: Label
 var _rotulo_populacao: Label
 var _rotulo_governo: Label
 var _rotulo_manutencao: Label
+var _rotulo_transicao: Label
 var _rotulo_polity: Label
 var _botao_pausa: Button
 
@@ -39,6 +40,10 @@ func _ready() -> void:
 	_rotulo_manutencao = Label.new()
 	_rotulo_manutencao.text = ""
 	caixa.add_child(_rotulo_manutencao)
+
+	_rotulo_transicao = Label.new()
+	_rotulo_transicao.text = ""
+	caixa.add_child(_rotulo_transicao)
 
 	_rotulo_polity = Label.new()
 	_rotulo_polity.text = ""
@@ -80,6 +85,8 @@ func atualizar() -> void:
 	if tipo_governo != null:
 		_rotulo_governo.text = "Governo: %s" % tipo_governo.nome
 		_rotulo_manutencao.text = _texto_manutencao(polity, tipo_governo)
+	if not polity.historico_governos.is_empty():
+		_rotulo_transicao.text = "Última transição: %s" % polity.historico_governos[-1]
 	_rotulo_polity.text = (
 		"%s — tesouro: %d, estabilidade: %.2f, legitimidade: %.2f"
 		% [polity.nome, int(polity.tesouro), polity.estabilidade, polity.legitimidade]

@@ -1,135 +1,124 @@
-## Vista isométrica do mapa (estilo SimCity 2000, PDF 18 §1/§4, PDF 24 §4)
-## — sprites reais (Kenney CC0, PDF 24 §5), não retângulos abstratos.
-## Terreno é construído uma vez (não muda); construções são reconstruídas
-## sempre que a população muda (chamado pelo main.gd a cada tick).
+## Vista do mapa — HOI4 (PDF 01 §6, referência nº 1) + SimCity: mapa
+## político plano com terreno e fronteiras grossas coloridas, e um ÍCONE
+## DE PRÉDIO top-down (não isométrico) por região, que cresce e muda de
+## material conforme a população/riqueza — a sensação de "ver a
+## civilização crescer" do SimCity, sem sair do mapa plano.
 ##
-## Projeção dimétrica 2:1 do PDF 18 §3: tela_x=(gx−gy)·L/2, tela_y=(gx+gy)·A/2.
-## Cada sprite de cubo Kenney é 111×128px; o topo em losango ocupa
-## aproximadamente a metade superior — por isso o offset vertical abaixo
-## (ajustável, não pixel-perfeito sem ver renderizado de verdade).
+## O ícone é desenhado por código (retângulos simples), não por sprite —
+## garantidamente renderiza sem depender de alinhar tiles de um pacote
+## externo. Sprites reais (Kenney, já em assets/kenney/) entram quando
+## puderem ser ajustados visualmente no editor. A lente Cidade isométrica
+## 3D (PDF 24 §4) fica documentada pra um zoom futuro, não implementada
+## agora.
 class_name VisaoDoMapa
 extends Node2D
 
-const LARGURA_TILE := 111.0
-const ALTURA_TOPO := LARGURA_TILE / 2.0  ## 2:1 — metade da largura
-const OFFSET_VERTICAL_SPRITE := 36.5  ## desloca o "centro do topo" pro pivô
+const TAMANHO_TILE := 16
+const ESPESSURA_FRONTEIRA := 3.0
+const OCUPACAO_MINIMA_VISIVEL := 0.02
 
-const MAX_CONSTRUCOES_POR_REGIAO := 12
+const PALETA_DONOS := [Color.RED, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.CYAN, Color.ORANGE]
 
 var estado: EstadoDoMundo
 
-var _texturas_bioma: Dictionary = {}  ## Bioma.Tipo -> Texture2D (cache)
-var _texturas_construcao: Dictionary = {}  ## Construcao.Nivel -> Texture2D (cache)
-var _dono_por_tile: PackedInt32Array = PackedInt32Array()
-var _no_terreno: Node2D
-var _no_construcoes: Node2D
 
-
-func grade_para_tela(gx: float, gy: float) -> Vector2:
-	return Vector2((gx - gy) * LARGURA_TILE / 2.0, (gx + gy) * ALTURA_TOPO / 2.0)
-
-
-## Chamado uma vez pelo main.gd depois de atribuir `estado`.
-func preparar() -> void:
+func _draw() -> void:
 	if estado == null:
 		return
-	_carregar_texturas()
-	_calcular_donos_por_tile()
-
-	_no_terreno = Node2D.new()
-	add_child(_no_terreno)
-	_construir_terreno()
-
-	_no_construcoes = Node2D.new()
-	add_child(_no_construcoes)
-	atualizar_construcoes()
-
-
-## Chamado a cada tick (main.gd) — só reconstrói as construções, que são
-## poucas; o terreno (milhares de tiles) fica parado.
-func atualizar_construcoes() -> void:
-	if _no_construcoes == null:
-		return
-	for filho in _no_construcoes.get_children():
-		filho.queue_free()
-
-	var construcoes := _coletar_construcoes()
-	construcoes.sort_custom(
-		func(a, b): return (a["tile"].x + a["tile"].y) < (b["tile"].x + b["tile"].y)
-	)
-	for construcao in construcoes:
-		_criar_sprite_construcao(construcao["tile"], construcao["regiao"])
-
-
-func _carregar_texturas() -> void:
-	for tipo in [
-		Bioma.Tipo.OCEANO,
-		Bioma.Tipo.PLANICIE,
-		Bioma.Tipo.FLORESTA,
-		Bioma.Tipo.DESERTO,
-		Bioma.Tipo.MONTANHA,
-		Bioma.Tipo.TUNDRA
-	]:
-		_texturas_bioma[tipo] = load(Bioma.caminho_textura(tipo))
-	for nivel in [Construcao.Nivel.MADEIRA, Construcao.Nivel.PEDRA]:
-		_texturas_construcao[nivel] = load(Construcao.caminho_textura(nivel))
-
-
-func _calcular_donos_por_tile() -> void:
-	_dono_por_tile.resize(estado.largura * estado.altura)
-	_dono_por_tile.fill(-1)
+	_desenhar_terreno()
 	for regiao in estado.regioes:
-		for tile in regiao.tiles:
-			_dono_por_tile[tile.y * estado.largura + tile.x] = regiao.owner_polity_id
+		_desenhar_fronteira(regiao)
+	for regiao in estado.regioes:
+		_desenhar_icone_povoado(regiao)
 
 
-func _construir_terreno() -> void:
+func _desenhar_terreno() -> void:
 	for y in range(estado.altura):
 		for x in range(estado.largura):
 			var tipo := estado.bioma_em(x, y)
-			var sprite := Sprite2D.new()
-			sprite.texture = _texturas_bioma[tipo]
-			sprite.centered = true
-			sprite.offset = Vector2(0, OFFSET_VERTICAL_SPRITE)
-			sprite.position = grade_para_tela(x, y)
-			sprite.z_index = (x + y) * 2
-			var dono: int = _dono_por_tile[y * estado.largura + x]
-			if dono >= 0:
-				sprite.modulate = _tingir_por_dono(dono)
-			_no_terreno.add_child(sprite)
+			var retangulo := Rect2(x * TAMANHO_TILE, y * TAMANHO_TILE, TAMANHO_TILE, TAMANHO_TILE)
+			draw_rect(retangulo, Bioma.cor(tipo), true)
 
 
-## Tinge o terreno com a cor do dono (Civilization-style), sem esconder
-## o sprite original — fronteiras de posse legíveis sem precisar de uma
-## camada de UI extra (PDF 18 §2).
-func _tingir_por_dono(id_polity: int) -> Color:
-	var paleta := [Color.RED, Color.BLUE, Color.YELLOW, Color.MAGENTA, Color.CYAN, Color.ORANGE]
-	var cor: Color = paleta[id_polity % paleta.size()]
-	return cor.lerp(Color.WHITE, 0.5)
+## Fronteira grossa colorida por dono (estilo HOI4) — cinza claro e fina
+## pra território sem dono ainda.
+func _desenhar_fronteira(regiao: Regiao) -> void:
+	if regiao.tiles.is_empty():
+		return
+
+	var min_x := regiao.tiles[0].x
+	var max_x := regiao.tiles[0].x
+	var min_y := regiao.tiles[0].y
+	var max_y := regiao.tiles[0].y
+	for tile in regiao.tiles:
+		min_x = mini(min_x, tile.x)
+		max_x = maxi(max_x, tile.x)
+		min_y = mini(min_y, tile.y)
+		max_y = maxi(max_y, tile.y)
+
+	var retangulo := Rect2(
+		min_x * TAMANHO_TILE,
+		min_y * TAMANHO_TILE,
+		(max_x - min_x + 1) * TAMANHO_TILE,
+		(max_y - min_y + 1) * TAMANHO_TILE
+	)
+	var cor := _cor_do_dono(regiao.owner_polity_id)
+	var espessura := ESPESSURA_FRONTEIRA if regiao.owner_polity_id >= 0 else 1.0
+	draw_rect(retangulo, cor, false, espessura)
 
 
-func _coletar_construcoes() -> Array:
-	var lista: Array = []
-	for regiao in estado.regioes:
-		if regiao.tiles.is_empty() or regiao.populacao_total <= 0.0:
-			continue
-		var ocupacao := clampf(regiao.populacao_total / regiao.capacidade_alimento, 0.0, 1.0)
-		var quantidade := int(round(ocupacao * mini(regiao.tiles.size(), MAX_CONSTRUCOES_POR_REGIAO)))
-		for i in range(quantidade):
-			var tile: Vector2i = regiao.tiles[i]
-			if estado.bioma_em(tile.x, tile.y) == Bioma.Tipo.OCEANO:
-				continue
-			lista.append({"tile": tile, "regiao": regiao})
-	return lista
+## Ícone de prédio top-down: paredes + telhado (inset) + porta. Tamanho
+## cresce com a ocupação da região; material (madeira/pedra) muda com a
+## riqueza — o mesmo proxy visual usado desde o M2 (Construcao).
+func _desenhar_icone_povoado(regiao: Regiao) -> void:
+	if regiao.tiles.is_empty() or regiao.populacao_total <= 0.0 or regiao.capacidade_alimento <= 0.0:
+		return
+	var ocupacao := clampf(regiao.populacao_total / regiao.capacidade_alimento, 0.0, 1.0)
+	if ocupacao < OCUPACAO_MINIMA_VISIVEL:
+		return
+
+	var centro := _centro_da_regiao(regiao)
+	var tamanho := lerpf(6.0, float(TAMANHO_TILE) * 1.6, ocupacao)
+	var eh_madeira := Construcao.nivel_por_riqueza(regiao.riqueza_media) == Construcao.Nivel.MADEIRA
+	var cor_parede := Color(0.55, 0.4, 0.25) if eh_madeira else Color(0.6, 0.6, 0.62)
+	var cor_telhado := Color(0.35, 0.2, 0.1) if eh_madeira else Color(0.3, 0.3, 0.32)
+
+	var metade := tamanho / 2.0
+	var corpo := Rect2(centro.x - metade, centro.y - metade, tamanho, tamanho)
+	draw_rect(corpo, cor_parede, true)
+	draw_rect(corpo, Color.BLACK, false, 1.0)
+
+	var margem := tamanho * 0.18
+	var telhado := Rect2(
+		centro.x - metade + margem,
+		centro.y - metade + margem,
+		tamanho - margem * 2.0,
+		tamanho - margem * 2.0
+	)
+	draw_rect(telhado, cor_telhado, true)
+
+	var porta_largura := maxf(tamanho * 0.22, 2.0)
+	var porta := Rect2(
+		centro.x - porta_largura / 2.0,
+		centro.y + metade - porta_largura * 0.6,
+		porta_largura,
+		porta_largura * 0.6
+	)
+	draw_rect(porta, Color(0.2, 0.12, 0.05), true)
 
 
-func _criar_sprite_construcao(tile: Vector2i, regiao: Regiao) -> void:
-	var nivel := Construcao.nivel_por_riqueza(regiao.riqueza_media)
-	var sprite := Sprite2D.new()
-	sprite.texture = _texturas_construcao[nivel]
-	sprite.centered = true
-	# Empilhado acima do tile de terreno (o mesmo pivô, deslocado pra cima).
-	sprite.offset = Vector2(0, OFFSET_VERTICAL_SPRITE - LARGURA_TILE * 0.55)
-	sprite.position = grade_para_tela(tile.x, tile.y)
-	sprite.z_index = (tile.x + tile.y) * 2 + 1
-	_no_construcoes.add_child(sprite)
+func _centro_da_regiao(regiao: Regiao) -> Vector2:
+	var soma_x := 0.0
+	var soma_y := 0.0
+	for tile in regiao.tiles:
+		soma_x += tile.x
+		soma_y += tile.y
+	var media_x := soma_x / regiao.tiles.size()
+	var media_y := soma_y / regiao.tiles.size()
+	return Vector2((media_x + 0.5) * TAMANHO_TILE, (media_y + 0.5) * TAMANHO_TILE)
+
+
+func _cor_do_dono(id_polity: int) -> Color:
+	if id_polity < 0:
+		return Color(1.0, 1.0, 1.0, 0.3)
+	return PALETA_DONOS[id_polity % PALETA_DONOS.size()]

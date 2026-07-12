@@ -1,6 +1,7 @@
-## Aplica a decisão do líder de cada polity e atualiza seus medidores —
-## PDF 13 (ciclo cérebro/corpo: monta briefing → Decider.decide() →
-## engine valida e aplica), PDF 17 (estabilidade). M2: o "briefing" é um
+## Aplica a decisão do líder de cada polity, atualiza seus medidores e
+## avalia transições de governo — PDF 13 (ciclo cérebro/corpo: monta
+## briefing → Decider.decide() → engine valida e aplica), PDF 17
+## (estabilidade + transições, TransicaoDeGoverno). O "briefing" é um
 ## resumo mínimo (tesouro/moral/personalidade); o schema completo do
 ## PDF 13 §2 (nação, eventos, relações, memória, pressões) chega junto
 ## com os sistemas que o alimentam.
@@ -33,6 +34,7 @@ static func avancar(estado: EstadoDoMundo) -> void:
 		_aplicar_decisao(polity, regioes_da_polity, decisao)
 
 		CalculadoraDeEstabilidade.avancar(polity, tipo_governo, lider, regioes_da_polity)
+		TransicaoDeGoverno.avaliar_e_aplicar(estado, polity, tipo_governo)
 
 
 static func _regioes_da_polity(estado: EstadoDoMundo, polity: Polity) -> Array[Regiao]:

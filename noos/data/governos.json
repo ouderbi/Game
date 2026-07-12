@@ -1080,6 +1080,26 @@
         "limiar": 0.6,
         "falha": "Se a abundância falha, a escassez volta — e com ela a briga por poder que abole a anarquia."
       }
+    },
+    {
+      "id": "estado_falido",
+      "nome": "Estado Falido",
+      "nome_en": "Failed State",
+      "era": "qualquer",
+      "concentracao_poder": 0.1,
+      "tendencia_corrupcao": 0.7,
+      "militarismo": 0.3,
+      "liberdades_civis": 0.5,
+      "estabilidade_base": 0.15,
+      "bonus": "Ninguém te governa — nenhuma lei alcança, nenhum imposto sufoca.",
+      "penalidade": "Nenhuma autoridade resolve nada — sem defesa, sem coordenação, sem futuro planejado.",
+      "consequencia": "O fundo do poço de qualquer civilização (PDF 17 §4) — sobrevive por inércia até alguém impor ordem de novo.",
+      "manutencao": {
+        "descricao": "Não há nada a manter — é a ausência de governo.",
+        "recurso": "comida",
+        "limiar": 0.05,
+        "falha": "Sem nem comida, a população se dispersa ou desaparece de vez."
+      }
     }
   ]
 }

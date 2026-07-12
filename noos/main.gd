@@ -35,13 +35,11 @@ func _ready() -> void:
 	_visao_mapa = VisaoDoMapa.new()
 	_visao_mapa.estado = _estado
 	add_child(_visao_mapa)
-	_visao_mapa.preparar()
+	_visao_mapa.queue_redraw()
 
 	var camera := ControladorDeCamera.new()
 	add_child(camera)
-	camera.ajustar_para_mapa_isometrico(
-		LARGURA_MAPA, ALTURA_MAPA, VisaoDoMapa.LARGURA_TILE, VisaoDoMapa.ALTURA_TOPO
-	)
+	camera.ajustar_para_mapa(LARGURA_MAPA, ALTURA_MAPA, VisaoDoMapa.TAMANHO_TILE)
 
 	var camada_ui := CanvasLayer.new()
 	add_child(camada_ui)
@@ -56,7 +54,7 @@ func _ready() -> void:
 func _ao_tick() -> void:
 	_simulacao.passo(_estado)
 	_hud.atualizar()
-	_visao_mapa.atualizar_construcoes()
+	_visao_mapa.queue_redraw()  # população/riqueza/posse mudam -> ícones e fronteiras redesenham
 
 
 func _criar_polities() -> void:
