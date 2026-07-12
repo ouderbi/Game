@@ -13,6 +13,8 @@ var government_system: GovernmentSystem
 var faction_system: FactionSystem
 var event_system: EventSystem
 var population_system: PopulationSystem
+var building_system: BuildingSystem
+var building_placer: BuildingPlacer
 
 # Game state
 var game_speed: float = 1.0  # 1x, 2x, 3x
@@ -44,6 +46,12 @@ func _ready():
 	
 	population_system = PopulationSystem.new()
 	add_child(population_system)
+	
+	building_system = BuildingSystem.new()
+	add_child(building_system)
+	
+	building_placer = BuildingPlacer.new()
+	add_child(building_placer)
 	
 	# Wait for systems to initialize
 	await get_tree().process_frame
@@ -146,6 +154,12 @@ func _handle_input():
 func _update_systems(delta: float):
 	"""Update all game systems each frame"""
 	resource_manager.update_production(delta * game_speed)
+	
+	# Apply building production
+	building_system.apply_building_effects(resource_manager, government_system, era_manager.current_era_id)
+	
+	# Update buildings
+	building_system.update_buildings(delta * game_speed)
 	
 	var world_state = get_world_state()
 	event_system.update_pressures(world_state, delta * game_speed)
