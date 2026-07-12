@@ -23,6 +23,8 @@ const Polity = preload("res://world/entities/polity.gd")
 const Lider = preload("res://world/entities/leader.gd")
 const CalculadoraDeEstabilidade = preload("res://world/estabilidade.gd")
 const SimulacaoPolitica = preload("res://world/simulacao_politica.gd")
+const Decisor = preload("res://brains/decider.gd")
+const DecisorHeuristico = preload("res://brains/heuristic.gd")
 
 
 func _initialize() -> void:
@@ -35,6 +37,7 @@ func _initialize() -> void:
 	ok = _testar_catalogo_governos() and ok
 	ok = _testar_estabilidade_reage_a_prosperidade() and ok
 	ok = _testar_simulacao_politica_nao_quebra() and ok
+	ok = _testar_ruido_da_heuristica_e_deterministico() and ok
 
 	if ok:
 		print("OK: todos os testes passaram")
@@ -131,6 +134,9 @@ func _testar_estabilidade_reage_a_prosperidade() -> bool:
 	polity.legitimidade = 0.5
 	polity.estabilidade = 0.5
 	var tipo_governo: TipoDeGoverno = CatalogoDeGovernos.catalogo()["republica_democratica"]
+	var lider := Lider.new()
+	lider.competencia = 0.8
+	lider.corruptibilidade = 0.2
 
 	var regiao_prospera := Regiao.new()
 	regiao_prospera.capacidade_alimento = 100.0
@@ -139,12 +145,44 @@ func _testar_estabilidade_reage_a_prosperidade() -> bool:
 	regiao_prospera.humor_medio = 0.9
 
 	for i in range(50):
-		CalculadoraDeEstabilidade.avancar(polity, tipo_governo, [regiao_prospera])
+		CalculadoraDeEstabilidade.avancar(polity, tipo_governo, lider, [regiao_prospera])
 
 	if polity.estabilidade <= 0.5:
 		print("FALHA: estabilidade não subiu com prosperidade/moral altas")
 		return false
 	print("OK: estabilidade sobe com prosperidade e moral altas")
+	return true
+
+
+func _testar_ruido_da_heuristica_e_deterministico() -> bool:
+	var decisor := DecisorHeuristico.new()
+	var briefing := {
+		"tesouro_baixo": 0.5,
+		"moral_baixa": 0.5,
+		"ambicao": 0.5,
+		"competencia": 0.3,
+		"agressao": 0.5,
+		"paranoia": 0.5,
+		"semente_ruido": 42,
+	}
+	var decisao_a := decisor.decidir(briefing)
+	var decisao_b := decisor.decidir(briefing)
+	if str(decisao_a) != str(decisao_b):
+		print("FALHA: mesma semente_ruido produziu decisões diferentes")
+		return false
+
+	var houve_variacao := false
+	for semente in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]:
+		briefing["semente_ruido"] = semente
+		var decisao := decisor.decidir(briefing)
+		if str(decisao) != str(decisao_a):
+			houve_variacao = true
+			break
+	if not houve_variacao:
+		print("FALHA: 10 sementes de ruído diferentes produziram sempre a mesma decisão")
+		return false
+
+	print("OK: ruído da heurística é determinístico por semente e varia entre sementes")
 	return true
 
 

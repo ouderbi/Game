@@ -1,9 +1,11 @@
 ## Medidores de estabilidade e legitimidade — PDF 17 §1, versão
 ## simplificada pro M2: sem facções/eventos/inflação ainda (chegam nos
 ## marcos seguintes e alimentam as equações completas de risco de golpe/
-## revolução do PDF 17 §2). Por ora: prosperidade e moral das regiões da
-## polity, e a tendência de corrupção do governo, empurram os dois
-## medidores rumo a um alvo, suavizado tick a tick.
+## revolução do PDF 17 §2). Prosperidade e moral das regiões, a tendência
+## de corrupção do governo E o próprio líder (corruptibilidade puxa
+## corrupção pra cima ou pra baixo; competência sustenta legitimidade —
+## PDF 17 §1: "competência do líder" é um dos motores explícitos) empurram
+## os medidores rumo a um alvo, suavizado tick a tick.
 class_name CalculadoraDeEstabilidade
 extends RefCounted
 
@@ -11,7 +13,7 @@ const VELOCIDADE := 0.03
 
 
 static func avancar(
-	polity: Polity, tipo_governo: TipoDeGoverno, regioes_da_polity: Array[Regiao]
+	polity: Polity, tipo_governo: TipoDeGoverno, lider: Lider, regioes_da_polity: Array[Regiao]
 ) -> void:
 	if regioes_da_polity.is_empty():
 		return
@@ -24,11 +26,22 @@ static func avancar(
 	var prosperidade := soma_riqueza / regioes_da_polity.size()
 	var moral := soma_humor / regioes_da_polity.size()
 
-	polity.corrupcao += (tipo_governo.tendencia_corrupcao - polity.corrupcao) * VELOCIDADE
+	# Corrupção varia por forma de governo E por líder (PDF 08 §4) — um
+	# líder corruptível empurra a corrupção acima da tendência do
+	# governo; um íntegro, abaixo.
+	var alvo_corrupcao := clampf(
+		tipo_governo.tendencia_corrupcao + (lider.corruptibilidade - 0.5) * 0.3, 0.0, 1.0
+	)
+	polity.corrupcao += (alvo_corrupcao - polity.corrupcao) * VELOCIDADE
 	polity.corrupcao = clampf(polity.corrupcao, 0.0, 1.0)
 
 	var alvo_legitimidade := clampf(
-		tipo_governo.estabilidade_base + prosperidade * 0.3 - polity.corrupcao * 0.4, 0.0, 1.0
+		tipo_governo.estabilidade_base
+		+ prosperidade * 0.3
+		+ lider.competencia * 0.15
+		- polity.corrupcao * 0.4,
+		0.0,
+		1.0
 	)
 	polity.legitimidade += (alvo_legitimidade - polity.legitimidade) * VELOCIDADE
 	polity.legitimidade = clampf(polity.legitimidade, 0.0, 1.0)

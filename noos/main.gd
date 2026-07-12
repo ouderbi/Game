@@ -80,6 +80,9 @@ func _criar_polities() -> void:
 
 		var regiao: Regiao = _estado.regioes[indice_regiao]
 
+		# Escopo do M2: traços sorteados uniformemente, sem preset por
+		# arquétipo/governo ainda (PDF 11 §1-§2 promete isso; entra
+		# quando tivermos mais de um arquétipo de verdade pra escolher).
 		var lider := Lider.new()
 		lider.id = proximo_id_lider
 		lider.nome = "Líder %d" % proximo_id_lider
