@@ -5,6 +5,8 @@ extends RefCounted
 
 enum Tipo { OCEANO, PLANICIE, FLORESTA, DESERTO, MONTANHA, TUNDRA }
 
+const PASTA_ASSETS := "res://assets/kenney/isometric_blocks/"
+
 
 static func cor(tipo: int) -> Color:
 	match tipo:
@@ -22,3 +24,22 @@ static func cor(tipo: int) -> Color:
 			return Color(0.80, 0.85, 0.88)
 		_:
 			return Color.MAGENTA
+
+
+## Sprite isométrico real (Kenney CC0, PDF 24 §5) pra cada bioma.
+static func caminho_textura(tipo: int) -> String:
+	match tipo:
+		Tipo.OCEANO:
+			return PASTA_ASSETS + "bioma_oceano.png"
+		Tipo.PLANICIE:
+			return PASTA_ASSETS + "bioma_planicie.png"
+		Tipo.FLORESTA:
+			return PASTA_ASSETS + "bioma_floresta.png"
+		Tipo.DESERTO:
+			return PASTA_ASSETS + "bioma_deserto.png"
+		Tipo.MONTANHA:
+			return PASTA_ASSETS + "bioma_montanha.png"
+		Tipo.TUNDRA:
+			return PASTA_ASSETS + "bioma_tundra.png"
+		_:
+			return PASTA_ASSETS + "bioma_planicie.png"

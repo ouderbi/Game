@@ -1,0 +1,17 @@
+"Isometric Blocks" por Kenney (kenney.nl) — Creative Commons CC0 (domínio
+público). Uso e redistribuição livres, sem exigência de atribuição — mas
+credite o Kenney de qualquer forma, é trabalho bom e de graça.
+
+Fonte: https://kenney.nl/assets/isometric-blocks
+
+Sprites individuais recortados do pacote original e renomeados por bioma/
+construção (PDF 24 §5):
+  bioma_planicie.png    <- voxelTile_55.png
+  bioma_floresta.png    <- voxelTile_54.png
+  bioma_deserto.png     <- voxelTile_20.png
+  bioma_montanha.png    <- voxelTile_48.png
+  bioma_tundra.png      <- voxelTile_13.png
+  bioma_oceano.png      <- voxelTile_24.png
+  construcao_madeira.png <- voxelTile_26.png
+  construcao_tijolo.png  <- voxelTile_27.png
+  construcao_pedra.png   <- voxelTile_48.png

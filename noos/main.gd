@@ -5,7 +5,6 @@ extends Node2D
 const LARGURA_MAPA := 64
 const ALTURA_MAPA := 48
 const SEMENTE := 1337
-const TAMANHO_TILE := 16
 
 ## 1 polity reservada pro jogador (M5 pluga o controle real) + 3 líderes-
 ## NPC (PDF 04 §7, PDF 11) — nenhum se encontra cedo (M2 ainda não tem
@@ -16,6 +15,7 @@ const NOMES_POLITIES := ["Sua Polity", "Reino do Norte", "República do Vale", "
 var _estado: EstadoDoMundo
 var _simulacao: Simulacao
 var _hud: HUD
+var _visao_mapa: VisaoDoMapa
 
 
 func _ready() -> void:
@@ -24,15 +24,16 @@ func _ready() -> void:
 	_criar_polities()
 	_simulacao = Simulacao.new()
 
-	var visao_mapa := VisaoDoMapa.new()
-	visao_mapa.estado = _estado
-	visao_mapa.tamanho_tile = TAMANHO_TILE
-	add_child(visao_mapa)
-	visao_mapa.queue_redraw()
+	_visao_mapa = VisaoDoMapa.new()
+	_visao_mapa.estado = _estado
+	add_child(_visao_mapa)
+	_visao_mapa.preparar()
 
 	var camera := ControladorDeCamera.new()
 	add_child(camera)
-	camera.ajustar_para_mapa(LARGURA_MAPA, ALTURA_MAPA, TAMANHO_TILE)
+	camera.ajustar_para_mapa_isometrico(
+		LARGURA_MAPA, ALTURA_MAPA, VisaoDoMapa.LARGURA_TILE, VisaoDoMapa.ALTURA_TOPO
+	)
 
 	var camada_ui := CanvasLayer.new()
 	add_child(camada_ui)
@@ -47,6 +48,7 @@ func _ready() -> void:
 func _ao_tick() -> void:
 	_simulacao.passo(_estado)
 	_hud.atualizar()
+	_visao_mapa.atualizar_construcoes()
 
 
 func _criar_polities() -> void:

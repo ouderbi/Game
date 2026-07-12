@@ -13,16 +13,33 @@ func _ready() -> void:
 	enabled = true  # no Godot 4, Camera2D usa "enabled" (não "current", que era Godot 3.x)
 
 
-## Centraliza a câmera no mapa e escolhe um zoom que mostre o mapa inteiro.
+## Centraliza a câmera no mapa e escolhe um zoom que mostre o mapa inteiro
+## (grade quadrada — mantido pra referência/telas futuras não-isométricas).
 func ajustar_para_mapa(largura_tiles: int, altura_tiles: int, tamanho_tile: int) -> void:
 	var largura_px := largura_tiles * tamanho_tile
 	var altura_px := altura_tiles * tamanho_tile
 	position = Vector2(largura_px, altura_px) / 2.0
+	_ajustar_zoom_pro_retangulo(largura_px, altura_px)
 
+
+## Mesma ideia, mas pro losango da projeção isométrica (PDF 24 §4):
+## tela_x=(gx−gy)·L/2, tela_y=(gx+gy)·A/2 — o "retângulo" que cobre o
+## losango inteiro tem largura (W+H)·L e altura (W+H)·A.
+func ajustar_para_mapa_isometrico(
+	largura_tiles: int, altura_tiles: int, largura_iso: float, altura_iso: float
+) -> void:
+	var soma := largura_tiles + altura_tiles
+	var largura_px := soma * largura_iso
+	var altura_px := soma * altura_iso
+	position = Vector2((largura_tiles - altura_tiles) * largura_iso / 2.0, altura_px / 2.0)
+	_ajustar_zoom_pro_retangulo(largura_px, altura_px)
+
+
+func _ajustar_zoom_pro_retangulo(largura_px: float, altura_px: float) -> void:
 	# get_viewport_rect() é método de Control, não de Camera2D — o caminho
 	# universal (qualquer Node) é get_viewport().get_visible_rect().
 	var tamanho_viewport := get_viewport().get_visible_rect().size
-	var fator := maxf(float(largura_px) / tamanho_viewport.x, float(altura_px) / tamanho_viewport.y)
+	var fator := maxf(largura_px / tamanho_viewport.x, altura_px / tamanho_viewport.y)
 	fator = clampf(fator, _zoom_minimo, _zoom_maximo)
 	zoom = Vector2(fator, fator)
 
