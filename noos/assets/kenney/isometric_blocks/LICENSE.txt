@@ -13,5 +13,8 @@ construção (PDF 24 §5):
   bioma_tundra.png      <- voxelTile_13.png
   bioma_oceano.png      <- voxelTile_24.png
   construcao_madeira.png <- voxelTile_26.png
-  construcao_tijolo.png  <- voxelTile_27.png
   construcao_pedra.png   <- voxelTile_48.png
+
+  construcao_tijolo.png  <- voxelTile_27.png (reservado — cerâmica cozida
+    é Antiguidade/Clássica em diante, PDF 05 §4; não usado enquanto toda
+    polity começa Tribo/era Pedra, ver world/construcao.gd)

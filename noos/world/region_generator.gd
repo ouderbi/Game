@@ -18,9 +18,11 @@ const CAPACIDADE_POR_BIOMA := {
 	Bioma.Tipo.TUNDRA: 2.0,
 }
 
-## Fração inicial da capacidade que a região começa povoada — deixa
-## espaço pra crescimento em vez de já nascer no teto (PDF 07 §6).
-const OCUPACAO_INICIAL := 0.4
+## Fração inicial da capacidade que a região começa povoada — baixa de
+## propósito: o jogo começa na Idade da Pedra, o início de uma
+## civilização (PDF 01 §1), não com o mundo já no teto de ocupação.
+## Cresce de verdade tick a tick (PDF 07 §6) em vez de já nascer cheio.
+const OCUPACAO_INICIAL := 0.08
 
 
 static func gerar(estado: EstadoDoMundo) -> Array[Regiao]:

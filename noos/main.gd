@@ -12,6 +12,14 @@ const SEMENTE := 1337
 ## esse isolamento). Todas rodam por heurística até o M4 trazer o LLM.
 const NOMES_POLITIES := ["Sua Polity", "Reino do Norte", "República do Vale", "Junta do Sul"]
 
+## Toda civilização começa Tribo — era Pedra, sem governo avançado
+## nenhum (PDF 05 §4: Monarquia/República/Ditadura só existem em eras
+## mais tarde). Monarquia/República/Ditadura continuam no catálogo,
+## prontas pra quando as transições de governo (golpe/revolução/reforma,
+## PDF 10 §5) forem implementadas — não são um destino aleatório de
+## largada.
+const GOVERNO_INICIAL := "tribo"
+
 var _estado: EstadoDoMundo
 var _simulacao: Simulacao
 var _hud: HUD
@@ -53,7 +61,6 @@ func _ao_tick() -> void:
 
 func _criar_polities() -> void:
 	_estado.tipos_de_governo = CatalogoDeGovernos.catalogo()
-	var ids_governo: Array = _estado.tipos_de_governo.keys()
 
 	if _estado.regioes.is_empty():
 		return
@@ -99,7 +106,7 @@ func _criar_polities() -> void:
 		var polity := Polity.new()
 		polity.id = proximo_id_polity
 		polity.nome = NOMES_POLITIES[i]
-		polity.tipo_governo_id = ids_governo[i % ids_governo.size()]
+		polity.tipo_governo_id = GOVERNO_INICIAL
 		polity.leader_id = lider.id
 		polity.region_ids = [regiao.id]
 		regiao.owner_polity_id = polity.id

@@ -71,7 +71,7 @@ func _carregar_texturas() -> void:
 		Bioma.Tipo.TUNDRA
 	]:
 		_texturas_bioma[tipo] = load(Bioma.caminho_textura(tipo))
-	for nivel in [Construcao.Nivel.MADEIRA, Construcao.Nivel.TIJOLO, Construcao.Nivel.PEDRA]:
+	for nivel in [Construcao.Nivel.MADEIRA, Construcao.Nivel.PEDRA]:
 		_texturas_construcao[nivel] = load(Construcao.caminho_textura(nivel))
 
 
