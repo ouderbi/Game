@@ -25,6 +25,7 @@ const CalculadoraDeEstabilidade = preload("res://world/estabilidade.gd")
 const SimulacaoPolitica = preload("res://world/simulacao_politica.gd")
 const Decisor = preload("res://brains/decider.gd")
 const DecisorHeuristico = preload("res://brains/heuristic.gd")
+const Manutencao = preload("res://world/manutencao.gd")
 
 
 func _initialize() -> void:
@@ -38,6 +39,8 @@ func _initialize() -> void:
 	ok = _testar_estabilidade_reage_a_prosperidade() and ok
 	ok = _testar_simulacao_politica_nao_quebra() and ok
 	ok = _testar_ruido_da_heuristica_e_deterministico() and ok
+	ok = _testar_catalogo_cobre_todas_eras() and ok
+	ok = _testar_manutencao_falhando_desestabiliza() and ok
 
 	if ok:
 		print("OK: todos os testes passaram")
@@ -117,15 +120,90 @@ func _testar_populacao_cai_com_escassez() -> bool:
 
 func _testar_catalogo_governos() -> bool:
 	var catalogo := CatalogoDeGovernos.catalogo()
-	if catalogo.size() < 4:
-		print("FALHA: catálogo de governos tem menos de 4 entradas")
+	if catalogo.size() < 50:
+		print("FALHA: catálogo de governos tem menos de 50 entradas (%d)" % catalogo.size())
+		return false
+	if not catalogo.has("tribo"):
+		print("FALHA: catálogo sem 'tribo' (governo inicial)")
 		return false
 	for id in catalogo:
 		var tipo: TipoDeGoverno = catalogo[id]
 		if tipo.id != id:
 			print("FALHA: chave do catálogo '%s' não bate com o id do tipo '%s'" % [id, tipo.id])
 			return false
-	print("OK: catálogo de governos consistente (%d tipos)" % catalogo.size())
+		if tipo.manutencao_recurso == "":
+			print("FALHA: governo '%s' sem recurso de manutenção" % id)
+			return false
+	print("OK: catálogo de governos consistente (%d tipos, todos com manutenção)" % catalogo.size())
+	return true
+
+
+func _testar_catalogo_cobre_todas_eras() -> bool:
+	var catalogo := CatalogoDeGovernos.catalogo()
+	var eras := [
+		"pedra",
+		"antiguidade",
+		"classica",
+		"medieval",
+		"industrial",
+		"moderna",
+		"informacao",
+		"alta_tecnologia",
+		"espacial",
+		"interplanetaria",
+		"estelar",
+		"intergalactica",
+	]
+	var eras_presentes := {}
+	for id in catalogo:
+		eras_presentes[catalogo[id].era] = true
+	for era in eras:
+		if not eras_presentes.has(era):
+			print("FALHA: nenhuma forma de governo na era '%s'" % era)
+			return false
+	print("OK: as 12 eras têm ao menos uma forma de governo")
+	return true
+
+
+func _testar_manutencao_falhando_desestabiliza() -> bool:
+	# Uma tribo faminta (manutenção 'comida' falhando) deve perder mais
+	# estabilidade que uma tribo farta, tudo o mais igual.
+	var tipo_governo: TipoDeGoverno = CatalogoDeGovernos.catalogo()["tribo"]
+	var lider := Lider.new()
+	lider.competencia = 0.5
+	lider.corruptibilidade = 0.5
+
+	var farta := Polity.new()
+	farta.estabilidade = 0.6
+	farta.legitimidade = 0.6
+	var regiao_farta := Regiao.new()
+	regiao_farta.capacidade_alimento = 100.0
+	regiao_farta.populacao_total = 10.0  # muita comida sobrando
+	regiao_farta.humor_medio = 0.6
+	regiao_farta.riqueza_media = 0.3
+
+	var faminta := Polity.new()
+	faminta.estabilidade = 0.6
+	faminta.legitimidade = 0.6
+	var regiao_faminta := Regiao.new()
+	regiao_faminta.capacidade_alimento = 100.0
+	regiao_faminta.populacao_total = 98.0  # população quase no teto: excedente ínfimo
+	regiao_faminta.humor_medio = 0.6
+	regiao_faminta.riqueza_media = 0.3
+
+	for i in range(40):
+		CalculadoraDeEstabilidade.avancar(farta, tipo_governo, lider, [regiao_farta])
+		CalculadoraDeEstabilidade.avancar(faminta, tipo_governo, lider, [regiao_faminta])
+
+	if faminta.estabilidade >= farta.estabilidade:
+		print(
+			(
+				"FALHA: manutenção falhando não reduziu estabilidade (faminta %.3f >= farta %.3f)"
+				% [faminta.estabilidade, farta.estabilidade]
+			)
+		)
+		return false
+	print("OK: governo com manutenção falhando fica menos estável que um mantido")
 	return true
 
 

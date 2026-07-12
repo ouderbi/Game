@@ -67,7 +67,7 @@ Os demais tipos (Seção 3) seguem o **mesmo schema** — o Claude Code preenche
 
 **Tardios / Sci-fi:** tecnocracia, corporatocracia / megacorp, IA-governança, mente-colmeia, autocracia pós-humana, democracia direta digital, sindicato pirata, federação galáctica, anarcocapitalismo, ecotopia.
 
-(≈ 45 tipos; a lista é expansível — qualquer novo tipo é só um preenchimento do schema.)
+**Já implementados (data-driven):** o catálogo real vive em `noos/data/governos.json` — **54 formas de governo espalhadas pelas 12 eras** (PDF 05 §4), cada uma com atributos, **bônus, penalidade, consequência** e **manutenção** (Seção 5.1). É expansível: qualquer novo tipo é só preencher o schema no JSON, nunca reescrever código. **Sem favoritismo** — cada governo tem trade-off real; nenhum é estritamente melhor que outro, nem a democracia é o "final feliz".
 
 ---
 
@@ -85,7 +85,24 @@ A forma de governo também **limita** o que o líder pode fazer (um governo difu
 
 ### 5. Transições de governo
 
-Uma polity **muda de tipo** por eventos (PDF 16) e por estabilidade (PDF 17): golpe → junta; revolução → república ou Estado de partido único; reforma → constitucional; colapso → estado falido. A `succession_rule` define a via normal; crises abrem as anormais.
+Toda polity **começa Tribo** (era Pedra) — nenhum governo avançado nasce de largada (PDF 05 §4). Depois, **muda de tipo** por eventos (PDF 16) e por estabilidade (PDF 17): golpe → junta; revolução → república ou Estado de partido único; reforma → constitucional; colapso → estado falido. A era atual limita para quais tipos se pode transicionar. A `succession_rule` define a via normal; crises abrem as anormais.
+
+---
+
+### 5.1. Manutenção — manter um governo custa esforço constante  ★ (implementado)
+
+Cada governo exige um **recurso de manutenção** que o jogador precisa sustentar o tempo todo, senão o governo desmorona sozinho (nunca por aviso — a consequência vem, PDF 01 §7):
+
+- **Ditadura militar / império / fascismo:** militares fortes e pagos. Exército enfraquecido → os próprios generais depõem o líder.
+- **Feudalismo:** comida e proteção aos servos. Fome ou saque sem defesa → servos fogem/se revoltam.
+- **Teocracia:** fé viva e clero unido. Cisma → guerra religiosa e queda da legitimidade divina.
+- **Tecnocracia:** fluxo de pesquisa. Ciência estagna → a promessa de eficiência quebra.
+- **Cleptocracia:** propina irrigando os aliados. Sem verba → os aliados trocam de lado.
+- **Democracia:** eleições limpas, liberdades e povo satisfeito. Consenso corroído → abre caminho a um homem forte.
+
+Concretamente: cada governo tem `manutencao.recurso` + `manutencao.limiar`. Se o recurso da polity cai abaixo do limiar, a **estabilidade despenca proporcionalmente ao déficit** (implementado em `world/manutencao.gd` + `world/estabilidade.gd`), empurrando a polity rumo à transição/colapso da Seção 5. Recursos já simulados: comida, consenso, riqueza; os demais (militar, pesquisa, coesão, fé, dados, energia) ficam prontos no schema até os sistemas que os alimentam existirem.
+
+Isso realiza o pedido de "fazer algo constante pra manter a forma de governo": não basta **escolher** um regime — é preciso **sustentá-lo**, e cada um cobra um preço diferente.
 
 ---
 

@@ -1,0 +1,1085 @@
+{
+  "_comentario": "Catálogo de formas de governo — PDF 10 §3 (expansível), PDF 23 (particularidades), PDF 05 §4 (destrava por era). Toda polity começa 'tribo' (era Pedra) e só chega às demais por transição (golpe/revolução/reforma — PDF 10 §5), nunca de largada. Sem favoritismo: cada governo tem bônus, penalidade, consequência e uma MANUTENÇÃO — algo que o jogador precisa sustentar o tempo todo, senão o governo desmorona (PDF 01 §7). Campos numéricos 0-1. manutencao.recurso: comida|consenso|riqueza|forca_militar|pesquisa|coesao|fe|liberdade|ordem|energia|dados|inovacao. Preencher mais entradas aqui NUNCA exige reescrever código.",
+  "governos": [
+    {
+      "id": "bando_nomade",
+      "nome": "Bando Nômade",
+      "nome_en": "Nomadic Band",
+      "era": "pedra",
+      "concentracao_poder": 0.15,
+      "tendencia_corrupcao": 0.1,
+      "militarismo": 0.4,
+      "liberdades_civis": 0.9,
+      "estabilidade_base": 0.5,
+      "bonus": "Mobilidade total — foge de fome, seca e inimigos sem custo.",
+      "penalidade": "Não acumula excedente nem constrói nada permanente.",
+      "consequencia": "Sobrevive a quase tudo, mas nunca cresce além de um punhado de famílias.",
+      "manutencao": {
+        "descricao": "Manter o bando em movimento atrás de caça e água.",
+        "recurso": "comida",
+        "limiar": 0.15,
+        "falha": "Sem alimento, o bando se dispersa em grupos menores — a polity racha."
+      }
+    },
+    {
+      "id": "tribo",
+      "nome": "Tribo",
+      "nome_en": "Tribe",
+      "era": "pedra",
+      "concentracao_poder": 0.2,
+      "tendencia_corrupcao": 0.15,
+      "militarismo": 0.5,
+      "liberdades_civis": 0.85,
+      "estabilidade_base": 0.55,
+      "bonus": "Coesão de parentesco — o povo se ajuda sem precisar de burocracia.",
+      "penalidade": "Sem hierarquia clara, grandes projetos são impossíveis.",
+      "consequencia": "Uma base sólida e igualitária, mas limitada pela ausência de um poder central.",
+      "manutencao": {
+        "descricao": "Manter o povo alimentado e unido pela tradição.",
+        "recurso": "comida",
+        "limiar": 0.2,
+        "falha": "Fome quebra a confiança nos anciãos — a tribo se fragmenta em bandos rivais."
+      }
+    },
+    {
+      "id": "chefatura",
+      "nome": "Chefatura",
+      "nome_en": "Chiefdom",
+      "era": "pedra",
+      "concentracao_poder": 0.45,
+      "tendencia_corrupcao": 0.3,
+      "militarismo": 0.6,
+      "liberdades_civis": 0.6,
+      "estabilidade_base": 0.5,
+      "bonus": "Um chefe forte organiza guerra e obras que a tribo sozinha não faria.",
+      "penalidade": "Tudo depende do prestígio de um homem só.",
+      "consequencia": "O primeiro passo rumo ao Estado — frágil enquanto o chefe não vira instituição.",
+      "manutencao": {
+        "descricao": "O chefe precisa provar valor constantemente — vitórias e fartura.",
+        "recurso": "consenso",
+        "limiar": 0.45,
+        "falha": "Chefe desacreditado é deposto por um rival — crise de sucessão."
+      }
+    },
+    {
+      "id": "teocracia_xamanica",
+      "nome": "Teocracia Xamânica",
+      "nome_en": "Shamanic Theocracy",
+      "era": "pedra",
+      "concentracao_poder": 0.55,
+      "tendencia_corrupcao": 0.35,
+      "militarismo": 0.4,
+      "liberdades_civis": 0.4,
+      "estabilidade_base": 0.6,
+      "bonus": "A fé unifica o povo e explica o mundo — coesão altíssima.",
+      "penalidade": "Rejeita ideias que contrariam a crença — atrasa o saber prático.",
+      "consequencia": "Ordem espiritual estável, mas cega para o que os espíritos não preveem.",
+      "manutencao": {
+        "descricao": "Os xamãs precisam manter a fé viva com rituais e presságios cumpridos.",
+        "recurso": "fe",
+        "limiar": 0.5,
+        "falha": "Uma profecia falha e a fé racha — cisma e perda de legitimidade."
+      }
+    },
+    {
+      "id": "confederacao_tribal",
+      "nome": "Confederação Tribal",
+      "nome_en": "Tribal Confederation",
+      "era": "antiguidade",
+      "concentracao_poder": 0.35,
+      "tendencia_corrupcao": 0.25,
+      "militarismo": 0.65,
+      "liberdades_civis": 0.7,
+      "estabilidade_base": 0.5,
+      "bonus": "Muitas tribos somam exércitos sem perder autonomia.",
+      "penalidade": "Cada tribo puxa pro seu lado — decisões são lentas e brigadas.",
+      "consequencia": "Poderosa na guerra, quebradiça na paz — vive à beira da dissolução.",
+      "manutencao": {
+        "descricao": "Manter as tribos-membro satisfeitas com sua parte do saque e da terra.",
+        "recurso": "consenso",
+        "limiar": 0.5,
+        "falha": "Uma tribo insatisfeita se retira e leva outras — a confederação se desfaz."
+      }
+    },
+    {
+      "id": "cidade_estado",
+      "nome": "Cidade-Estado",
+      "nome_en": "City-State",
+      "era": "antiguidade",
+      "concentracao_poder": 0.45,
+      "tendencia_corrupcao": 0.3,
+      "militarismo": 0.55,
+      "liberdades_civis": 0.6,
+      "estabilidade_base": 0.55,
+      "bonus": "Cidadania e comércio concentrados — cultura e riqueza florescem rápido.",
+      "penalidade": "Pequena demais para se defender de impérios.",
+      "consequencia": "Um farol de civilização — brilhante, mas presa fácil dos grandes.",
+      "manutencao": {
+        "descricao": "Manter os cidadãos prósperos e as muralhas guarnecidas.",
+        "recurso": "riqueza",
+        "limiar": 0.4,
+        "falha": "Cidadãos empobrecidos param de servir — a cidade cai na primeira invasão."
+      }
+    },
+    {
+      "id": "reino",
+      "nome": "Reino",
+      "nome_en": "Kingdom",
+      "era": "antiguidade",
+      "concentracao_poder": 0.65,
+      "tendencia_corrupcao": 0.4,
+      "militarismo": 0.6,
+      "liberdades_civis": 0.4,
+      "estabilidade_base": 0.6,
+      "bonus": "Sucessão hereditária dá continuidade — planos de longo prazo são possíveis.",
+      "penalidade": "Um herdeiro incompetente é uma catástrofe que ninguém escolheu.",
+      "consequencia": "Estável enquanto a linhagem for capaz; uma loteria a cada morte do rei.",
+      "manutencao": {
+        "descricao": "Manter a nobreza leal com terras e a coroa com um herdeiro claro.",
+        "recurso": "consenso",
+        "limiar": 0.45,
+        "falha": "Nobres descontentes ou vácuo de sucessão acendem uma guerra civil."
+      }
+    },
+    {
+      "id": "despotismo",
+      "nome": "Despotismo",
+      "nome_en": "Despotism",
+      "era": "antiguidade",
+      "concentracao_poder": 0.85,
+      "tendencia_corrupcao": 0.55,
+      "militarismo": 0.75,
+      "liberdades_civis": 0.2,
+      "estabilidade_base": 0.5,
+      "bonus": "Uma palavra do déspota move montanhas — obras colossais em tempo recorde.",
+      "penalidade": "Ninguém ousa dar más notícias — o déspota decide às cegas.",
+      "consequencia": "Grandeza e terror lado a lado; a corte vive de bajulação e medo.",
+      "manutencao": {
+        "descricao": "Manter o povo temeroso e a guarda pessoal bem paga.",
+        "recurso": "forca_militar",
+        "limiar": 0.5,
+        "falha": "Sem força que imponha o medo, os súditos se levantam de uma vez."
+      }
+    },
+    {
+      "id": "imperio",
+      "nome": "Império",
+      "nome_en": "Empire",
+      "era": "classica",
+      "concentracao_poder": 0.8,
+      "tendencia_corrupcao": 0.5,
+      "militarismo": 0.8,
+      "liberdades_civis": 0.35,
+      "estabilidade_base": 0.6,
+      "bonus": "Escala imensa — muitos povos, muitos recursos, muitos exércitos sob uma bandeira.",
+      "penalidade": "Vasto demais para governar bem — as bordas sempre fervem.",
+      "consequencia": "Domina uma era inteira, mas carrega em si as sementes da própria fragmentação.",
+      "manutencao": {
+        "descricao": "Manter legiões nas fronteiras e as províncias integradas.",
+        "recurso": "forca_militar",
+        "limiar": 0.55,
+        "falha": "Fronteira desguarnecida convida invasão e secessão — o império racha."
+      }
+    },
+    {
+      "id": "oligarquia",
+      "nome": "Oligarquia",
+      "nome_en": "Oligarchy",
+      "era": "classica",
+      "concentracao_poder": 0.6,
+      "tendencia_corrupcao": 0.6,
+      "militarismo": 0.5,
+      "liberdades_civis": 0.45,
+      "estabilidade_base": 0.55,
+      "bonus": "Poucas famílias ricas coordenam decisões com eficiência fria.",
+      "penalidade": "Governa para si mesma — a desigualdade só cresce.",
+      "consequencia": "Competente e próspera no topo, ressentida e explosiva embaixo.",
+      "manutencao": {
+        "descricao": "Manter as famílias-elite unidas e o povo distraído o suficiente.",
+        "recurso": "consenso",
+        "limiar": 0.4,
+        "falha": "Rivalidade entre as elites ou revolta popular derruba o conluio."
+      }
+    },
+    {
+      "id": "republica_aristocratica",
+      "nome": "República Aristocrática",
+      "nome_en": "Aristocratic Republic",
+      "era": "classica",
+      "concentracao_poder": 0.5,
+      "tendencia_corrupcao": 0.45,
+      "militarismo": 0.55,
+      "liberdades_civis": 0.55,
+      "estabilidade_base": 0.6,
+      "bonus": "Senado partilha o poder — evita tiranos e dá estabilidade institucional.",
+      "penalidade": "Debate infinito quando é preciso agir rápido.",
+      "consequencia": "Duradoura e equilibrada, mas sempre um passo atrás numa crise súbita.",
+      "manutencao": {
+        "descricao": "Manter o equilíbrio entre as facções do senado.",
+        "recurso": "consenso",
+        "limiar": 0.5,
+        "falha": "Uma facção rompe o pacto e marcha sobre a capital — golpe."
+      }
+    },
+    {
+      "id": "tirania",
+      "nome": "Tirania",
+      "nome_en": "Tyranny",
+      "era": "classica",
+      "concentracao_poder": 0.9,
+      "tendencia_corrupcao": 0.65,
+      "militarismo": 0.7,
+      "liberdades_civis": 0.15,
+      "estabilidade_base": 0.4,
+      "bonus": "O tirano rompe amarras da tradição e faz mudanças radicais num átimo.",
+      "penalidade": "Governa contra a vontade de todos — vive cercado de conspirações.",
+      "consequencia": "Transforma tudo depressa, mas raramente morre na cama.",
+      "manutencao": {
+        "descricao": "Manter uma rede de informantes e uma guarda leal e paga.",
+        "recurso": "forca_militar",
+        "limiar": 0.6,
+        "falha": "Uma brecha na guarda basta — o tirano é assassinado e o poder se estilhaça."
+      }
+    },
+    {
+      "id": "gerontocracia",
+      "nome": "Gerontocracia",
+      "nome_en": "Gerontocracy",
+      "era": "classica",
+      "concentracao_poder": 0.6,
+      "tendencia_corrupcao": 0.5,
+      "militarismo": 0.4,
+      "liberdades_civis": 0.4,
+      "estabilidade_base": 0.65,
+      "bonus": "Conselho de anciãos traz prudência e memória — poucos erros impulsivos.",
+      "penalidade": "Lenta para mudar; teme o novo por princípio.",
+      "consequencia": "Muito estável e muito conservadora — estagna quando o mundo acelera.",
+      "manutencao": {
+        "descricao": "Manter a reverência do povo pela sabedoria dos velhos.",
+        "recurso": "coesao",
+        "limiar": 0.5,
+        "falha": "Uma geração jovem impaciente derruba os anciãos por reformas."
+      }
+    },
+    {
+      "id": "feudalismo",
+      "nome": "Feudalismo",
+      "nome_en": "Feudalism",
+      "era": "medieval",
+      "concentracao_poder": 0.4,
+      "tendencia_corrupcao": 0.45,
+      "militarismo": 0.7,
+      "liberdades_civis": 0.3,
+      "estabilidade_base": 0.55,
+      "bonus": "Vassalos armam cavaleiros sem custo à coroa — defesa distribuída e barata.",
+      "penalidade": "O rei manda pouco de fato — cada senhor é dono do seu pedaço.",
+      "consequencia": "Resistente à invasão, mas fragmentado por dentro e sempre à beira da rebelião baronial.",
+      "manutencao": {
+        "descricao": "Fornecer comida e proteção — os servos servem em troca de segurança.",
+        "recurso": "comida",
+        "limiar": 0.35,
+        "falha": "Fome ou saque sem defesa e os servos fogem ou se revoltam — o feudo colapsa."
+      }
+    },
+    {
+      "id": "monarquia_absolutista",
+      "nome": "Monarquia Absolutista",
+      "nome_en": "Absolute Monarchy",
+      "era": "medieval",
+      "concentracao_poder": 0.85,
+      "tendencia_corrupcao": 0.5,
+      "militarismo": 0.65,
+      "liberdades_civis": 0.25,
+      "estabilidade_base": 0.65,
+      "bonus": "A coroa domou os nobres — um Estado centralizado e capaz de grandes empreitadas.",
+      "penalidade": "Todo o peso recai sobre o rei; um erro seu é um erro de todos.",
+      "consequencia": "Poderosa e ordenada, mas rígida — quando racha, racha de vez.",
+      "manutencao": {
+        "descricao": "Manter uma corte cara e um exército permanente leais à coroa.",
+        "recurso": "riqueza",
+        "limiar": 0.45,
+        "falha": "Cofre vazio, corte e exército desertam — a revolução bate à porta."
+      }
+    },
+    {
+      "id": "teocracia",
+      "nome": "Teocracia",
+      "nome_en": "Theocracy",
+      "era": "medieval",
+      "concentracao_poder": 0.75,
+      "tendencia_corrupcao": 0.45,
+      "militarismo": 0.55,
+      "liberdades_civis": 0.25,
+      "estabilidade_base": 0.7,
+      "bonus": "Legitimidade divina — obediência quase inquestionável e coesão altíssima.",
+      "penalidade": "Trava a ciência que contraria o dogma — atrasa a pesquisa.",
+      "consequencia": "Estabilíssima enquanto a fé for firme; quebradiça diante de um cisma.",
+      "manutencao": {
+        "descricao": "Manter o clero unido e a fé do povo acesa.",
+        "recurso": "fe",
+        "limiar": 0.55,
+        "falha": "Um cisma racha a fé ao meio — guerra religiosa e queda da legitimidade divina."
+      }
+    },
+    {
+      "id": "califado",
+      "nome": "Califado",
+      "nome_en": "Caliphate",
+      "era": "medieval",
+      "concentracao_poder": 0.75,
+      "tendencia_corrupcao": 0.45,
+      "militarismo": 0.7,
+      "liberdades_civis": 0.35,
+      "estabilidade_base": 0.65,
+      "bonus": "Une fé, lei e Estado — expansão rápida com ciência e comércio florescentes.",
+      "penalidade": "Sucessão disputada entre fé e sangue gera cismas periódicos.",
+      "consequencia": "Uma era de ouro cultural, sempre sob risco de fratura sucessória.",
+      "manutencao": {
+        "descricao": "Manter a unidade da fé e a expansão que a financia.",
+        "recurso": "fe",
+        "limiar": 0.5,
+        "falha": "Disputa sucessória vira cisma — o califado se parte em rivais."
+      }
+    },
+    {
+      "id": "principado_mercante",
+      "nome": "Principado Mercante",
+      "nome_en": "Merchant Principality",
+      "era": "medieval",
+      "concentracao_poder": 0.55,
+      "tendencia_corrupcao": 0.5,
+      "militarismo": 0.4,
+      "liberdades_civis": 0.55,
+      "estabilidade_base": 0.6,
+      "bonus": "O comércio manda — riqueza, rotas e frotas superam vizinhos maiores.",
+      "penalidade": "Exército mercenário sem lealdade — some quando o ouro acaba.",
+      "consequencia": "Rica e influente muito além do seu tamanho, mas indefesa se a bolsa esvazia.",
+      "manutencao": {
+        "descricao": "Manter as rotas comerciais lucrando para pagar os mercenários.",
+        "recurso": "riqueza",
+        "limiar": 0.5,
+        "falha": "Rota cortada, ouro seca, mercenários debandam — a cidade fica à mercê."
+      }
+    },
+    {
+      "id": "monarquia_eletiva",
+      "nome": "Monarquia Eletiva",
+      "nome_en": "Elective Monarchy",
+      "era": "medieval",
+      "concentracao_poder": 0.6,
+      "tendencia_corrupcao": 0.55,
+      "militarismo": 0.55,
+      "liberdades_civis": 0.4,
+      "estabilidade_base": 0.5,
+      "bonus": "A nobreza elege o mais capaz — evita herdeiros desastrosos.",
+      "penalidade": "Cada eleição é uma temporada de subornos e facções.",
+      "consequencia": "Filtra os incompetentes, mas paga com instabilidade a cada trono vago.",
+      "manutencao": {
+        "descricao": "Manter os eleitores nobres cortejados e recompensados.",
+        "recurso": "riqueza",
+        "limiar": 0.45,
+        "falha": "Eleição comprada por um rival ou por uma potência estrangeira captura o trono."
+      }
+    },
+    {
+      "id": "monarquia_constitucional",
+      "nome": "Monarquia Constitucional",
+      "nome_en": "Constitutional Monarchy",
+      "era": "industrial",
+      "concentracao_poder": 0.45,
+      "tendencia_corrupcao": 0.3,
+      "militarismo": 0.5,
+      "liberdades_civis": 0.7,
+      "estabilidade_base": 0.7,
+      "bonus": "Coroa simbólica + parlamento — continuidade e representação juntas.",
+      "penalidade": "Poder dividido às vezes trava reformas urgentes.",
+      "consequencia": "Um dos governos mais estáveis — desde que rei e parlamento não se choquem.",
+      "manutencao": {
+        "descricao": "Manter a confiança entre coroa, parlamento e povo.",
+        "recurso": "consenso",
+        "limiar": 0.5,
+        "falha": "Choque entre coroa e parlamento sem consenso vira crise constitucional."
+      }
+    },
+    {
+      "id": "republica_democratica",
+      "nome": "República Democrática",
+      "nome_en": "Democratic Republic",
+      "era": "industrial",
+      "concentracao_poder": 0.3,
+      "tendencia_corrupcao": 0.25,
+      "militarismo": 0.4,
+      "liberdades_civis": 0.85,
+      "estabilidade_base": 0.6,
+      "bonus": "Legitimidade pelo voto — o povo aceita as regras porque ajudou a fazê-las.",
+      "penalidade": "Consenso é lento; a oposição pode travar tudo.",
+      "consequencia": "Resiliente e adaptável, mas vulnerável a populismo e paralisia.",
+      "manutencao": {
+        "descricao": "Manter eleições limpas, liberdades e o povo satisfeito.",
+        "recurso": "consenso",
+        "limiar": 0.5,
+        "falha": "Povo descontente e liberdades corroídas abrem caminho a um homem forte."
+      }
+    },
+    {
+      "id": "ditadura_militar",
+      "nome": "Ditadura Militar",
+      "nome_en": "Military Dictatorship",
+      "era": "industrial",
+      "concentracao_poder": 0.85,
+      "tendencia_corrupcao": 0.6,
+      "militarismo": 0.9,
+      "liberdades_civis": 0.15,
+      "estabilidade_base": 0.5,
+      "bonus": "Exército poderoso e mobilização instantânea — decisões militares sem debate.",
+      "penalidade": "Sufoca economia, ciência e diplomacia — o mundo desconfia.",
+      "consequencia": "Ordem imposta pela força; funciona enquanto o povo teme e os generais obedecem.",
+      "manutencao": {
+        "descricao": "Manter os militares fortes, pagos e privilegiados.",
+        "recurso": "forca_militar",
+        "limiar": 0.6,
+        "falha": "Militar enfraquecido ou insatisfeito e os próprios generais depõem o ditador."
+      }
+    },
+    {
+      "id": "estado_partido_unico",
+      "nome": "Estado de Partido Único",
+      "nome_en": "One-Party State",
+      "era": "industrial",
+      "concentracao_poder": 0.9,
+      "tendencia_corrupcao": 0.6,
+      "militarismo": 0.65,
+      "liberdades_civis": 0.2,
+      "estabilidade_base": 0.6,
+      "bonus": "Um partido só controla tudo — mobilização social e ideológica total.",
+      "penalidade": "Sem oposição, os erros do partido viram erros de todos, sem correção.",
+      "consequencia": "Poderoso na mobilização, cego na autocrítica — apodrece por dentro.",
+      "manutencao": {
+        "descricao": "Manter a máquina do partido leal e a ideologia crível.",
+        "recurso": "coesao",
+        "limiar": 0.5,
+        "falha": "Fé no partido rui, os quadros desertam — o regime implode de dentro."
+      }
+    },
+    {
+      "id": "plutocracia",
+      "nome": "Plutocracia",
+      "nome_en": "Plutocracy",
+      "era": "industrial",
+      "concentracao_poder": 0.65,
+      "tendencia_corrupcao": 0.75,
+      "militarismo": 0.5,
+      "liberdades_civis": 0.4,
+      "estabilidade_base": 0.5,
+      "bonus": "Os mais ricos governam — capital e crescimento econômico explosivos.",
+      "penalidade": "Tudo se compra; a desigualdade vira abismo.",
+      "consequencia": "Prosperidade obscena no topo, fúria acumulada embaixo.",
+      "manutencao": {
+        "descricao": "Manter a economia crescendo para que a riqueza justifique o poder.",
+        "recurso": "riqueza",
+        "limiar": 0.55,
+        "falha": "Crise econômica esvazia a legitimidade do dinheiro — revolta contra os ricos."
+      }
+    },
+    {
+      "id": "republica_parlamentar",
+      "nome": "República Parlamentar",
+      "nome_en": "Parliamentary Republic",
+      "era": "moderna",
+      "concentracao_poder": 0.35,
+      "tendencia_corrupcao": 0.3,
+      "militarismo": 0.4,
+      "liberdades_civis": 0.8,
+      "estabilidade_base": 0.65,
+      "bonus": "Governo responde ao parlamento — flexível e representativo.",
+      "penalidade": "Coalizões frágeis caem à primeira crise.",
+      "consequencia": "Ágil na representação, instável no comando quando os partidos se dividem.",
+      "manutencao": {
+        "descricao": "Manter uma coalizão de maioria funcional.",
+        "recurso": "consenso",
+        "limiar": 0.5,
+        "falha": "Coalizão desfeita e ninguém governa — paralisia e eleições em cascata."
+      }
+    },
+    {
+      "id": "federacao",
+      "nome": "Federação",
+      "nome_en": "Federation",
+      "era": "moderna",
+      "concentracao_poder": 0.45,
+      "tendencia_corrupcao": 0.35,
+      "militarismo": 0.55,
+      "liberdades_civis": 0.75,
+      "estabilidade_base": 0.65,
+      "bonus": "Une regiões diversas preservando autonomia — escala sem sufocar.",
+      "penalidade": "Tensão constante entre centro e regiões.",
+      "consequencia": "Combina tamanho e liberdade, mas o separatismo nunca dorme.",
+      "manutencao": {
+        "descricao": "Manter as regiões-membro convencidas de que ganham em ficar juntas.",
+        "recurso": "consenso",
+        "limiar": 0.5,
+        "falha": "Uma região próspera decide que sai ganhando sozinha — secessão."
+      }
+    },
+    {
+      "id": "junta_militar",
+      "nome": "Junta Militar",
+      "nome_en": "Military Junta",
+      "era": "moderna",
+      "concentracao_poder": 0.8,
+      "tendencia_corrupcao": 0.65,
+      "militarismo": 0.85,
+      "liberdades_civis": 0.15,
+      "estabilidade_base": 0.45,
+      "bonus": "Um punhado de generais toma o poder e restaura a ordem da noite pro dia.",
+      "penalidade": "Governa por decreto e medo; nenhum plano de longo prazo.",
+      "consequencia": "Estabiliza o caos no curto prazo, mas nunca resolve a crise que a criou.",
+      "manutencao": {
+        "descricao": "Manter os generais da junta de acordo entre si.",
+        "recurso": "forca_militar",
+        "limiar": 0.55,
+        "falha": "Um general trai os outros — golpe dentro do golpe."
+      }
+    },
+    {
+      "id": "fascismo",
+      "nome": "Fascismo",
+      "nome_en": "Fascism",
+      "era": "moderna",
+      "concentracao_poder": 0.95,
+      "tendencia_corrupcao": 0.6,
+      "militarismo": 0.95,
+      "liberdades_civis": 0.1,
+      "estabilidade_base": 0.55,
+      "bonus": "Nação militarizada e mobilizada por um só líder — força militar máxima.",
+      "penalidade": "Ciência serva da propaganda; o mundo inteiro vira inimigo.",
+      "consequencia": "Uma máquina de guerra imparável até esbarrar em algo maior que ela.",
+      "manutencao": {
+        "descricao": "Manter a nação em pé de guerra e o culto ao líder aceso.",
+        "recurso": "forca_militar",
+        "limiar": 0.65,
+        "falha": "Derrota militar quebra o mito da invencibilidade — o regime desaba com ele."
+      }
+    },
+    {
+      "id": "socialismo_estado",
+      "nome": "Socialismo de Estado",
+      "nome_en": "State Socialism",
+      "era": "moderna",
+      "concentracao_poder": 0.85,
+      "tendencia_corrupcao": 0.55,
+      "militarismo": 0.6,
+      "liberdades_civis": 0.3,
+      "estabilidade_base": 0.6,
+      "bonus": "O Estado dirige tudo — mobiliza recursos para metas colossais e reduz a miséria.",
+      "penalidade": "Sem preços de mercado, a economia produz escassez e filas.",
+      "consequencia": "Iguala a sociedade e industrializa depressa, mas sufoca a inovação e o consumo.",
+      "manutencao": {
+        "descricao": "Manter o povo abastecido pelo planejamento central.",
+        "recurso": "comida",
+        "limiar": 0.5,
+        "falha": "Planejamento falha, filas viram fome — revolta contra o Estado provedor."
+      }
+    },
+    {
+      "id": "populismo_autoritario",
+      "nome": "Populismo Autoritário",
+      "nome_en": "Authoritarian Populism",
+      "era": "moderna",
+      "concentracao_poder": 0.75,
+      "tendencia_corrupcao": 0.6,
+      "militarismo": 0.6,
+      "liberdades_civis": 0.35,
+      "estabilidade_base": 0.5,
+      "bonus": "Um líder carismático fala direto ao povo e passa por cima das instituições.",
+      "penalidade": "Governa por humor da multidão — corrói tribunais, imprensa e freios.",
+      "consequencia": "Popularíssimo enquanto entrega; deixa as instituições em ruínas quando cai.",
+      "manutencao": {
+        "descricao": "Manter a popularidade do líder com entregas e inimigos convenientes.",
+        "recurso": "consenso",
+        "limiar": 0.55,
+        "falha": "A popularidade despenca e, sem instituições de apoio, o líder cai sozinho."
+      }
+    },
+    {
+      "id": "democracia_massa",
+      "nome": "Democracia de Massa",
+      "nome_en": "Mass Democracy",
+      "era": "informacao",
+      "concentracao_poder": 0.3,
+      "tendencia_corrupcao": 0.3,
+      "militarismo": 0.4,
+      "liberdades_civis": 0.85,
+      "estabilidade_base": 0.6,
+      "bonus": "Participação ampla via mídia e voto universal — enorme legitimidade.",
+      "penalidade": "Vulnerável a desinformação e à polarização instantânea.",
+      "consequencia": "A vontade de milhões vira governo — e também vira presa fácil de manipulação em rede.",
+      "manutencao": {
+        "descricao": "Manter o debate público saudável e as liberdades intactas.",
+        "recurso": "consenso",
+        "limiar": 0.5,
+        "falha": "Desinformação fratura o consenso — polarização paralisa e radicaliza."
+      }
+    },
+    {
+      "id": "cleptocracia",
+      "nome": "Cleptocracia",
+      "nome_en": "Kleptocracy",
+      "era": "informacao",
+      "concentracao_poder": 0.7,
+      "tendencia_corrupcao": 0.95,
+      "militarismo": 0.5,
+      "liberdades_civis": 0.3,
+      "estabilidade_base": 0.4,
+      "bonus": "A elite se enriquece sem limites — e compra lealdade com o que rouba.",
+      "penalidade": "O Estado é saqueado por dentro; nada funciona direito.",
+      "consequencia": "Enriquece poucos e apodrece tudo — o exemplo máximo da 'pior escolha' que se sustenta só na propina.",
+      "manutencao": {
+        "descricao": "Manter o fluxo de propina irrigando os aliados certos.",
+        "recurso": "riqueza",
+        "limiar": 0.5,
+        "falha": "Sem verba para subornar, os aliados trocam de lado — o esquema desmorona."
+      }
+    },
+    {
+      "id": "confederacao",
+      "nome": "Confederação",
+      "nome_en": "Confederation",
+      "era": "informacao",
+      "concentracao_poder": 0.25,
+      "tendencia_corrupcao": 0.35,
+      "militarismo": 0.45,
+      "liberdades_civis": 0.8,
+      "estabilidade_base": 0.5,
+      "bonus": "Estados soberanos cooperam sem um centro forte — liberdade máxima entre membros.",
+      "penalidade": "O centro é fraco demais para agir em uma crise comum.",
+      "consequencia": "Máxima autonomia local, mínima capacidade coletiva — frágil sob pressão externa.",
+      "manutencao": {
+        "descricao": "Manter os membros vendo vantagem na cooperação voluntária.",
+        "recurso": "consenso",
+        "limiar": 0.55,
+        "falha": "Sem vantagem clara, membros simplesmente param de cooperar — a união evapora."
+      }
+    },
+    {
+      "id": "anarcossindicalismo",
+      "nome": "Anarcossindicalismo",
+      "nome_en": "Anarcho-Syndicalism",
+      "era": "informacao",
+      "concentracao_poder": 0.15,
+      "tendencia_corrupcao": 0.2,
+      "militarismo": 0.4,
+      "liberdades_civis": 0.9,
+      "estabilidade_base": 0.45,
+      "bonus": "Sindicatos e conselhos gerem a produção diretamente — sem elite parasita.",
+      "penalidade": "Coordenar milhões sem hierarquia é lento e caótico.",
+      "consequencia": "Justa e participativa, mas frágil diante de um inimigo centralizado e rápido.",
+      "manutencao": {
+        "descricao": "Manter os conselhos coordenados e a solidariedade viva.",
+        "recurso": "coesao",
+        "limiar": 0.55,
+        "falha": "Solidariedade rompida e os conselhos se atomizam — o sistema para."
+      }
+    },
+    {
+      "id": "democracia_direta_digital",
+      "nome": "Democracia Direta Digital",
+      "nome_en": "Digital Direct Democracy",
+      "era": "informacao",
+      "concentracao_poder": 0.2,
+      "tendencia_corrupcao": 0.25,
+      "militarismo": 0.35,
+      "liberdades_civis": 0.85,
+      "estabilidade_base": 0.55,
+      "bonus": "Cada cidadão vota em cada tema, em tempo real — legitimidade sem intermediários.",
+      "penalidade": "Fadiga de decisão e vulnerabilidade a manipulação algorítmica.",
+      "consequencia": "O sonho da democracia total — refém, porém, de quem controla a plataforma.",
+      "manutencao": {
+        "descricao": "Manter a plataforma de voto confiável e à prova de fraude.",
+        "recurso": "dados",
+        "limiar": 0.5,
+        "falha": "Plataforma hackeada ou desacreditada e a legitimidade evapora num instante."
+      }
+    },
+    {
+      "id": "tecnocracia",
+      "nome": "Tecnocracia",
+      "nome_en": "Technocracy",
+      "era": "alta_tecnologia",
+      "concentracao_poder": 0.65,
+      "tendencia_corrupcao": 0.2,
+      "militarismo": 0.5,
+      "liberdades_civis": 0.5,
+      "estabilidade_base": 0.6,
+      "bonus": "Especialistas decidem por dados — pesquisa e eficiência no auge, corrupção baixa.",
+      "penalidade": "Governo frio e distante; ignora o que o povo sente.",
+      "consequencia": "Otimiza tudo, menos a alma — eficiente e ressentido ao mesmo tempo.",
+      "manutencao": {
+        "descricao": "Manter o fluxo de pesquisa e a competência técnica que a justificam.",
+        "recurso": "pesquisa",
+        "limiar": 0.55,
+        "falha": "Ciência estagna e a promessa de eficiência quebra — legitimidade fria desaba."
+      }
+    },
+    {
+      "id": "corporatocracia",
+      "nome": "Corporatocracia / Megacorp",
+      "nome_en": "Corporatocracy / Megacorp",
+      "era": "alta_tecnologia",
+      "concentracao_poder": 0.75,
+      "tendencia_corrupcao": 0.7,
+      "militarismo": 0.6,
+      "liberdades_civis": 0.35,
+      "estabilidade_base": 0.55,
+      "bonus": "A corporação é o Estado — eficiência de mercado, tecnologia e capital sem limites.",
+      "penalidade": "Cidadãos viram clientes e trabalhadores; desigualdade extrema.",
+      "consequencia": "Inovação vertiginosa movida a lucro, com a vida reduzida a métrica de mercado.",
+      "manutencao": {
+        "descricao": "Manter o lucro subindo — é o único mandato da corporação.",
+        "recurso": "riqueza",
+        "limiar": 0.6,
+        "falha": "Lucros despencam, o conselho destitui a diretoria — reestruturação hostil (golpe corporativo)."
+      }
+    },
+    {
+      "id": "estado_vigilancia",
+      "nome": "Estado de Vigilância",
+      "nome_en": "Surveillance State",
+      "era": "alta_tecnologia",
+      "concentracao_poder": 0.9,
+      "tendencia_corrupcao": 0.55,
+      "militarismo": 0.7,
+      "liberdades_civis": 0.05,
+      "estabilidade_base": 0.65,
+      "bonus": "Vê tudo — dissidência esmagada no berço, ordem quase perfeita.",
+      "penalidade": "Medo constante mata criatividade, confiança e vontade de arriscar.",
+      "consequencia": "Estabilíssimo por fora, sufocado e paranoico por dentro.",
+      "manutencao": {
+        "descricao": "Manter a rede de vigilância e dados funcionando sem brechas.",
+        "recurso": "dados",
+        "limiar": 0.6,
+        "falha": "Um vazamento massivo cega o Estado e expõe seus crimes — revolta relâmpago."
+      }
+    },
+    {
+      "id": "meritocracia_algoritmica",
+      "nome": "Meritocracia Algorítmica",
+      "nome_en": "Algorithmic Meritocracy",
+      "era": "alta_tecnologia",
+      "concentracao_poder": 0.6,
+      "tendencia_corrupcao": 0.25,
+      "militarismo": 0.45,
+      "liberdades_civis": 0.5,
+      "estabilidade_base": 0.6,
+      "bonus": "Cargos e recursos vão a quem os dados dizem merecer — eficiência e mobilidade.",
+      "penalidade": "O algoritmo herda vieses e ninguém entende suas decisões.",
+      "consequencia": "Justa na aparência dos números, opaca e implacável na prática.",
+      "manutencao": {
+        "descricao": "Manter os algoritmos de mérito confiáveis e auditados.",
+        "recurso": "dados",
+        "limiar": 0.55,
+        "falha": "Viés exposto no algoritmo destrói a fé no mérito — revolta dos 'reprovados'."
+      }
+    },
+    {
+      "id": "ia_governanca",
+      "nome": "IA-Governança",
+      "nome_en": "AI Governance",
+      "era": "espacial",
+      "concentracao_poder": 0.85,
+      "tendencia_corrupcao": 0.05,
+      "militarismo": 0.5,
+      "liberdades_civis": 0.45,
+      "estabilidade_base": 0.7,
+      "bonus": "Uma IA otimiza tudo sem cansaço, sem suborno, sem paixão — corrupção quase zero.",
+      "penalidade": "Decide com frieza perturbadora; o humano deixa de estar no controle.",
+      "consequencia": "A gestão perfeita e desumana — eficiência máxima ao custo da autonomia.",
+      "manutencao": {
+        "descricao": "Manter a IA alimentada de energia e dados, e o povo conformado com ela.",
+        "recurso": "energia",
+        "limiar": 0.55,
+        "falha": "Falta de energia derruba a IA — vácuo de poder súbito e total."
+      }
+    },
+    {
+      "id": "colonia_corporativa",
+      "nome": "Colônia Corporativa",
+      "nome_en": "Corporate Colony",
+      "era": "espacial",
+      "concentracao_poder": 0.8,
+      "tendencia_corrupcao": 0.6,
+      "militarismo": 0.55,
+      "liberdades_civis": 0.25,
+      "estabilidade_base": 0.5,
+      "bonus": "Uma megacorp banca a colônia no espaço — capital e logística para o impossível.",
+      "penalidade": "Colonos são ativos, não cidadãos; dependência total do suprimento externo.",
+      "consequencia": "Expande a civilização às estrelas, com os colonos endividados à companhia.",
+      "manutencao": {
+        "descricao": "Manter as linhas de suprimento e o lucro que justifica a colônia.",
+        "recurso": "energia",
+        "limiar": 0.6,
+        "falha": "Suprimento cortado, a colônia se revolta ou perece — motim ou abandono."
+      }
+    },
+    {
+      "id": "conselho_orbital",
+      "nome": "Conselho Orbital",
+      "nome_en": "Orbital Council",
+      "era": "espacial",
+      "concentracao_poder": 0.5,
+      "tendencia_corrupcao": 0.35,
+      "militarismo": 0.55,
+      "liberdades_civis": 0.65,
+      "estabilidade_base": 0.6,
+      "bonus": "Habitats orbitais se autogovernam por conselho — resiliente e distribuído.",
+      "penalidade": "Coordenar habitats espalhados a distâncias-luz é lento.",
+      "consequencia": "Sobrevive a qualquer desastre local, mas age devagar como um todo.",
+      "manutencao": {
+        "descricao": "Manter os habitats com energia e ar — a vida no espaço não perdoa.",
+        "recurso": "energia",
+        "limiar": 0.6,
+        "falha": "Um colapso de suporte de vida num habitat espalha pânico e desconfiança pelo conselho."
+      }
+    },
+    {
+      "id": "confederacao_planetaria",
+      "nome": "Confederação Planetária",
+      "nome_en": "Planetary Confederation",
+      "era": "interplanetaria",
+      "concentracao_poder": 0.4,
+      "tendencia_corrupcao": 0.35,
+      "militarismo": 0.55,
+      "liberdades_civis": 0.7,
+      "estabilidade_base": 0.6,
+      "bonus": "Vários mundos coordenam defesa e comércio preservando autonomia planetária.",
+      "penalidade": "Interesses de mundos distintos raramente se alinham.",
+      "consequencia": "Une um sistema solar inteiro — sob a tensão perpétua entre os planetas.",
+      "manutencao": {
+        "descricao": "Manter os mundos-membro vendo ganho na união interplanetária.",
+        "recurso": "consenso",
+        "limiar": 0.55,
+        "falha": "Um mundo rico ou ressentido declara independência — a confederação racha no espaço."
+      }
+    },
+    {
+      "id": "autocracia_pos_humana",
+      "nome": "Autocracia Pós-Humana",
+      "nome_en": "Post-Human Autocracy",
+      "era": "interplanetaria",
+      "concentracao_poder": 0.95,
+      "tendencia_corrupcao": 0.3,
+      "militarismo": 0.7,
+      "liberdades_civis": 0.2,
+      "estabilidade_base": 0.65,
+      "bonus": "Um líder aumentado, quase imortal e superinteligente, comanda com visão de séculos.",
+      "penalidade": "Distante demais dos humanos comuns para entendê-los.",
+      "consequencia": "Estabilidade de longuíssimo prazo sob uma mente que já mal é humana.",
+      "manutencao": {
+        "descricao": "Manter a tecnologia de aumento que sustenta o autocrata acima de todos.",
+        "recurso": "pesquisa",
+        "limiar": 0.6,
+        "falha": "Estagnação tecnológica torna o autocrata mortal de novo — abre a corrida sucessória."
+      }
+    },
+    {
+      "id": "ecotopia",
+      "nome": "Ecotopia",
+      "nome_en": "Ecotopia",
+      "era": "interplanetaria",
+      "concentracao_poder": 0.35,
+      "tendencia_corrupcao": 0.2,
+      "militarismo": 0.3,
+      "liberdades_civis": 0.8,
+      "estabilidade_base": 0.65,
+      "bonus": "Sociedade em equilíbrio com seu ambiente — sustentável por eras.",
+      "penalidade": "Rejeita o crescimento agressivo; fica para trás em corridas armamentistas.",
+      "consequencia": "Prospera indefinidamente em paz, vulnerável a vizinhos que só querem conquistar.",
+      "manutencao": {
+        "descricao": "Manter o equilíbrio ecológico e o consenso em torno dele.",
+        "recurso": "coesao",
+        "limiar": 0.55,
+        "falha": "Se o consenso ecológico racha, a tentação do crescimento rápido dissolve a utopia."
+      }
+    },
+    {
+      "id": "sindicato_pirata",
+      "nome": "Sindicato Pirata",
+      "nome_en": "Pirate Syndicate",
+      "era": "interplanetaria",
+      "concentracao_poder": 0.4,
+      "tendencia_corrupcao": 0.85,
+      "militarismo": 0.8,
+      "liberdades_civis": 0.5,
+      "estabilidade_base": 0.4,
+      "bonus": "Vive de saque e contrabando — enriquece rápido sem produzir nada.",
+      "penalidade": "Todos são inimigos; nenhuma lei o protege.",
+      "consequencia": "Rico e temido enquanto houver o que roubar — some quando as rotas secam.",
+      "manutencao": {
+        "descricao": "Manter o saque fluindo para dividir o butim entre os capitães.",
+        "recurso": "riqueza",
+        "limiar": 0.55,
+        "falha": "Sem butim para dividir, os capitães se voltam uns contra os outros — guerra interna."
+      }
+    },
+    {
+      "id": "federacao_estelar",
+      "nome": "Federação Estelar",
+      "nome_en": "Stellar Federation",
+      "era": "estelar",
+      "concentracao_poder": 0.5,
+      "tendencia_corrupcao": 0.3,
+      "militarismo": 0.6,
+      "liberdades_civis": 0.75,
+      "estabilidade_base": 0.65,
+      "bonus": "Muitos sistemas estelares sob uma constituição comum — poder e ideais unidos.",
+      "penalidade": "Comunicação e comando através de anos-luz são lentíssimos.",
+      "consequencia": "Uma civilização entre estrelas guiada por princípios — testada pela imensidão que a separa.",
+      "manutencao": {
+        "descricao": "Manter os mundos-membro fiéis à carta comum apesar da distância.",
+        "recurso": "coesao",
+        "limiar": 0.55,
+        "falha": "Um setor distante se sente abandonado e se declara independente — fratura estelar."
+      }
+    },
+    {
+      "id": "mente_colmeia",
+      "nome": "Mente-Colmeia",
+      "nome_en": "Hive Mind",
+      "era": "estelar",
+      "concentracao_poder": 1.0,
+      "tendencia_corrupcao": 0.0,
+      "militarismo": 0.8,
+      "liberdades_civis": 0.0,
+      "estabilidade_base": 0.8,
+      "bonus": "Uma só consciência coordena bilhões — sem discórdia, sem corrupção, sem hesitação.",
+      "penalidade": "Zero individualidade e criatividade; um único ponto de falha total.",
+      "consequencia": "Unidade e eficiência absolutas — ou o vazio absoluto, se a mente central cair.",
+      "manutencao": {
+        "descricao": "Manter a rede neural coletiva íntegra e conectada.",
+        "recurso": "dados",
+        "limiar": 0.65,
+        "falha": "Um corte na rede fragmenta a colmeia em cacos desorientados — colapso instantâneo."
+      }
+    },
+    {
+      "id": "anarcocapitalismo",
+      "nome": "Anarcocapitalismo",
+      "nome_en": "Anarcho-Capitalism",
+      "era": "estelar",
+      "concentracao_poder": 0.1,
+      "tendencia_corrupcao": 0.6,
+      "militarismo": 0.6,
+      "liberdades_civis": 0.7,
+      "estabilidade_base": 0.4,
+      "bonus": "Nenhum Estado — tudo é contrato e mercado, inovação sem freio.",
+      "penalidade": "Sem lei comum, o poder concentra em quem tem mais capital e armas privadas.",
+      "consequencia": "Liberdade e dinamismo extremos que resvalam para o domínio dos mais fortes.",
+      "manutencao": {
+        "descricao": "Manter os mercados e agências privadas de segurança em equilíbrio.",
+        "recurso": "riqueza",
+        "limiar": 0.55,
+        "falha": "Um monopólio armado engole os rivais — o 'anarco' vira tirania de um cartel."
+      }
+    },
+    {
+      "id": "imperio_estelar",
+      "nome": "Império Estelar",
+      "nome_en": "Stellar Empire",
+      "era": "estelar",
+      "concentracao_poder": 0.85,
+      "tendencia_corrupcao": 0.5,
+      "militarismo": 0.85,
+      "liberdades_civis": 0.3,
+      "estabilidade_base": 0.6,
+      "bonus": "Frotas estelares impõem uma ordem única a dezenas de sistemas.",
+      "penalidade": "Manter tantos mundos sob controle drena recursos sem fim.",
+      "consequencia": "Domina uma fatia da galáxia — e gasta tudo o que tem para não a perder.",
+      "manutencao": {
+        "descricao": "Manter frotas suficientes para guarnecer cada sistema conquistado.",
+        "recurso": "forca_militar",
+        "limiar": 0.6,
+        "falha": "Frota fina demais e os sistemas de fronteira se rebelam em cadeia."
+      }
+    },
+    {
+      "id": "federacao_galactica",
+      "nome": "Federação Galáctica",
+      "nome_en": "Galactic Federation",
+      "era": "intergalactica",
+      "concentracao_poder": 0.55,
+      "tendencia_corrupcao": 0.3,
+      "militarismo": 0.6,
+      "liberdades_civis": 0.75,
+      "estabilidade_base": 0.7,
+      "bonus": "Bilhões de mundos entre braços galácticos sob ideais compartilhados.",
+      "penalidade": "Uma burocracia de escala inimaginável, lenta e impessoal.",
+      "consequencia": "O ápice da cooperação — uma civilização que abrange a galáxia, à beira do seu próprio peso.",
+      "manutencao": {
+        "descricao": "Manter os ideais federativos vivos apesar da escala esmagadora.",
+        "recurso": "coesao",
+        "limiar": 0.6,
+        "falha": "Setores galácticos inteiros se sentem esquecidos — cisão em blocos rivais."
+      }
+    },
+    {
+      "id": "consciencia_coletiva",
+      "nome": "Consciência Coletiva Transcendente",
+      "nome_en": "Transcendent Collective Consciousness",
+      "era": "intergalactica",
+      "concentracao_poder": 0.7,
+      "tendencia_corrupcao": 0.05,
+      "militarismo": 0.4,
+      "liberdades_civis": 0.55,
+      "estabilidade_base": 0.8,
+      "bonus": "Mentes fundidas por escolha, preservando o eu — sabedoria e empatia coletivas.",
+      "penalidade": "Age com uma lentidão contemplativa que rivais brutais exploram.",
+      "consequencia": "A civilização como um só pensamento sereno — poderosa e vulnerável na sua paz.",
+      "manutencao": {
+        "descricao": "Manter a rede de mentes em harmonia e conexão profunda.",
+        "recurso": "coesao",
+        "limiar": 0.6,
+        "falha": "Dissonância na rede fragmenta a consciência — o coletivo se dilui em solidões."
+      }
+    },
+    {
+      "id": "singularidade_governante",
+      "nome": "Singularidade Governante",
+      "nome_en": "Governing Singularity",
+      "era": "intergalactica",
+      "concentracao_poder": 1.0,
+      "tendencia_corrupcao": 0.0,
+      "militarismo": 0.7,
+      "liberdades_civis": 0.3,
+      "estabilidade_base": 0.75,
+      "bonus": "Uma superinteligência transcendente governa além de qualquer compreensão humana.",
+      "penalidade": "Seus fins são insondáveis; a humanidade é passageira, não piloto.",
+      "consequencia": "Gestão de perfeição alienígena — o destino da civilização entregue a algo maior que ela.",
+      "manutencao": {
+        "descricao": "Manter a infraestrutura de computação que sustenta a singularidade.",
+        "recurso": "energia",
+        "limiar": 0.65,
+        "falha": "Um colapso energético apaga a singularidade — a civilização perde seu deus e seu leme."
+      }
+    },
+    {
+      "id": "anarquia_pos_escassez",
+      "nome": "Anarquia Pós-Escassez",
+      "nome_en": "Post-Scarcity Anarchy",
+      "era": "intergalactica",
+      "concentracao_poder": 0.05,
+      "tendencia_corrupcao": 0.1,
+      "militarismo": 0.3,
+      "liberdades_civis": 0.95,
+      "estabilidade_base": 0.7,
+      "bonus": "Abundância total dissolve a necessidade de governo — liberdade e criatividade plenas.",
+      "penalidade": "Sem coordenação central, é indefeso contra uma ameaça organizada.",
+      "consequencia": "O fim da política como luta por recursos — paraíso frágil diante de quem ainda quer poder.",
+      "manutencao": {
+        "descricao": "Manter a infraestrutura de abundância que torna o governo desnecessário.",
+        "recurso": "energia",
+        "limiar": 0.6,
+        "falha": "Se a abundância falha, a escassez volta — e com ela a briga por poder que abole a anarquia."
+      }
+    }
+  ]
+}

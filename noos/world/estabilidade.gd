@@ -1,11 +1,12 @@
 ## Medidores de estabilidade e legitimidade — PDF 17 §1, versão
-## simplificada pro M2: sem facções/eventos/inflação ainda (chegam nos
-## marcos seguintes e alimentam as equações completas de risco de golpe/
+## simplificada: sem facções/eventos/inflação ainda (chegam nos marcos
+## seguintes e alimentam as equações completas de risco de golpe/
 ## revolução do PDF 17 §2). Prosperidade e moral das regiões, a tendência
 ## de corrupção do governo E o próprio líder (corruptibilidade puxa
 ## corrupção pra cima ou pra baixo; competência sustenta legitimidade —
-## PDF 17 §1: "competência do líder" é um dos motores explícitos) empurram
-## os medidores rumo a um alvo, suavizado tick a tick.
+## PDF 17 §1) empurram os medidores rumo a um alvo, suavizado tick a tick.
+## A MANUTENÇÃO do governo (Manutencao) entra como penalidade quando o
+## recurso que o sustenta falha.
 class_name CalculadoraDeEstabilidade
 extends RefCounted
 
@@ -46,8 +47,17 @@ static func avancar(
 	polity.legitimidade += (alvo_legitimidade - polity.legitimidade) * VELOCIDADE
 	polity.legitimidade = clampf(polity.legitimidade, 0.0, 1.0)
 
+	# Manutenção do governo (PDF 10 §5): se o recurso que sustenta este
+	# governo (militares numa ditadura, comida num feudo...) cai abaixo do
+	# limiar, a estabilidade despenca proporcionalmente ao déficit. É o que
+	# faz "manter a forma de governo" custar esforço constante.
+	var manutencao := Manutencao.avaliar(tipo_governo, polity, regioes_da_polity)
+	var penalidade_manutencao: float = manutencao["deficit"] * 0.8
+
 	var alvo_estabilidade := clampf(
-		polity.legitimidade * 0.5 + moral * 0.3 + prosperidade * 0.2, 0.0, 1.0
+		polity.legitimidade * 0.5 + moral * 0.3 + prosperidade * 0.2 - penalidade_manutencao,
+		0.0,
+		1.0
 	)
 	polity.estabilidade += (alvo_estabilidade - polity.estabilidade) * VELOCIDADE
 	polity.estabilidade = clampf(polity.estabilidade, 0.0, 1.0)
