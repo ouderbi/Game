@@ -22,6 +22,7 @@ var save_load_system: SaveLoadSystem
 var tech_tree_ui: TechTreeUI
 var multi_scale_viewport: MultiScaleViewport
 var event_log: EventLogUI
+var playtesting_analyzer: PlaytestingAnalyzer
 
 # Game state
 var game_speed: float = 1.0  # 1x, 2x, 3x
@@ -82,6 +83,9 @@ func _ready():
 	event_log = EventLogUI.new()
 	add_child(event_log)
 	
+	playtesting_analyzer = PlaytestingAnalyzer.new()
+	add_child(playtesting_analyzer)
+	
 	# Wait for systems to initialize
 	await get_tree().process_frame
 	
@@ -111,6 +115,7 @@ func _ready():
 	print("  T: Toggle Tech Tree | D: Diplomacy Panel")
 	print("  Z/X: Zoom In/Out (Multi-Scale)")
 	print("  E: Event Log | H: Export History")
+	print("  B: Balance Report (for tuning)")
 	print("  Arrows: Move camera | Scroll: Zoom | 1/2/3: Speed | ESC: Pause")
 	print("============================\n")
 
@@ -225,6 +230,10 @@ func _handle_input():
 	
 	if Input.is_key_pressed(KEY_H):
 		event_log.export_log_to_file("history_%d" % current_year)
+	
+	# Playtesting/Balance report
+	if Input.is_key_pressed(KEY_B):
+		playtesting_analyzer.print_balance_report(self)
 
 func _update_systems(delta: float):
 	"""Update all game systems each frame"""
