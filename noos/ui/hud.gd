@@ -1,5 +1,5 @@
-## Painel de nação mínimo do M0 — PDF 19 §1/§5: tick atual, pausa e
-## velocidade (1x/2x/3x). Os demais painéis (Governo, Diplomacia...)
+## Painel de nação mínimo — PDF 19 §1/§5: tick atual, população total,
+## pausa e velocidade (1x/2x/3x). Os demais painéis (Governo, Diplomacia...)
 ## entram nos marcos seguintes.
 class_name HUD
 extends Control
@@ -7,6 +7,7 @@ extends Control
 var estado: EstadoDoMundo
 
 var _rotulo_tick: Label
+var _rotulo_populacao: Label
 var _botao_pausa: Button
 
 
@@ -20,6 +21,10 @@ func _ready() -> void:
 	_rotulo_tick = Label.new()
 	_rotulo_tick.text = "Tick: 0"
 	caixa.add_child(_rotulo_tick)
+
+	_rotulo_populacao = Label.new()
+	_rotulo_populacao.text = "População: 0"
+	caixa.add_child(_rotulo_populacao)
 
 	_botao_pausa = Button.new()
 	_botao_pausa.text = "Pausar"
@@ -46,3 +51,4 @@ func _ao_clicar_pausa() -> void:
 func atualizar() -> void:
 	if estado != null:
 		_rotulo_tick.text = "Tick: %d" % estado.tick_atual
+		_rotulo_populacao.text = "População: %d" % int(estado.populacao_total())

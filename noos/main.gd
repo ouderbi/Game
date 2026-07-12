@@ -14,6 +14,7 @@ var _hud: HUD
 
 func _ready() -> void:
 	_estado = GeradorDeMapa.gerar(SEMENTE, LARGURA_MAPA, ALTURA_MAPA)
+	_estado.regioes = GeradorDeRegioes.gerar(_estado)
 	_simulacao = Simulacao.new()
 
 	var visao_mapa := VisaoDoMapa.new()
