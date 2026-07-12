@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 19 / 21 — UI/UX & Controles
 
 > **Camada:** Interface & Experiência · **Status:** rascunho para revisão · **Série:** 21 documentos
@@ -20,6 +20,8 @@ Onde os **verbos do jogador** (PDF 02 §6) chegam às mãos. Implementa `ui/`.
 | Construção | erguer estruturas (PDF 21) |
 | Líder & Facções | seu líder, facções, lealdade |
 | Eventos | crises que exigem decisão (pop-ups) |
+| Zoom | alterna entre as 4 lentes: Cidade/País/Planeta/Galáxia (PDF 24) |
+| Cheats (modo sandbox) | painel à parte, só visível com sandbox ligado (PDF 02 §8) |
 
 ---
 
@@ -66,11 +68,21 @@ Coerente com o PDF 01 §7: **nenhum aviso** do tipo "tem certeza? isso é ruim".
 
 ---
 
-### 8. Conexões
+### 8. Localização (PT-BR / EN)  ✅ decidido
+
+- Todo texto de jogo (painéis, eventos, falas dos líderes) passa por uma camada de localização desde o M5 (PDF 20), com **português e inglês** disponíveis desde o lançamento da primeira versão jogável.
+- Usa o sistema de tradução nativo do Godot (arquivos `.csv`/`.po` por *locale*); o jogador troca o idioma na config, sem reiniciar.
+- Textos gerados pelo LLM (falas/diplomacia, PDF 13 §3) são pedidos **no idioma ativo** do jogador diretamente no prompt — não passam por tradução automática à parte.
+
+---
+
+### 9. Conexões
 
 - **21 (Construções/Políticas)** preenche os painéis de Governo e Construção.
 - **12–13** alimentam o feed de diplomacia.
 - **17** fornece os medidores e pressões exibidos.
+- **24 (Multi-escala)** fornece os controles de zoom entre lentes.
+- **29 (Áudio)** hospeda os controles de volume nesta camada de UI.
 
 ---
 

@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 06 / 20 — Modelo de Dados
 
 > **Camada:** Modelo de Mundo · **Status:** rascunho para revisão · **Série:** 20 documentos
@@ -52,17 +52,17 @@ WorldState
 
 ---
 
-### 3. População (ECS-lite — arrays, não objetos)
+### 3. População (agregada por região — princípio de ouro do PDF 24)
 
-Para escalar a milhões, a população **não** é uma lista de objetos. São **arrays paralelos** (numpy), indexados pelo mesmo índice de indivíduo:
+A população **não** é uma lista de milhões de indivíduos. É um conjunto de **arrays agregados por região** (`PackedArrays` do Godot, PDF 03 §6), um índice por região, não por cidadão:
 
 ```
-age[]         humor[]       loyalty[]
-wealth[]      occupation[]  region_id[]
-health[]      ideology[]    alive[]
+pop_total[]        humor_médio[]      lealdade_média[]
+riqueza_dist[]      ocupação_dist[]    saúde_média[]
+ideologia_dist[]    traços_dist[]      (por região)
 ```
 
-Operações são vetorizadas (um passo de simulação processa o array inteiro de uma vez). Indivíduos "importantes" podem ser promovidos a entidades OOP quando necessário (LOD — ver PDF 03 §9).
+`*_dist` guarda **distribuições agregadas** (ex.: fração pró-social, fração panicada, curva de riqueza) — é isso que sustenta a "burrice"/altruísmo emergentes do PDF 07 sem precisar simular cada pessoa. Operações são vetorizadas por região (um passo de simulação processa o array inteiro de uma vez, mesmo em mapas com milhares de regiões — Planeta/Galáxia, PDF 24). Indivíduos "importantes" (líderes, heróis, figuras notáveis) podem ser promovidos a entidades próprias quando necessário (LOD — ver PDF 03 §9) — exceção, não a regra.
 
 ---
 

@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 21 / 21 — Construções, Estruturas & Políticas
 
 > **Camada:** Governança (entrou por último na ordem dos arquivos) · **Status:** rascunho para revisão · **Série:** 21 documentos

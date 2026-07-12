@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 23 / 23 — Tecnologia & Particularidades por Governo
 
 > **Camada:** Governança (entrou no fim da ordem dos arquivos) · **Status:** rascunho para revisão · **Série:** 23 documentos
@@ -102,7 +102,7 @@ Quando uma polity **troca de governo** (golpe, revolução, reforma — PDFs 10/
 
 ### 7. Escopo (mantendo o "dar certo")
 
-A fatia vertical usa **poucos governos com perfis simples**; a variedade dos 45 entra na expansão (PDF 20, pós-fatia). O schema garante que crescer é só preencher, nunca reescrever.
+Os primeiros marcos (M0–M5, PDF 20) usam **poucos governos com perfis simples**; a variedade completa dos ~45 entra a partir do M6/pós-M6. O schema garante que crescer é só preencher, nunca reescrever — a arquitetura já suporta os 45 desde o início (PDF 20 §1), só o conteúdo entra aos poucos.
 
 ---
 

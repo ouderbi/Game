@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 17 / 21 — Estabilidade, Legitimidade & Colapso
 
 > **Camada:** Dinâmicas Emergentes · **Status:** rascunho para revisão · **Série:** 21 documentos

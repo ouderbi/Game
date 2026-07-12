@@ -1,8 +1,8 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 14 / 21 — Provedores de LLM, Custo & Treino/Destilação
 
 > **Camada:** Inteligência · **Status:** rascunho para revisão · **Série:** 21 documentos
-> **Depende de:** 03 (Arquitetura), 13 (Inteligência) · **Alimenta:** 20 (Roadmap)
+> **Depende de:** 03 (Arquitetura), 13 (Inteligência) · **Alimenta:** 20 (Roadmap), 26 (Modos de IA)
 
 A camada que torna o "cérebro" **trocável**, controla o **custo** e abriga a estratégia futura de **treinar uma rede** (do jeito que dá certo). Implementa `providers/`.
 
@@ -12,58 +12,58 @@ A camada que torna o "cérebro" **trocável**, controla o **custo** e abriga a e
 
 Todo motor de decisão implementa a mesma interface — trocar de motor **nunca** reescreve o jogo:
 
-```python
-class Provider:
-    def decide(self, briefing: Briefing) -> Decision: ...
+```gdscript
+class_name Provider
+func decide(briefing: Briefing) -> Decision:
+    pass
 
 # Implementações:
-#   HeuristicProvider   → regras; grátis; instantâneo; SEMPRE disponível (fallback)
-#   AnthropicProvider   → Claude via API; esperto + voz; custa; latência de rede
-#   OllamaProvider      → modelo aberto local; grátis; rápido; offline
-#   OllamaCloudProvider → modelo aberto na nuvem; varia
+#   HeuristicProvider   → regras/Utility AI (PDF 25); grátis; instantâneo; SEMPRE disponível (fallback)
+#   OllamaProvider      → modelo aberto local, via HTTPRequest; grátis; offline — PRIORITÁRIO agora
+#   AnthropicProvider   → Claude via API; esperto + voz; custa; latência de rede — opt-in/futuro
 #   DistilledProvider   → rede pequena destilada; grátis; rápido (FASE 3)
 ```
 
+**Sem `OllamaCloudProvider`:** decisão explícita de usar só Ollama **local** — nada de nuvem de terceiros pro modelo aberto.
+
 ---
 
-### 2. Tiering de modelos (qual cérebro para qual líder)
+### 2. Tiering de modelos (qual cérebro para qual líder)  — revisado, Ollama-first
 
-| Importância do líder | Motor sugerido | Por quê |
+| Importância do líder | Motor sugerido hoje | Motor futuro (quando houver orçamento) |
 |---|---|---|
-| Potência pivotal | Opus 4.8 | mais esperto + melhor voz |
-| Potência média | Sonnet 4.6 / Haiku 4.5 ou local | equilíbrio custo/qualidade |
-| Estado menor / fundo | modelo local pequeno ou heurística | grátis e rápido |
+| Potência pivotal (1 jogador + 3 líderes-NPC, PDF 04 §7/11) | modelo local via Ollama (o maior que rodar bem na máquina) | Claude (Opus 4.8) — mais esperto + melhor voz |
+| Potência média | modelo local menor via Ollama | Claude (Sonnet 5) |
+| Estado menor / fundo | heurística (Utility AI, PDF 25) | heurística (sem mudança — não compensa gastar em líderes de fundo) |
 
-A **dificuldade** do jogo escala por aqui: rivais em tiers melhores = adversários mais espertos (PDF 02 §8).
-
----
-
-### 3. Os limites e preços do Opus 4.8 (referência)
-
-- **Contexto:** 1M tokens por padrão. **Saída:** até 128k tokens.
-- **Preço:** US$5 / milhão de tokens de entrada, US$25 / milhão de saída (preço de contexto longo acima de 200k de entrada).
-- **Cache de prompt:** mínimo de 1.024 tokens; leitura de cache ≈ 10% do custo de entrada.
-- **Modo rápido** (preview): ~2,5x mais veloz, a US$10/US$50.
-
-Outros tiers, pra referência: Sonnet 4.6 US$3/US$15, Haiku 4.5 US$1/US$5.
+A **dificuldade** do jogo escala por aqui: modelos locais maiores/heurística com menos ruído = adversários mais espertos (PDF 02 §8), sem depender de API paga.
 
 ---
 
-### 4. Disciplina de custo (alavancas concretas)
+### 3. Referência de preços da API Anthropic (quando/se for usada)  ⚠️ verificar antes de usar
 
-- **Heurística/local como padrão**; Opus só pros poucos líderes pivotais.
+Hoje o desenvolvimento **não depende disso** (Seção 5) — a tabela abaixo é só referência pra quando/se a `AnthropicProvider` entrar em uso real:
+
+- **Opus 4.8:** contexto de 1M tokens por padrão, saída até 128k. Preço de referência: US$5 / milhão de tokens de entrada, US$25 / milhão de saída (contexto longo acima de 200k de entrada tem preço à parte). Cache de prompt: mínimo de 1.024 tokens; leitura de cache ≈ 10% do custo de entrada.
+- **Sonnet 5** e **Haiku 4.5:** modelos de tier médio/leve, mais baratos que o Opus — **confirme os preços atuais na página oficial da Anthropic antes de orçar**, em vez de usar números fixos aqui (mudam com o tempo).
+
+---
+
+### 4. Disciplina de custo (alavancas concretas, pra quando a API entrar em jogo)
+
+- **Ollama local como padrão**; API paga só pros poucos líderes pivotais, e só depois que houver orçamento definido.
 - **Cadência esparsa**: pensar por *turno*, não por *tick*.
 - **Cache de prompt** da parte estável do briefing (corta a maior parte do custo de entrada).
-- **Batch API** (assíncrono, ~50% mais barato) para decisões não-urgentes.
-- **Teto de gasto** configurável + **fallback heurístico** se estourar.
+- **Batch API** (assíncrono, mais barato) para decisões não-urgentes.
+- **Teto de gasto** configurável + **fallback heurístico/Ollama** se estourar.
 
 ---
 
-### 5. A realidade de cobrança (importante)
+### 5. A realidade de cobrança (situação atual do projeto)
 
-- O jogo, ao chamar a API em tempo de execução, usa **créditos de API** (pré-pagos no Console) — **cobrados à parte da assinatura Max**. O Max cobre você *construindo* o jogo; não cobre o jogo *rodando*.
-- **Modelo local (Ollama)** = **custo zero por token**, rodando na máquina do jogador. É o caminho pra escala sem medo da conta.
-- A chave de API fica **fora do código** (PDF 03 §10); o jogador escolhe o provedor na config.
+- **Hoje o projeto usa exclusivamente o Ollama local** — sem custo por token, rodando na própria máquina, sem depender de rede externa. É o provedor padrão de desenvolvimento e o padrão pro jogo publicado.
+- **A `AnthropicProvider` fica implementada no contrato (Seção 1) mas não é ativada agora** — não há orçamento de API comprometido para o desenvolvimento neste momento. Quando isso mudar, é só configurar a chave (Seção abaixo) e trocar o provedor — nenhuma linha de jogo muda (PDF 03 §8).
+- A chave de API, se um dia usada, fica **fora do controle de versão** (PDF 03 §10); o jogador escolhe o provedor na config.
 
 ---
 
@@ -71,9 +71,9 @@ Outros tiers, pra referência: Sonnet 4.6 US$3/US$15, Haiku 4.5 US$1/US$5.
 
 O instinto de custo/velocidade está certo — mas **fase 3**, não agora:
 
-1. **Fase 1 — Heurística + LLM.** Funciona hoje, sem ML nenhum.
-2. **Fase 2 — Trocar LLM por modelo local pequeno** (Ollama). Custo/velocidade sem treinar nada.
-3. **Fase 3 — Destilação.** Com o jogo rodando, grave milhares de pares **(briefing → decisão)** que o LLM produz. Treine uma **rede pequena pra imitar** o LLM nas decisões repetitivas.
+1. **Fase 1 — Heurística + Ollama local.** Funciona hoje, sem ML nenhum, sem custo de API.
+2. **Fase 2 — Ajuste dos modelos locais** (tamanhos/prompts) conforme o hardware alvo.
+3. **Fase 3 — Destilação.** Com o jogo rodando, grave milhares de pares **(briefing → decisão)** que o modelo (local ou, futuramente, via API) produz. Treine uma **rede pequena pra imitar** o LLM nas decisões repetitivas.
 
 **Por que imitação e não RL do zero:**
 
@@ -97,8 +97,9 @@ Cada decisão de LLM durante o jogo normal é **logada** (briefing + decisão). 
 ### 8. Conexões
 
 - **13 (Inteligência)** define o `Briefing` e a `Decision` que estes provedores consomem/produzem.
-- **03 (Arquitetura)** hospeda a fila assíncrona e a config de segredos.
+- **03 (Arquitetura)** hospeda o `HTTPRequest`/fila assíncrona e a config de segredos.
 - **20 (Roadmap)** posiciona as Fases 1→3 no tempo.
+- **26 (Modos de IA)** reafirma que o jogo é 100% jogável sem qualquer LLM.
 
 ---
 

@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 20 / 21 — Roadmap, Marcos & Convenções pro Claude Code
 
 > **Camada:** Interface & Experiência · **Status:** rascunho para revisão · **Série:** 21 documentos
@@ -8,16 +8,13 @@ O documento mais operacional. Define **a ordem de construção** e **como alimen
 
 ---
 
-### 1. A fatia vertical (o primeiro alvo)
+### 1. Escopo do projeto  ✅ decidido (revisado — escopo grande desde o início)
 
-A menor versão jogável de ponta a ponta. **Tudo o mais é expansão sobre ela.** Contém:
+Diferente da ideia original de "fatia vertical pequena", o projeto **mira o escopo completo desde a arquitetura**: 12 eras (Pedra → Intergaláctica), 4 lentes de mapa (Cidade/País/Planeta/Galáxia — PDF 24), dezenas de formas de governo, modo sandbox com cheats. Isso é uma escolha deliberada, com um risco conhecido (PDF 28 §3: escopo é o assassino nº 1 de projeto indie) — mitigado assim:
 
-- Um **mundo pequeno** gerado (um continente, poucas regiões).
-- **4–6 polities** com líderes (a maioria heurística; 1–2 com LLM).
-- **Loop central:** tick, população com necessidades básicas, economia simples, alguns tipos de governo, medidores de estabilidade/legitimidade.
-- **1–2 eventos** funcionando (ex.: fome + golpe) pra **provar a emergência**.
-- **Render mínimo** (mapa de tiles + fronteiras) e **UI mínima** (painel da nação + pausa).
-- **Meta:** algumas polities vivem alguns turnos e produzem **um evento emergente** sozinhas.
+- **Arquitetura grande, construção incremental.** O código já nasce estruturado pra suportar tudo (schemas, interfaces, as 4 lentes, os 12 slots de era) — mas cada marco entrega algo **rodável de ponta a ponta**, nunca um salto gigante sem nada funcionando no meio.
+- **Godot 4** (PDF 03) sustenta essa ambição: multiplataforma de graça, exporta fácil, headless pra testar sem tela.
+- **Ritmo acelerado**, priorizando ter o loop central + emergência provada rodando o quanto antes, e expandindo em largura (mais eras, mais governos, mais lentes) a partir daí.
 
 ---
 
@@ -25,15 +22,16 @@ A menor versão jogável de ponta a ponta. **Tudo o mais é expansão sobre ela.
 
 | Marco | Entrega | Docs |
 |---|---|---|
-| **M0 — Esqueleto** | estrutura de pastas, loop de tick, render de mapa, pausa/velocidade | 03, 04, 18 |
-| **M1 — População viva** | arrays de população, necessidades, economia básica, demografia | 06, 07, 08 |
-| **M2 — Polities & governo** | polities, alguns governos, líderes (heurística), medidores | 10, 11, 17 |
-| **M3 — Primeira emergência** | sistema de pressão + 1–2 eventos, cadeia de feedback visível | 15, 16, 17 |
-| **M4 — A mente** | cérebro LLM dos líderes pivotais, camada de provedor, diplomacia | 12, 13, 14 |
-| **M5 — Fatia vertical** | painéis de UI, save/load, base de eras, jogável de ponta a ponta | 05, 19, 06 |
-| **Pós-fatia** | mais governos/eventos/eras, escalas regional/individual, destilação (fase 3), construções/políticas completas | 21, todos |
+| **M0 — Esqueleto Godot** | projeto Godot, estrutura de pastas (PDF 03 §2), loop de tick determinístico, render de mapa (lente País), pausa/velocidade | 03, 04, 18, 24 |
+| **M1 — População viva** | população agregada por região, necessidades, economia básica, demografia | 06, 07, 08 |
+| **M2 — Polities & governo** | polities, catálogo inicial de governos, líderes (heurística/Utility AI), medidores de estabilidade/legitimidade | 10, 11, 17, 25 |
+| **M3 — Emergência aberta** | sistema de pressão + catálogo de eventos ativo; **nenhum evento é garantido** — o que acontece é resultado das escolhas do jogador e dos líderes-NPC, podendo até não acontecer nada por um bom tempo | 15, 16, 17 |
+| **M4 — A mente** | cérebro Ollama local dos líderes pivotais (1 jogador + 3 líderes-NPC isolados no início — PDF 04 §7, 11), camada de provedor trocável, diplomacia | 12, 13, 14, 26 |
+| **M5 — Ciclo completo Era 1–8** | painéis de UI (PT+EN), save/load, eras Pedra→Alta Tecnologia jogáveis, sandbox/cheats, lente Cidade isométrica | 05, 19, 06, 21 |
+| **M6 — Escala espacial** | eras Espacial→Intergaláctica, lentes Planeta e Galáxia, isolamento/primeiro-contato completo | 04, 05, 24 |
+| **Pós-M6** | catálogo completo de ~45 governos, testes em massa, destilação (fase 3), polimento, lançamento | 21, 23, 27, 28 |
 
-**Regra de ouro:** o **corpo** antes do **cérebro** (a simulação funciona sem LLM primeiro); a **emergência provada** antes de **escalar**.
+**Regra de ouro (mantida):** o **corpo** antes do **cérebro** (a simulação funciona sem LLM primeiro — PDF 26); a **emergência provada** antes de **escalar** conteúdo.
 
 ---
 
@@ -44,8 +42,9 @@ A menor versão jogável de ponta a ponta. **Tudo o mais é expansão sobre ela.
 - Construa **por marco**; cada módulo tem um "**pronto**" (Seção 4) antes do próximo.
 - A **engine é a autoridade**; o LLM propõe e é validado (PDF 13).
 - **Determinismo:** tick fixo + semente → testável e reproduzível.
-- **Incremental:** rodável em cada marco, nunca um salto gigante.
-- **Segredos/config:** chave de API fora do código (PDF 03 §10).
+- **Incremental mesmo com escopo grande:** a arquitetura suporta tudo desde o início, mas cada marco entrega algo rodável — nunca um salto gigante.
+- **Idiomas:** identificadores e comentários de código em **português**; textos de jogo (UI, falas dos líderes) com suporte a **PT-BR e EN** desde o M5 (PDF 19).
+- **Segredos/config:** chave de API fora do controle de versão (PDF 03 §10). Hoje o provedor padrão é o **Ollama local** — a `AnthropicProvider` existe no contrato, mas fica opt-in/futura até haver orçamento definido (PDF 14).
 - Crie um **`CLAUDE.md`** na raiz do repositório resumindo estas convenções.
 
 ---
@@ -53,7 +52,7 @@ A menor versão jogável de ponta a ponta. **Tudo o mais é expansão sobre ela.
 ### 4. "Pronto" por módulo (checklist)
 
 - [ ] Roda sem erro e se integra ao loop.
-- [ ] Tem teste básico (determinístico).
+- [ ] Tem teste básico (determinístico, roda headless — PDF 03 §11).
 - [ ] Respeita os schemas do PDF 06.
 - [ ] Escopo **fechado** — nada meio-feito acumulado.
 - [ ] Documentado o suficiente pro próximo módulo usar.
@@ -62,7 +61,7 @@ A menor versão jogável de ponta a ponta. **Tudo o mais é expansão sobre ela.
 
 ### 5. O que faz "dar certo"
 
-Entregar a **fatia vertical primeiro**, expandir só depois, e **fechar o escopo de cada módulo**. É o oposto de tentar tudo de uma vez — e o que separa este projeto dos que morrem no meio.
+Entregar o **loop central + emergência provada primeiro** (M0–M4), depois expandir em largura (mais eras, mais governos, mais lentes) sobre uma arquitetura que já foi desenhada pro tamanho final — e **fechar o escopo de cada módulo** antes de abrir o próximo. Nunca um módulo "meio-feito" acumulado.
 
 ---
 

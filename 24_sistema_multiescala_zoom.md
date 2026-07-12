@@ -1,11 +1,11 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 24 / 24 — Sistema Multi-Escala & Zoom
 
 > **Camada:** Interface & Experiência (entrou no fim da ordem dos arquivos) · **Status:** rascunho para revisão · **Série:** 24 documentos
-> **Depende de:** 03 (LOD), 04 (Mundo), 06 (Dados), 07 (População), 18 (Render) · **Alimenta:** 18, 19
-> **Atende ao seu pedido:** zoom contínuo cidade → mapa → país → multimundos, com visual estilo SimCity 2000, sem derreter a máquina.
+> **Depende de:** 03 (Arquitetura/Godot), 04 (Mundo), 05 (Eras), 06 (Dados), 07 (População), 18 (Render) · **Alimenta:** 18, 19
+> **Atende ao seu pedido:** zoom contínuo Cidade → País → Planeta → Galáxia, tamanho tipo Spore, com visual estilo SimCity 2000, sem derreter a máquina. Implementado em **Godot 4** (PDF 03).
 
-Zoom de SimCity (cidade, tile a tile) até HOI4 (mundo, país a país), numa máquina só. O segredo está em separar o que é **simulado** do que é **desenhado**.
+Zoom de SimCity (cidade, tile a tile) até uma escala galáctica, numa máquina só. O segredo está em separar o que é **simulado** do que é **desenhado**.
 
 ---
 
@@ -17,23 +17,25 @@ A unidade real de simulação é a **região/cidade**, nunca o cidadão. O zoom 
 
 ---
 
-### 2. As quatro lentes
+### 2. As quatro lentes  ✅ decidido (tamanhos literais de grade)
 
-| Lente | O que mostra | Fonte dos dados |
-|---|---|---|
-| **Cidade** (mais perto) | tiles isométricos + sprites de prédios (estilo SimCity 2000) | números agregados da região |
-| **Mapa** (várias cidades) | regiões como nós, rotas e fluxos | estado das regiões |
-| **País** (vários países) | nível HOI4: polities, fronteiras, diplomacia | polities/relações (PDF 12) |
-| **Multimundos** | só o mundo ativo ao vivo; outros congelados | mundos salvos (PDF 04) |
+| Lente | Grade de referência | O que mostra | Fonte dos dados | Era mínima (PDF 05) |
+|---|---|---|---|---|
+| **Cidade** (mais perto) | 256 × 256 tiles | tiles isométricos + sprites de prédios (estilo SimCity 2000) | números agregados da região | Pedra (desde o início) |
+| **País** (várias cidades/regiões) | 1024 × 1024 tiles | regiões como nós, fronteiras, rotas, diplomacia local | estado das regiões e polities (PDF 12) | Pedra (desde o início) |
+| **Planeta** (vários países) | 4096 × 4096 tiles | nível HOI4: todas as polities do planeta, fronteiras, guerra, diplomacia global | polities/relações (PDF 12) | Espacial (PDF 05) revela o planeta inteiro de uma vez; antes disso só o explorado |
+| **Galáxia** | grafo de sistemas/planetas (não é grade de tiles) | sistemas estelares, rotas interestelares; só o planeta/sistema aberto no momento é simulado em detalhe | mundos/planetas salvos (PDF 04 §5) | Estelar+ (PDF 05) |
 
-Os "cidadãos andando" na lente Cidade são **representação amostral / enfeite** — não milhões simulados um a um.
+Os "tamanhos de referência" (256/1024/4096) são a **resolução da grade visual** daquela lente — não um limite fixo; mapas podem ser configurados menores/maiores, respeitando o orçamento de desempenho (PDF 03 §9). Os "cidadãos andando" na lente Cidade são **representação amostral / enfeite** — não milhões simulados um a um.
+
+Note que a lente **Galáxia** é diferente de "**múltiplos mundos**" (PDF 04 §5): a Galáxia é a escala macro *dentro* de uma partida/save; "múltiplos mundos" são saves inteiros e independentes (cada um com sua própria semente, podendo cada um ter sua própria galáxia).
 
 ---
 
 ### 3. Simulação vs. Visualização (a distinção que faz tudo funcionar)
 
-- **Simulação:** sempre **agregada e vetorizada** (numpy, PDF 06/07). Processa **todas as regiões de uma vez** — nunca um laço "pra cada cidade, simule". É exatamente como o HOI4 faz.
-- **Visualização:** o **LOD** (PDF 03) decide o detalhe do **desenho**, não da simulação. A região visível desenha em detalhe (tiles, sprites); as outras 200 são ícone + número. **Culling**: só desenha o que está na viewport.
+- **Simulação:** sempre **agregada**, processada em bloco sobre arrays por região (PDF 03/06/07 — `PackedArrays` do Godot). Processa **todas as regiões de uma vez** — nunca um laço "pra cada cidade, simule". É exatamente como o HOI4 faz.
+- **Visualização:** o **LOD** (PDF 03) decide o detalhe do **desenho**, não da simulação. A região visível desenha em detalhe (tiles, sprites); as outras milhares são ícone + número. **Culling**: só desenha o que está na viewport (Godot cuida disso nativamente via `VisibleOnScreenNotifier2D`/câmera).
 
 > Regra prática: **simula tudo junto e barato; desenha em detalhe só onde você olha.**
 
@@ -59,16 +61,16 @@ A lente Cidade não é uma simulação nova — é uma **camada de visualizaçã
 
 ---
 
-### 6. Ordem de implementação (escopo — manter o "dar certo")
+### 6. Ordem de implementação  ✅ decidido (arquitetura grande desde o início)
 
-As lentes entram **uma de cada vez**, depois que a base estratégica roda. Tentar as quatro de uma vez é o caminho clássico pra empacar.
+O projeto mira o escopo completo (12 eras, 4 lentes) desde a arquitetura — mas a **construção** ainda entra em ordem, marco a marco (PDF 20), pra sempre ter algo rodável:
 
-1. **Base (já em andamento):** render de mapa de tiles, lente estratégica (M0).
-2. **Lente País / Mapa** — a mais próxima do que já existe.
+1. **Base:** render de mapa de tiles, lente **País** (a mais próxima de um 4X clássico) — M0.
+2. **Lente Planeta** — visão global de todas as polities (nível HOI4).
 3. **Lente Cidade isométrica** — a mais trabalhosa (ordenação, sprites, elevação).
-4. **Lente Multimundos.**
+4. **Lente Galáxia** — entra quando as eras Espacial+ estiverem em produção (PDF 05).
 
-**Importante desde já:** a arquitetura de **câmera + LOD** deve ser desenhada para **acomodar as quatro lentes** desde o início — assim adicionar uma lente nova não dói. O *princípio de ouro* (Seção 1) vale para **todo** o código de simulação agora, mesmo antes das lentes existirem.
+**Desde o dia 1:** a arquitetura de **câmera + LOD** já é desenhada para as quatro lentes (Seção 2) e os 12 slots de era (PDF 05) — mesmo que só uma lente e as primeiras eras estejam com conteúdo populado no início. O *princípio de ouro* (Seção 1) vale para **todo** o código de simulação desde o primeiro tick.
 
 ---
 

@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 18 / 21 — Render & Estilo Visual 2D
 
 > **Camada:** Interface & Experiência · **Status:** rascunho para revisão · **Série:** 21 documentos
@@ -10,9 +10,9 @@ Como o jogo se desenha. Implementa `render/`. Gráficos modestos de propósito �
 
 ### 1. Abordagem de renderização
 
-- **pygame**, mapa **baseado em tiles** (quadrados, PDF 04).
-- **Sprites** pra cidades, exércitos e ícones de evento.
-- **Câmera** com *pan* e *zoom*.
+- **Godot 4** (PDF 03): `TileMapLayer` pro mapa **baseado em tiles** (quadrados, PDF 04).
+- **Sprites** (`Sprite2D`/`AnimatedSprite2D`) pra cidades, exércitos e ícones de evento.
+- **Câmera** (`Camera2D`) com *pan* e *zoom*, transitando entre as 4 lentes do PDF 24.
 
 ---
 
@@ -30,13 +30,13 @@ Como o jogo se desenha. Implementa `render/`. Gráficos modestos de propósito �
 
 ### 3. Câmera e zoom
 
-*Pan* livre + *zoom* entre a escala **estratégica** (mundo inteiro) e mais perto (região). Os níveis de zoom casam com as escalas do PDF 02 §4: longe = agregado/abstrato; perto = mais detalhe (liga com o LOD, PDF 03 §9). Escalas regional/individual são futuras.
+*Pan* livre + *zoom* contínuo entre as quatro lentes do PDF 24 (Cidade → País → Planeta → Galáxia): longe = agregado/abstrato; perto = mais detalhe (liga com o LOD, PDF 03 §9). Transição suave entre lentes (PDF 24 §5).
 
 ---
 
 ### 4. Estilo visual por era
 
-A estética **muda conforme a civilização avança**: primitiva (pedra) → clássica → industrial → moderna → **retrofuturismo Fallout / sci-fi** no fim da árvore. Cada era tem paleta e conjunto de sprites próprios.
+A estética **muda conforme a civilização avança** pelas 12 eras (PDF 05): primitiva (pedra) → clássica → industrial → moderna → **retrofuturismo Fallout** (Alta Tecnologia) → sci-fi espacial/galáctico (Espacial → Intergaláctica) no fim da árvore. Cada era tem paleta e conjunto de sprites próprios.
 
 ---
 
@@ -56,7 +56,7 @@ O jogador **vê a crise de relance**, sem abrir menu: tons e ícones pra fome, r
 
 ### 7. Assets e arte-placeholder
 
-Sprites, tiles e fontes em `assets/`. Pra **fatia vertical**, arte-placeholder (formas/cores simples) — não travar o projeto esperando arte final.
+Sprites, tiles e fontes em `assets/`. **Placeholder de alta qualidade desde já**: pacotes CC0 (Kenney) entram nos primeiros marcos (PDF 20, PDF 24 §5) — não travar o projeto esperando arte final, mas também não começar com formas/cores simples demais, já que a resolução da engine de render é alta desde o início.
 
 ---
 
@@ -65,6 +65,7 @@ Sprites, tiles e fontes em `assets/`. Pra **fatia vertical**, arte-placeholder (
 - **19 (UI/UX)** desenha por cima desta base.
 - **04 (Mundo)** fornece tiles, biomas e regiões.
 - **16 (Eventos)** fornece os efeitos visuais de crise.
+- **24 (Multi-escala)** detalha as quatro lentes e a lente Cidade isométrica.
 
 ---
 

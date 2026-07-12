@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 26 / 28 — Modos de Jogo & IA Opcional
 
 > **Camada:** Inteligência · **Status:** rascunho para revisão · **Série:** 28 documentos
