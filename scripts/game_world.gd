@@ -20,6 +20,8 @@ var combat_system: CombatSystem
 var diplomacy_system: DiplomacySystem
 var save_load_system: SaveLoadSystem
 var tech_tree_ui: TechTreeUI
+var multi_scale_viewport: MultiScaleViewport
+var event_log: EventLogUI
 
 # Game state
 var game_speed: float = 1.0  # 1x, 2x, 3x
@@ -74,6 +76,12 @@ func _ready():
 	tech_tree_ui.era_manager = era_manager
 	add_child(tech_tree_ui)
 	
+	multi_scale_viewport = MultiScaleViewport.new()
+	add_child(multi_scale_viewport)
+	
+	event_log = EventLogUI.new()
+	add_child(event_log)
+	
 	# Wait for systems to initialize
 	await get_tree().process_frame
 	
@@ -101,6 +109,8 @@ func _ready():
 	print("  F6: Declare War")
 	print("  S: Save Game | L: Load Game")
 	print("  T: Toggle Tech Tree | D: Diplomacy Panel")
+	print("  Z/X: Zoom In/Out (Multi-Scale)")
+	print("  E: Event Log | H: Export History")
 	print("  Arrows: Move camera | Scroll: Zoom | 1/2/3: Speed | ESC: Pause")
 	print("============================\n")
 
@@ -199,6 +209,22 @@ func _handle_input():
 		print("Wars: ", summary["wars"])
 		print("Trade Routes: ", summary["trades"])
 		print("Avg Tension: ", summary["avg_tension"])
+	
+	# Multi-scale viewport zoom
+	if Input.is_key_pressed(KEY_Z):
+		multi_scale_viewport.zoom_in()
+	if Input.is_key_pressed(KEY_X):
+		multi_scale_viewport.zoom_out()
+	
+	# Event log
+	if Input.is_key_pressed(KEY_E):
+		print("\n=== RECENT EVENTS ===")
+		for event in event_log.get_recent_events(10):
+			print(event)
+		event_log.print_log_summary()
+	
+	if Input.is_key_pressed(KEY_H):
+		event_log.export_log_to_file("history_%d" % current_year)
 
 func _update_systems(delta: float):
 	"""Update all game systems each frame"""
@@ -296,11 +322,15 @@ func apply_event_consequences(event: Dictionary, consequences: Dictionary):
 
 func _on_era_changed(new_era_id: String):
 	print(">>> ERA CHANGED: ", era_manager.get_era_name())
+	event_log.log_era_advance(era_manager.get_era_name(), current_year)
 	tile_renderer.set_era(era_manager.current_era_id)
 	population_system.total_population = int(population_system.total_population * 1.2)  # Growth when era changes
 
 func _on_event_triggered(event_data: Dictionary):
-	print("⚠️  EVENT: ", event_data.get("description", "Unknown event"), " (severity: %.1f)" % event_data.get("severity", 0.5))
+	var event_type = event_data.get("type", "unknown")
+	var description = event_data.get("description", "Unknown event")
+	print("⚠️  EVENT: ", description, " (severity: %.1f)" % event_data.get("severity", 0.5))
+	event_log.log_event(event_type, description, current_year, "warning")
 
 func _on_population_changed(new_population: int):
 	pass  # Too frequent to print
