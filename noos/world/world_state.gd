@@ -1,6 +1,7 @@
-## O WorldState — PDF 06 §1. Tudo que é salvo mora aqui; no M0 só o mapa
-## e o tick atual. Cada marco seguinte acrescenta os demais campos
-## (polities, líderes, pressões...) sem trocar o formato de acesso.
+## O WorldState — PDF 06 §1. Tudo que é salvo mora aqui. Cada marco
+## seguinte acrescenta os demais campos (pressões, relações...) sem
+## trocar o formato de acesso. Dicionários indexados por id (nunca
+## objeto direto, PDF 06 §4) — mantém save/load simples (M5).
 class_name EstadoDoMundo
 extends RefCounted
 
@@ -10,6 +11,10 @@ var altura: int
 var biomas: PackedByteArray  ## um Bioma.Tipo por tile, indexado por y * largura + x
 var tick_atual: int = 0
 var regioes: Array[Regiao] = []  ## preenchido por GeradorDeRegioes (PDF 04 §1) após gerar()
+
+var tipos_de_governo: Dictionary = {}  ## id (String) -> TipoDeGoverno
+var lideres: Dictionary = {}  ## id (int) -> Lider
+var polities: Dictionary = {}  ## id (int) -> Polity
 
 
 func bioma_em(x: int, y: int) -> int:

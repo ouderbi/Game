@@ -12,5 +12,5 @@ func passo(estado: EstadoDoMundo) -> void:
 	for regiao in estado.regioes:
 		SimulacaoPopulacional.avancar(regiao)
 	# TODO M3 (PDF 15/16): disparar eventos que cruzaram limiar
-	# TODO M2/M4 (PDF 10/11/13/14): coletar decisões (heurística + LLM) e aplicar efeitos
+	SimulacaoPolitica.avancar(estado)  # decisões de líderes (heurística — LLM chega no M4) + medidores
 	estado.tick_atual += 1
