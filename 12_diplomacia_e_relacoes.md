@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 12 / 21 — Diplomacia & Relações
 
 > **Camada:** Governança · **Status:** rascunho para revisão · **Série:** 21 documentos

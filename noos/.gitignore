@@ -1,0 +1,13 @@
+# Godot 4+
+.godot/
+.import/
+export.cfg
+export_presets.cfg
+
+# Import artifacts
+*.translation
+
+# Segredos/config locais — PDF 03 §10, config/README.md
+config/*.cfg
+config/*.env
+!config/README.md

@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 28 / 28 — Estratégia de Lançamento (Steam)
 
 > **Camada:** Negócio (para o desenvolvedor, **não** para o Claude Code implementar) · **Status:** referência
@@ -18,7 +18,7 @@ Realidade comercial e o que aumenta as chances. **Este documento é pra você de
 
 ---
 
-### 2. O que joga a favor do Leviatã
+### 2. O que joga a favor do Noós
 
 - **Gênero forte:** sims de colônia/gerência e estratégia estão entre os de maior receita mediana (público dedicado, à la RimWorld, Dwarf Fortress, Civ).
 - **Gancho de marketing real:** "líderes rivais movidos por IA de verdade" é diferencial que gera vídeo e curiosidade.
@@ -52,7 +52,7 @@ Trate este projeto como **aprendizado + portfólio**, com a venda como *possibil
 
 ### 6. Sequência sugerida
 
-1. Fatia vertical jogável e polida (PDF 20).
+1. Ciclo completo (M0–M5, PDF 20) jogável e polido — não precisa dos 45 governos nem da escala Galáxia pra ir a público, só do núcleo redondo.
 2. Página Steam + trailer curto → começar wishlists.
 3. Demo + divulgação nas comunidades de estratégia.
 4. Comunidade ativa antes do lançamento.

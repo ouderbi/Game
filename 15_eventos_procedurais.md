@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 15 / 21 — Sistema de Eventos Procedurais
 
 > **Camada:** Dinâmicas Emergentes · **Status:** rascunho para revisão · **Série:** 21 documentos

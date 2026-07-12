@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 22 / 23 — Mapa de Integração & Fluxo do Sistema
 
 > **Camada:** Integração (entrou no fim da ordem dos arquivos) · **Status:** rascunho para revisão · **Série:** 23 documentos
@@ -96,9 +96,9 @@ Nenhum passo foi roteirizado — cada um é um sistema reagindo ao anterior.
 | População/economia/sociedade | 07, 08, 09 |
 | Pressões e eventos | 15, 16 |
 | Governança e medidores | 10, 11, 17 |
-| Mente e decisão | 12, 13, 14 |
+| Mente e decisão | 12, 13, 14, 25, 26 |
 | Construções/políticas/tech | 05, 21, 23 |
-| Apresentação | 18, 19 |
+| Apresentação | 18, 19, 24, 29 |
 | Orquestração (build) | 20 |
 
 ---

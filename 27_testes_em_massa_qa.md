@@ -1,10 +1,10 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 27 / 28 — Testes em Massa & QA
 
 > **Camada:** Orquestração · **Status:** rascunho para revisão · **Série:** 28 documentos
 > **Depende de:** 03 (Render desacoplado, determinismo), 14 (Provedor trocável) · **Alimenta:** 14 (dados de destilação)
 
-Como testar o jogo em escala — milhares de partidas, séculos de jogo em segundos. Possível porque o jogo já foi **projetado** pra isso. Implementa `tests/mass_sim.py`.
+Como testar o jogo em escala — milhares de partidas, séculos de jogo em segundos. Possível porque o jogo já foi **projetado** pra isso. Implementa `tests/mass_sim.gd`.
 
 ---
 
@@ -52,7 +52,7 @@ Cada partida headless **loga** os pares (briefing → decisão). Rodar testes em
 
 ### 6. O harness
 
-`tests/mass_sim.py`: recebe um intervalo de sementes → roda cada uma headless com heurística na velocidade máxima por X séculos → checa invariantes a cada tick → registra métricas → reporta falhas com **semente + tick**.
+`tests/mass_sim.gd`: recebe um intervalo de sementes → roda cada uma headless com heurística na velocidade máxima por X séculos → checa invariantes a cada tick → registra métricas → reporta falhas com **semente + tick**.
 
 Mais: **testes de soak** (uma partida por milhões de ticks, pra pegar vazamentos lentos) e **de regressão** (um conjunto fixo de sementes rodado a cada mudança de código — se o resultado muda sem querer, pegou um regresso).
 

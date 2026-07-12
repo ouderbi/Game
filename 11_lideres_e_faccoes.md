@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 11 / 21 — Líderes & Facções
 
 > **Camada:** Governança · **Status:** rascunho para revisão · **Série:** 21 documentos

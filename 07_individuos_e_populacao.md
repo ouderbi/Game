@@ -1,25 +1,25 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 07 / 20 — Indivíduos & População
 
 > **Camada:** População · **Status:** rascunho para revisão · **Série:** 20 documentos
 > **Depende de:** 06 (Modelo de Dados) · **Alimenta:** 08 (Economia), 09 (Sociedade), 15–17 (Eventos/Estabilidade)
 > **Realiza:** a "natureza humana emergente" prometida no PDF 01 §4 (no nível do indivíduo).
 
-Os milhões de indivíduos independentes. **Nada de LLM aqui** — tudo é IA barata por regras, vetorizada (arrays do PDF 06). É de propósito: a vida humana em massa precisa ser rápida, e a riqueza vem da *interação*, não da inteligência de cada um.
+A vida humana em massa, sempre **agregada por região** (princípio de ouro do PDF 24 §1 — nunca simulação por cidadão individual, nem em mapas grandes). **Nada de LLM aqui** — tudo é IA barata por regras, processada em bloco (arrays do PDF 06 §3). É de propósito: a riqueza vem da *interação* entre regiões e distribuições, não da inteligência de cada pessoa simulada.
 
 ---
 
-### 1. Atributos do indivíduo (os arrays)
+### 1. Atributos agregados por região (os arrays)
 
-Cada indivíduo é um índice nos arrays paralelos:
+Cada **região** carrega estatísticas agregadas da sua população:
 
 ```
-idade   saúde   riqueza   humor   lealdade
-ideologia   ocupação   região   vivo
-+ traços: racionalidade, pró-socialidade, conformidade
+idade_média   saúde_média   riqueza_dist   humor_médio   lealdade_média
+ideologia_dist   ocupação_dist   população_total
++ traços agregados: fração_racional, fração_pró-social, fração_conformista
 ```
 
-Os três últimos traços são as alavancas da natureza humana (Seções 4–5).
+`*_dist`/`fração_*` descrevem a **distribuição** daquele traço na população da região (ex.: "12% de pró-sociais"), não um valor por pessoa. Os três traços de natureza humana são as alavancas das Seções 4–5. Indivíduos específicos (heróis, figuras notáveis, o líder) existem como entidades próprias à parte (PDF 06 §2), promovidos por LOD quando importam pra história.
 
 ---
 

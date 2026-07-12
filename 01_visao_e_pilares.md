@@ -1,14 +1,14 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 01 / 20 — Visão & Pilares
 
-> **Nome de trabalho:** "Leviatã" (provisório — em Hobbes, o Estado é um corpo cuja cabeça é o soberano; combina com a nossa separação cérebro/corpo). Sinta-se livre pra vetar.
+> **Nome:** "Noós" (decidido — do grego *nous*, "mente/intelecto"; combina direto com a nossa separação cérebro/corpo).
 > **Camada:** Fundamentos · **Status:** rascunho para revisão · **Série:** 21 documentos
 
 ---
 
 ### 1. Resumo (pitch)
 
-Um simulador de grande estratégia em 2D no qual o jogador **sempre lidera** uma civilização — da Idade da Pedra à alta tecnologia e ao sci-fi. Os rivais e aliados ao redor do tabuleiro são **líderes com mente própria, movida por LLM**: eles lembram, planejam e tramam. Num mundo onde guerra nuclear, pandemia, golpe de Estado, inflação e corrupção **emergem das pressões acumuladas** — nunca de um dado aleatório — cada partida vira uma história que ninguém roteirizou.
+Um simulador de grande estratégia em 2D no qual o jogador **sempre lidera** uma civilização — das 12 eras, da Idade da Pedra à civilização Intergaláctica (PDF 05). Os rivais e aliados ao redor do tabuleiro são **líderes com mente própria, movida por LLM**: eles lembram, planejam e tramam. Num mundo onde guerra nuclear, pandemia, golpe de Estado, inflação e corrupção **emergem das pressões acumuladas** — nunca de um dado aleatório — cada partida vira uma história que ninguém roteirizou. Um sandbox de porte ambicioso (inspirado em Age of Empires + SimCity + Fallout, com a escala de Spore), com modo sandbox e cheats liberados pra quem só quer brincar com os sistemas.
 
 ---
 
@@ -29,7 +29,7 @@ A inteligência dos líderes-LLM é a alma do jogo, não um enfeite. Um ditador 
 Acontecimentos e comportamentos nascem de causas acumuladas no mundo, não de scripts. Isso inclui a natureza humana: pessoas falhas, irracionais e às vezes nobres são justamente o que faz a história parecer viva. O bem e o mal não são botões — são resultados.
 
 **Pilar 3 — Variedade civilizacional radical.**
-Dezenas de formas de governo e de não-governo, e a jornada completa pedra → alta tecnologia → sci-fi. A variedade é a graça da coisa.
+Dezenas de formas de governo e de não-governo, e a jornada completa das 12 eras: pedra → intergaláctica (PDF 05). A variedade é a graça da coisa.
 
 ---
 
@@ -55,9 +55,9 @@ Princípio-guia: **se um traço humano importa, ele vira uma variável que inter
 **É:**
 - Grande estratégia com líderes movidos por LLM.
 - Poucos sistemas profundos e entrelaçados (emergência > quantidade de variáveis).
-- Single-player, rodando como programa nativo de Windows (.exe).
+- Single-player, feito em Godot 4 (PDF 03), exportável nativamente pra Windows/Linux/Mac.
 - Um mundo ativo simulado ao vivo; outros mundos ficam salvos/congelados.
-- Um **sandbox sem babá**: toda decisão é possível, inclusive a pior.
+- Um **sandbox sem babá**: toda decisão é possível, inclusive a pior — com **modo sandbox e cheats** liberados pra quem quer só experimentar os sistemas sem restrição narrativa.
 
 **NÃO é:**
 - Um shooter ou jogo de ação.
@@ -73,6 +73,8 @@ Princípio-guia: **se um traço humano importa, ele vira uma variável que inter
 | Hearts of Iron 4 | Política, diplomacia, grande estratégia | Foco exclusivo na 2ª Guerra; microgestão militar pesada |
 | Age of Empires | Progressão por eras, ritmo | RTS de micro em tempo real |
 | Civilization | Árvore tecnológica, arco pedra → futuro | Combate em grade por turnos clássico |
+| SimCity (2000) | Visual isométrico, leitura de cidade viva à primeira vista | Foco só em gestão urbana, sem geopolítica |
+| Spore | Ambição de escala — de uma célula a uma civilização galáctica | Fases de jogo totalmente distintas por estágio |
 | Fallout | Retrofuturismo, facções, tom | Jogabilidade de RPG individual no núcleo |
 | Star Wars | Escala sci-fi, facções icônicas | IP e narrativa fixa |
 
@@ -83,9 +85,9 @@ Princípio-guia: **se um traço humano importa, ele vira uma variável que inter
 1. **Emergência > contagem de variáveis** — poucos sistemas profundos que se cruzam.
 2. **Natureza humana como força emergente** — virtudes e vícios saem dos sistemas, não de scripts.
 3. **Cérebro / corpo** — o LLM decide em alto nível (esparso, assíncrono); o código executa (rápido, todo tick).
-4. **Consciência de custo** — LLM é caro; tiering de modelos (caros só pros líderes pivotais) e camada de provedor trocável.
-5. **Fatia vertical antes de tudo** — um núcleo pequeno e jogável primeiro; expansão só depois.
-6. **Liberdade total — inclusive a de errar** — toda escolha é permitida, mesmo a autodestrutiva; o jogo nunca barra nem adverte ("tem certeza?"). Combinações ruins levam ao colapso naturalmente. A burrice não é só das pessoas — é uma opção do jogador.
+4. **Consciência de custo** — hoje resolvida rodando **Ollama local** (custo zero); a `AnthropicProvider` fica pronta no contrato pra quando fizer sentido pagar por líderes pivotais (PDF 14).
+5. **Arquitetura grande, entrega incremental** — a arquitetura já é desenhada pro escopo final (12 eras, 4 lentes de mapa); a construção entra em marcos, sempre com algo rodável (PDF 20).
+6. **Liberdade total — inclusive a de errar** — toda escolha é permitida, mesmo a autodestrutiva; o jogo nunca barra nem adverte ("tem certeza?"). Combinações ruins levam ao colapso naturalmente. A burrice não é só das pessoas — é uma opção do jogador. O **modo sandbox com cheats** leva isso ao extremo pra quem só quer brincar com os sistemas.
 
 ---
 
@@ -99,10 +101,10 @@ Para quem gosta de sandboxes de estratégia emergente e de "histórias geradas" 
 
 Concretos, pra sabermos quando cada etapa fechou:
 
-- A **fatia vertical** roda de fato num `.exe` em Windows.
-- Surgem **histórias que não foram programadas** (ex.: uma pandemia derruba a legitimidade de uma teocracia e dispara um golpe).
-- O **escopo de cada módulo fecha** antes de começar o próximo (nada de meio-feito acumulado).
-- **Marco "vivo":** um punhado de polities com líderes-LLM atravessam uma era sozinhas e produzem ao menos um evento emergente sem intervenção.
+- O **loop central** roda de fato, exportado pelo Godot (Windows/Linux/Mac).
+- Surgem **histórias que não foram programadas** (ex.: uma pandemia derruba a legitimidade de uma teocracia e dispara um golpe) — sem garantia de acontecer a cada partida; a emergência é honesta, não roteirizada mesmo pra "provar o ponto" (PDF 15 §1).
+- O **escopo de cada módulo fecha** antes de começar o próximo (nada de meio-feito acumulado), mesmo com a arquitetura mirando o escopo grande.
+- **Marco "vivo":** o jogador e os 3 líderes-NPC pivotais (inicialmente isolados — PDF 04 §7) atravessam eras sozinhos e produzem eventos emergentes sem intervenção externa.
 
 ---
 
@@ -112,8 +114,8 @@ Concretos, pra sabermos quando cada etapa fechou:
 - **Líder-LLM:** a mente de uma polity, movida por um modelo de linguagem.
 - **Cérebro / corpo:** decisão de alto nível (LLM) vs. execução mecânica (código).
 - **Pressão:** acúmulo de estado que faz um evento ficar provável (ex.: pressão de pandemia).
-- **Fatia vertical:** a menor versão jogável de ponta a ponta do jogo.
 - **Mundo ativo vs. congelado:** o mundo carregado é simulado ao vivo; os demais ficam salvos em disco.
+- **Lente:** o nível de zoom (Cidade/País/Planeta/Galáxia — PDF 24) sobre a mesma simulação agregada.
 
 ---
 
@@ -124,7 +126,7 @@ Concretos, pra sabermos quando cada etapa fechou:
 - **10–12 (Governo, Líderes/Facções, Diplomacia)** realizam o Pilar 3 e a variedade.
 - **13–14 (Inteligência, Provedores/Custo)** realizam o Pilar 1 e o princípio cérebro/corpo.
 - **15–17 (Eventos, Catálogo, Estabilidade)** realizam o Pilar 2 e o espectro bem/mal.
-- **20 (Roadmap)** define a fatia vertical e a ordem de implementação.
+- **20 (Roadmap)** define os marcos e a ordem de implementação.
 - **21 (Construções, Estruturas & Políticas)** cataloga prédios e alavancas de política (muros, bunkers, universidades, estatização…), com liberdade total de escolha.
 
 ---

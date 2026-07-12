@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 25 / 28 — IA Heurística (Utility AI)
 
 > **Camada:** Inteligência · **Status:** rascunho para revisão · **Série:** 28 documentos
@@ -21,7 +21,7 @@ Exemplos de consideração: "quanto menor o tesouro, mais desejável subir impos
 
 ---
 
-### 2. Por que é a melhor escolha pro Leviatã
+### 2. Por que é a melhor escolha pro Noós
 
 - **Pesa muitas variáveis ao mesmo tempo** (economia × militar × diplomacia) — a complexidade "tipo mundo real" que o projeto quer.
 - **Personalidade = pesos.** Os `personality_traits` (PDF 11) **são** os pesos das considerações. As 45 formas de governo ganham comportamento distinto **sem código novo** — só números diferentes. Pilar 3 de graça.

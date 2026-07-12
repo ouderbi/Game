@@ -1,4 +1,4 @@
-# PROJETO LEVIATÃ
+# PROJETO NOÓS
 ## Documento 13 / 21 — Camada de Inteligência dos Líderes
 
 > **Camada:** Inteligência · **Status:** rascunho para revisão · **Série:** 21 documentos
