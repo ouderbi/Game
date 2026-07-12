@@ -1,0 +1,100 @@
+[gd_scene load_steps=4 format=3 uid="uid://b5qp7g87rp0ik7m"]
+
+[ext_resource type="Script" path="res://scripts/game_world.gd"]
+[ext_resource type="Script" path="res://scripts/ui_hud.gd"]
+[ext_resource type="Script" path="res://scripts/tile_renderer.gd"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("game_world")
+
+[node name="TileRenderer" type="CanvasLayer" parent="."]
+script = ExtResource("tile_renderer")
+
+[node name="Camera2D" type="Camera2D" parent="."]
+anchor_mode = 1
+
+[node name="UILayer" type="CanvasLayer" parent="."]
+layer = 100
+
+[node name="HUD" type="Control" parent="UILayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("ui_hud")
+
+[node name="InfoPanel" type="PanelContainer" parent="UILayer/HUD"]
+anchor_left = 0.02
+anchor_top = 0.02
+anchor_right = 0.25
+anchor_bottom = 0.4
+custom_minimum_size = Vector2(300, 0)
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/HUD/InfoPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/HUD/InfoPanel/MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="EraLabel" type="Label" parent="UILayer/HUD/InfoPanel/MarginContainer/VBoxContainer"]
+text = "Era: Stone Age"
+theme_override_font_sizes/font_size = 16
+
+[node name="PopulationLabel" type="Label" parent="UILayer/HUD/InfoPanel/MarginContainer/VBoxContainer"]
+text = "Population: 1000"
+
+[node name="GovernmentLabel" type="Label" parent="UILayer/HUD/InfoPanel/MarginContainer/VBoxContainer"]
+text = "Government: Tribal"
+
+[node name="LegitimacyLabel" type="Label" parent="UILayer/HUD/InfoPanel/MarginContainer/VBoxContainer"]
+text = "Legitimacy: 70%"
+
+[node name="MoraleLabel" type="Label" parent="UILayer/HUD/InfoPanel/MarginContainer/VBoxContainer"]
+text = "Morale: 50%"
+
+[node name="HappinessLabel" type="Label" parent="UILayer/HUD/InfoPanel/MarginContainer/VBoxContainer"]
+text = "Happiness: 50%"
+
+[node name="ResourcesPanel" type="PanelContainer" parent="UILayer/HUD"]
+anchor_left = 0.02
+anchor_top = 0.42
+anchor_right = 0.25
+anchor_bottom = 0.95
+custom_minimum_size = Vector2(300, 0)
+
+[node name="MarginContainer" type="MarginContainer" parent="UILayer/HUD/ResourcesPanel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UILayer/HUD/ResourcesPanel/MarginContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+
+[node name="ResourcesTitle" type="Label" parent="UILayer/HUD/ResourcesPanel/MarginContainer/VBoxContainer"]
+text = "Resources"
+theme_override_font_sizes/font_size = 14
+
+[node name="FoodLabel" type="Label" parent="UILayer/HUD/ResourcesPanel/MarginContainer/VBoxContainer"]
+text = "Food: 100"
+
+[node name="WoodLabel" type="Label" parent="UILayer/HUD/ResourcesPanel/MarginContainer/VBoxContainer"]
+text = "Wood: 50"
+
+[node name="StoneLabel" type="Label" parent="UILayer/HUD/ResourcesPanel/MarginContainer/VBoxContainer"]
+text = "Stone: 30"
+
+[node name="CheatsLabel" type="Label" parent="UILayer/HUD"]
+anchor_right = 0.3
+anchor_bottom = 0.05
+margin_top = 10
+margin_left = 10
+text = "F1: Fill Resources | F2: Next Era | F3: Democracy | F4: Coup Risk"
+theme_override_font_sizes/font_size = 11
