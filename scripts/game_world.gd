@@ -15,6 +15,8 @@ var event_system: EventSystem
 var population_system: PopulationSystem
 var building_system: BuildingSystem
 var building_placer: BuildingPlacer
+var unit_system: UnitSystem
+var combat_system: CombatSystem
 
 # Game state
 var game_speed: float = 1.0  # 1x, 2x, 3x
@@ -53,6 +55,12 @@ func _ready():
 	building_placer = BuildingPlacer.new()
 	add_child(building_placer)
 	
+	unit_system = UnitSystem.new()
+	add_child(unit_system)
+	
+	combat_system = CombatSystem.new()
+	add_child(combat_system)
+	
 	# Wait for systems to initialize
 	await get_tree().process_frame
 	
@@ -64,21 +72,21 @@ func _ready():
 	print("Current Era: ", era_manager.get_era_name())
 	print("Population: ", population_system.total_population)
 	print("Government: ", government_system.get_government_name())
+	print("Military: ", unit_system.get_trained_units_count(), " trained units")
 	print("Resources: Food=%d, Wood=%d, Stone=%d" % [
 		resource_manager.get_resource_amount("food"),
 		resource_manager.get_resource_amount("wood"),
 		resource_manager.get_resource_amount("stone")
 	])
 	print("Mood: ", population_system.sentiment)
-	print("\nCHEATS:")
+	print("\nCHEATS & CONTROLS:")
 	print("  F1: Fill Resources")
 	print("  F2: Next Era")
 	print("  F3: Democracy")
-	print("  F4: Coup Risk")
-	print("  Arrows: Move camera")
-	print("  Scroll: Zoom")
-	print("  1/2/3: Speed")
-	print("  ESC: Pause")
+	print("  F4: Military Coup Risk")
+	print("  F5: Recruit Hunter (costs food)")
+	print("  F6: Declare War")
+	print("  Arrows: Move camera | Scroll: Zoom | 1/2/3: Speed | ESC: Pause")
 	print("============================\n")
 
 func setup_camera():
@@ -150,6 +158,16 @@ func _handle_input():
 	if Input.is_key_pressed(KEY_F4):
 		faction_system.factions["military"]["power"] = 0.8
 		print("Cheated: Military coup risk raised!")
+	if Input.is_key_pressed(KEY_F5):
+		var unit_type = "hunter" if era_manager.current_era_id == "stone_age" else "warrior_bronze"
+		if unit_system.recruit_unit(unit_type, population_system, resource_manager):
+			print("Recruited: ", unit_type)
+	if Input.is_key_pressed(KEY_F6):
+		var strength = unit_system.get_total_military_strength(government_system.get_military_modifier())
+		if strength > 0:
+			combat_system.declare_war(strength, strength * 0.8)
+		else:
+			print("Cannot declare war - no military units!")
 
 func _update_systems(delta: float):
 	"""Update all game systems each frame"""
@@ -161,7 +179,19 @@ func _update_systems(delta: float):
 	# Update buildings
 	building_system.update_buildings(delta * game_speed)
 	
+	# Update units
+	unit_system.update_units(delta * game_speed)
+	
+	# Update wars
+	combat_system.update_wars(unit_system, population_system, delta * game_speed)
+	
 	var world_state = get_world_state()
+	
+	# Update war pressure if at war
+	if combat_system.is_at_war():
+		world_state["is_at_war"] = true
+		event_system.pressures["war"] = 0.9  # Keep war pressure high
+	
 	event_system.update_pressures(world_state, delta * game_speed)
 	
 	population_system.update_population(delta * game_speed, world_state)
@@ -186,12 +216,12 @@ func get_world_state() -> Dictionary:
 		"population": population_system.total_population,
 		"sanitation": 0.5,  # TODO: Link to infrastructure
 		"trade_routes": 3,
-		"military_strength": 1000,
+		"military_strength": unit_system.get_total_military_strength(government_system.get_military_modifier()),
 		"hostility_with_neighbors": 0.3,
-		"leader_belligerence": 0.2,
+		"leader_belligerence": 0.2 if not combat_system.is_at_war() else 0.8,
 		"food_production": 150,
 		"food_consumption": population_system.total_population * 0.1,
-		"is_at_war": false,
+		"is_at_war": combat_system.is_at_war(),
 		"inequality": population_system.inequality_index,
 		"repression": 1.0 - government_system.get_civil_liberties(),
 		"legitimacy": government_system.legitimacy,

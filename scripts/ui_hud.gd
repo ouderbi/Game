@@ -15,6 +15,7 @@ class_name UIHUD
 @onready var stone_label = %StoneLabel
 
 var game_world: GameWorld
+var war_active: bool = false
 
 func _ready():
 	game_world = get_parent().get_parent()  # Navigate up to GameWorld
@@ -68,6 +69,13 @@ func update_display():
 		food_label.text = "Food: " + str(game_world.resource_manager.get_resource_amount("food"))
 		wood_label.text = "Wood: " + str(game_world.resource_manager.get_resource_amount("wood"))
 		stone_label.text = "Stone: " + str(game_world.resource_manager.get_resource_amount("stone"))
+	
+	# Military & War
+	if game_world.unit_system:
+		var trained = game_world.unit_system.get_trained_units_count()
+		var strength = game_world.unit_system.get_total_military_strength(game_world.government_system.get_military_modifier())
+		var war_status = " (AT WAR!)" if game_world.combat_system.is_at_war() else ""
+		print_debug("Military: %d units, strength: %.0f%s" % [trained, strength, war_status])
 
 func _on_era_changed(era_id: String):
 	era_label.text = "Era: " + game_world.era_manager.get_era_name()
