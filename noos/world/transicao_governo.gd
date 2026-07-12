@@ -30,8 +30,9 @@ static func avaliar_e_aplicar(
 	estado: EstadoDoMundo, polity: Polity, tipo_governo_atual: TipoDeGoverno
 ) -> void:
 	if polity.estabilidade < LIMIAR_COLAPSO:
-		_aplicar_transicao(estado, polity, tipo_governo_atual, ID_ESTADO_FALIDO, "colapso")
-		return
+		if polity.tipo_governo_id != ID_ESTADO_FALIDO:
+			_aplicar_transicao(estado, polity, tipo_governo_atual, ID_ESTADO_FALIDO, "colapso")
+		return  # já é estado_falido — não reaplica fôlego repetido nem regrava histórico
 
 	var risco_golpe := _risco_golpe(polity)
 	var risco_revolucao := _risco_revolucao(estado, polity)
@@ -94,6 +95,9 @@ static func _regioes_da_polity(estado: EstadoDoMundo, polity: Polity) -> Array[R
 static func _escolher_destino(
 	estado: EstadoDoMundo, polity: Polity, atual: TipoDeGoverno, motivo: String
 ) -> String:
+	if atual == null:
+		return ""  # sem o governo atual pra comparar, não dá pra pontuar candidatos
+
 	var catalogo := CatalogoDeGovernos.catalogo()
 	var rng := _rng_para(estado, polity, "destino")
 
@@ -128,12 +132,17 @@ static func _aplicar_transicao(
 	novo_id: String,
 	motivo: String
 ) -> void:
+	# Nome de exibição dos dois lados (nunca mistura id cru com nome) — o
+	# histórico vira texto legível pra tela de legado (PDF 02 §7).
 	var nome_antigo := polity.tipo_governo_id
 	if tipo_governo_atual != null:
 		nome_antigo = tipo_governo_atual.nome
+	var tipo_governo_novo: TipoDeGoverno = CatalogoDeGovernos.catalogo().get(novo_id)
+	var nome_novo := tipo_governo_novo.nome if tipo_governo_novo != null else novo_id
+
 	polity.tipo_governo_id = novo_id
 	polity.historico_governos.append(
-		"%d:%s->%s:%s" % [estado.tick_atual, nome_antigo, novo_id, motivo]
+		"%d:%s->%s:%s" % [estado.tick_atual, nome_antigo, nome_novo, motivo]
 	)
 	# Fôlego do regime novo — nunca reinicia do zero (as cicatrizes ficam).
 	polity.estabilidade = clampf(polity.estabilidade + FOLEGO_POS_TRANSICAO, 0.0, 1.0)
@@ -141,7 +150,7 @@ static func _aplicar_transicao(
 	print(
 		(
 			"[transição] %s (tick %d): %s -> %s (%s)"
-			% [polity.nome, estado.tick_atual, nome_antigo, novo_id, motivo]
+			% [polity.nome, estado.tick_atual, nome_antigo, nome_novo, motivo]
 		)
 	)
 
