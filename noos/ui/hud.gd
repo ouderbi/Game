@@ -1,11 +1,9 @@
 ## Painel de nação mínimo — PDF 19 §1/§5: tick atual, população total,
-## governo + manutenção e medidores da "Sua Polity", pausa e velocidade
-## (1x/2x/3x). Os demais painéis (Governo, Diplomacia...) entram nos
-## marcos seguintes.
+## governo + manutenção e medidores da "Sua Polity", os primeiros verbos
+## reais do jogador (impostos), pausa e velocidade (1x/2x/3x). Os demais
+## painéis (Governo, Diplomacia...) entram nos marcos seguintes.
 class_name HUD
 extends Control
-
-const ID_POLITY_DO_JOGADOR := 0
 
 var estado: EstadoDoMundo
 
@@ -49,6 +47,17 @@ func _ready() -> void:
 	_rotulo_polity.text = ""
 	caixa.add_child(_rotulo_polity)
 
+	var caixa_impostos := HBoxContainer.new()
+	caixa.add_child(caixa_impostos)
+	var botao_subir := Button.new()
+	botao_subir.text = "Subir impostos"
+	botao_subir.pressed.connect(_ao_clicar_imposto.bind("raise_taxes"))
+	caixa_impostos.add_child(botao_subir)
+	var botao_baixar := Button.new()
+	botao_baixar.text = "Baixar impostos"
+	botao_baixar.pressed.connect(_ao_clicar_imposto.bind("lower_taxes"))
+	caixa_impostos.add_child(botao_baixar)
+
 	_botao_pausa = Button.new()
 	_botao_pausa.text = "Pausar"
 	_botao_pausa.pressed.connect(_ao_clicar_pausa)
@@ -68,6 +77,15 @@ func _ao_clicar_pausa() -> void:
 	_botao_pausa.text = "Retomar" if Relogio.pausado else "Pausar"
 
 
+## PDF 19 §2: clique do jogador → ação enfileirada → aplicada pelo MESMO
+## pipeline do tick que a IA usa (SimulacaoPolitica._aplicar_decisao).
+## A UI nunca aplica o efeito direto — só propõe.
+func _ao_clicar_imposto(tipo: String) -> void:
+	if estado == null:
+		return
+	estado.fila_acoes_jogador.append({"type": tipo, "amount": 0.02})
+
+
 ## Chamado pelo main.gd depois de cada passo de simulação — deixa a ordem
 ## "simula, depois mostra" explícita, sem depender da ordem de conexão
 ## de sinais.
@@ -77,9 +95,9 @@ func atualizar() -> void:
 	_rotulo_tick.text = "Tick: %d" % estado.tick_atual
 	_rotulo_populacao.text = "População: %d" % int(estado.populacao_total())
 
-	if not estado.polities.has(ID_POLITY_DO_JOGADOR):
+	var polity := estado.polity_do_jogador()
+	if polity == null:
 		return
-	var polity: Polity = estado.polities[ID_POLITY_DO_JOGADOR]
 	var tipo_governo: TipoDeGoverno = estado.tipos_de_governo.get(polity.tipo_governo_id)
 
 	if tipo_governo != null:

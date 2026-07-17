@@ -25,13 +25,13 @@ Onde os **verbos do jogador** (PDF 02 §6) chegam às mãos. Implementa `ui/`.
 
 ---
 
-### 2. Como uma decisão entra na simulação
+### 2. Como uma decisão entra na simulação  ✅ implementado (primeiro verbo)
 
 ```
 clique do jogador → ação enfileirada → aplicada pelo MESMO pipeline do tick (PDF 03 §5)
 ```
 
-A ação do jogador passa pela mesma validação que a decisão do líder-LLM. Consistência total.
+A ação do jogador passa pela mesma validação que a decisão do líder-LLM (ou heurística). Consistência total: `EstadoDoMundo.fila_acoes_jogador` recebe o clique; `SimulacaoPolitica.avancar()` identifica a polity com `eh_jogador = true` e, em vez de chamar o Decisor heurístico, consome essa fila — o mesmo `_aplicar_decisao()` valida e aplica os dois casos. Primeiro verbo real: subir/baixar impostos (HUD). Os demais painéis da Seção 1 chegam conforme os sistemas por trás deles existirem.
 
 ---
 

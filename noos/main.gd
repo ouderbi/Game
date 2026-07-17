@@ -107,6 +107,7 @@ func _criar_polities() -> void:
 		polity.tipo_governo_id = GOVERNO_INICIAL
 		polity.leader_id = lider.id
 		polity.region_ids = [regiao.id]
+		polity.eh_jogador = i == 0  # "Sua Polity" — as outras 3 seguem por heurística
 		regiao.owner_polity_id = polity.id
 		_estado.polities[polity.id] = polity
 

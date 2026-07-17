@@ -11,6 +11,12 @@ var tipo_governo_id: String
 var leader_id: int
 var region_ids: Array[int] = []
 
+## true só pra "Sua Polity" — decisões vêm da fila de ações do jogador
+## (EstadoDoMundo.fila_acoes_jogador) em vez do Decisor heurístico
+## (SimulacaoPolitica.avancar). PDF 19 §2: clique do jogador → ação
+## enfileirada → aplicada pelo MESMO pipeline do tick que a IA usa.
+var eh_jogador: bool = false
+
 ## Era atual (PDF 05 §4) — hoje sempre "pedra" (sem árvore de eras ainda,
 ## M5). Já existe pra filtrar candidatos de transição de governo por era
 ## desde já (TransicaoDeGoverno), sem precisar mexer nesse código quando

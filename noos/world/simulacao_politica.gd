@@ -29,8 +29,12 @@ static func avancar(estado: EstadoDoMundo) -> void:
 		if regioes_da_polity.is_empty():
 			continue
 
-		var briefing := _montar_briefing(estado, polity, lider, regioes_da_polity)
-		var decisao: Dictionary = decisor.decidir(briefing)
+		var decisao: Dictionary
+		if polity.eh_jogador:
+			decisao = _consumir_fila_do_jogador(estado)
+		else:
+			var briefing := _montar_briefing(estado, polity, lider, regioes_da_polity)
+			decisao = decisor.decidir(briefing)
 		_aplicar_decisao(polity, regioes_da_polity, decisao)
 
 		CalculadoraDeEstabilidade.avancar(polity, tipo_governo, lider, regioes_da_polity)
@@ -64,6 +68,15 @@ static func _montar_briefing(
 		# partida sempre reproduz o mesmo "erro" do líder (PDF 03 §4).
 		"semente_ruido": estado.semente * 1000003 + estado.tick_atual * 97 + polity.id,
 	}
+
+
+## Consome (e esvazia) a fila de cliques do jogador — a mesma validação
+## de _aplicar_decisao vale aqui também (PDF 13 §8): o jogador propõe, a
+## engine valida.
+static func _consumir_fila_do_jogador(estado: EstadoDoMundo) -> Dictionary:
+	var acoes := estado.fila_acoes_jogador.duplicate()
+	estado.fila_acoes_jogador.clear()
+	return {"actions": acoes}
 
 
 ## A engine é a autoridade: valida o "cardápio" de ações conhecido,

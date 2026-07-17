@@ -46,6 +46,7 @@ func _initialize() -> void:
 	ok = _testar_colapso_vira_estado_falido() and ok
 	ok = _testar_transicao_e_deterministica() and ok
 	ok = _testar_transicao_respeita_era() and ok
+	ok = _testar_fila_do_jogador_e_consumida() and ok
 
 	if ok:
 		print("OK: todos os testes passaram")
@@ -406,4 +407,44 @@ func _testar_transicao_respeita_era() -> bool:
 		print("FALHA: nenhuma transição disparou em 300 ticks — não deu pra testar o filtro de era")
 		return false
 	print("OK: transições respeitam a era da polity")
+	return true
+
+
+func _testar_fila_do_jogador_e_consumida() -> bool:
+	var estado := GeradorDeMapa.gerar(11, 32, 24)
+	estado.regioes = GeradorDeRegioes.gerar(estado)
+	if estado.regioes.is_empty():
+		print("FALHA: sem regiões pra testar a fila do jogador")
+		return false
+
+	estado.tipos_de_governo = CatalogoDeGovernos.catalogo()
+	var lider := Lider.new()
+	lider.id = 0
+	estado.lideres[0] = lider
+
+	var polity := Polity.new()
+	polity.id = 0
+	polity.tipo_governo_id = "tribo"
+	polity.leader_id = 0
+	polity.eh_jogador = true
+	polity.region_ids = [estado.regioes[0].id]
+	estado.regioes[0].owner_polity_id = 0
+	estado.regioes[0].riqueza_media = 0.5
+	estado.polities[0] = polity
+
+	if estado.polity_do_jogador() != polity:
+		print("FALHA: polity_do_jogador() não achou a polity marcada eh_jogador=true")
+		return false
+
+	var tesouro_inicial := polity.tesouro
+	estado.fila_acoes_jogador.append({"type": "raise_taxes", "amount": 0.02})
+	SimulacaoPolitica.avancar(estado)
+
+	if not estado.fila_acoes_jogador.is_empty():
+		print("FALHA: fila_acoes_jogador não foi esvaziada depois de SimulacaoPolitica.avancar()")
+		return false
+	if polity.tesouro <= tesouro_inicial:
+		print("FALHA: ação enfileirada pelo jogador não teve efeito (tesouro não subiu)")
+		return false
+	print("OK: fila de ações do jogador é consumida e aplicada pelo mesmo pipeline da IA")
 	return true
