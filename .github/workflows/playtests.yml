@@ -1,0 +1,33 @@
+name: Automated Playtests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ouderbi-deep-strategy-game
+
+jobs:
+  run-playtests:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Godot
+        uses: game-ci/godot-action@v2
+        with:
+          godot-version: '4.2.4'
+
+      - name: Run headless playtests
+        env:
+          PLAYTEST_RUNS: 10
+        run: |
+          mkdir -p playtest_reports
+          godot --headless --disable-render-loop --path . -s res://scripts/headless_playtest.gd || true
+
+      - name: Upload playtest reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: playtest-reports
+          path: playtest_reports/
