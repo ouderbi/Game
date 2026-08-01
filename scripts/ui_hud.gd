@@ -17,6 +17,12 @@ class_name UIHUD
 var game_world: GameWorld
 var war_active: bool = false
 
+# Dynamic UI panels
+var faction_panel: FactionStatusPanel
+var war_panel: WarStatusPanel
+var building_browser_panel: BuildingBrowserPanel
+var government_effects_panel: GovernmentEffectsPanel
+
 func _ready():
 	game_world = get_parent().get_parent()  # Navigate up to GameWorld
 	
@@ -34,6 +40,48 @@ func _ready():
 	
 	if game_world and game_world.resource_manager:
 		game_world.resource_manager.resource_changed.connect(_on_resource_changed)
+	
+	# Instantiate and configure additional UI panels (right side)
+	# Faction status
+	faction_panel = preload("res://scripts/faction_status_panel.gd").new()
+	faction_panel.faction_system = game_world.faction_system
+	faction_panel.government_system = game_world.government_system
+	faction_panel.anchor_left = 0.74
+	faction_panel.anchor_top = 0.02
+	faction_panel.anchor_right = 0.98
+	faction_panel.anchor_bottom = 0.36
+	add_child(faction_panel)
+	
+	# War status
+	war_panel = preload("res://scripts/war_status_panel.gd").new()
+	war_panel.combat_system = game_world.combat_system
+	war_panel.unit_system = game_world.unit_system
+	war_panel.anchor_left = 0.74
+	war_panel.anchor_top = 0.38
+	war_panel.anchor_right = 0.98
+	war_panel.anchor_bottom = 0.62
+	add_child(war_panel)
+	
+	# Building browser
+	building_browser_panel = preload("res://scripts/building_browser_panel.gd").new()
+	building_browser_panel.building_system = game_world.building_system
+	building_browser_panel.era_manager = game_world.era_manager
+	building_browser_panel.resource_manager = game_world.resource_manager
+	building_browser_panel.anchor_left = 0.74
+	building_browser_panel.anchor_top = 0.64
+	building_browser_panel.anchor_right = 0.98
+	building_browser_panel.anchor_bottom = 0.95
+	add_child(building_browser_panel)
+	
+	# Government effects
+	government_effects_panel = preload("res://scripts/government_effects_panel.gd").new()
+	government_effects_panel.government_system = game_world.government_system
+	government_effects_panel.faction_system = game_world.faction_system
+	government_effects_panel.anchor_left = 0.49
+	government_effects_panel.anchor_top = 0.64
+	government_effects_panel.anchor_right = 0.73
+	government_effects_panel.anchor_bottom = 0.95
+	add_child(government_effects_panel)
 
 func _process(_delta):
 	if not game_world:
@@ -41,6 +89,20 @@ func _process(_delta):
 	
 	# Update display every frame
 	update_display()
+	
+	# Update dynamic panels
+	if faction_panel:
+		faction_panel.update_display()
+	if war_panel:
+		war_panel.update_display()
+	if building_browser_panel:
+		# building browser is heavier; update less frequently could be considered
+		building_browser_panel.print_building_summary()  # lightweight summary for now
+	if government_effects_panel:
+		# government effects are mostly static; ensure labels are current
+		# recreate panel when government changes would be better; refresh here
+		# Call print for debug summary
+		government_effects_panel.print_government_status()
 
 func update_display():
 	if not game_world:

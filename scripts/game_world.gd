@@ -23,6 +23,10 @@ var tech_tree_ui: TechTreeUI
 var multi_scale_viewport: MultiScaleViewport
 var event_log: EventLogUI
 var playtesting_analyzer: PlaytestingAnalyzer
+var faction_status_panel: FactionStatusPanel
+var war_status_panel: WarStatusPanel
+var building_browser_panel: BuildingBrowserPanel
+var government_effects_panel: GovernmentEffectsPanel
 
 # Game state
 var game_speed: float = 1.0  # 1x, 2x, 3x
