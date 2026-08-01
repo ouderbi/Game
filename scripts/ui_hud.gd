@@ -23,6 +23,10 @@ var war_panel: WarStatusPanel
 var building_browser_panel: BuildingBrowserPanel
 var government_effects_panel: GovernmentEffectsPanel
 
+# Throttle timer for heavy UI updates
+var throttle_timer: Timer
+
+
 func _ready():
 	game_world = get_parent().get_parent()  # Navigate up to GameWorld
 	
@@ -83,25 +87,31 @@ func _ready():
 	government_effects_panel.anchor_bottom = 0.95
 	add_child(government_effects_panel)
 
+	# Create throttle timer for heavy updates
+	throttle_timer = Timer.new()
+	throttle_timer.wait_time = 1.0
+	throttle_timer.one_shot = false
+	throttle_timer.autostart = true
+	add_child(throttle_timer)
+	throttle_timer.timeout.connect(_on_throttle_timeout)
+
 func _process(_delta):
 	if not game_world:
 		return
 	
-	# Update display every frame
+	# Update display every frame (keeps HUD responsive)
 	update_display()
-	
-	# Update dynamic panels
+
+# Throttled heavy-update handler
+func _on_throttle_timeout():
 	if faction_panel:
 		faction_panel.update_display()
 	if war_panel:
 		war_panel.update_display()
 	if building_browser_panel:
-		# building browser is heavier; update less frequently could be considered
-		building_browser_panel.print_building_summary()  # lightweight summary for now
+		# Print a lightweight summary or refresh data if explicitly requested
+		building_browser_panel.print_building_summary()
 	if government_effects_panel:
-		# government effects are mostly static; ensure labels are current
-		# recreate panel when government changes would be better; refresh here
-		# Call print for debug summary
 		government_effects_panel.print_government_status()
 
 func update_display():

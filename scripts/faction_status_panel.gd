@@ -41,28 +41,32 @@ func setup_panel():
 			var faction_label = Label.new()
 			faction_label.text = faction_name
 			faction_label.add_theme_font_size_override("font_size", 12)
+			faction_label.hint_tooltip = "Faction: %s — click for details" % faction.get("name", faction_id)
 			container.add_child(faction_label)
-			
+		
 			# Loyalty bar
 			var loyalty_bar = ProgressBar.new()
 			loyalty_bar.min_value = 0
 			loyalty_bar.max_value = 100
 			loyalty_bar.value = faction.get("loyalty", 0.5) * 100
 			loyalty_bar.show_percentage = true
+			loyalty_bar.hint_tooltip = "Current loyalty (higher = less likely to coup)."
 			container.add_child(loyalty_bar)
-			
+		
 			# Satisfaction bar
 			var satisfaction_bar = ProgressBar.new()
 			satisfaction_bar.min_value = 0
 			satisfaction_bar.max_value = 100
 			satisfaction_bar.value = faction.get("satisfaction", 0.5) * 100
 			satisfaction_bar.show_percentage = true
+			satisfaction_bar.hint_tooltip = "Satisfaction affects population behaviour and support for government."
 			container.add_child(satisfaction_bar)
-			
+		
 			# Coup risk label
 			var coup_risk = faction_system.calculate_coup_risk(faction_id)
 			var coup_label = Label.new()
 			coup_label.text = "Coup Risk: %.0f%%" % (coup_risk * 100)
+			coup_label.hint_tooltip = "Estimated coup probability based on loyalty, power and current policies."
 			var color = Color.RED if coup_risk > 0.7 else Color.YELLOW if coup_risk > 0.4 else Color.GREEN
 			coup_label.add_theme_color_override("font_color", color)
 			container.add_child(coup_label)

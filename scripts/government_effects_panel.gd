@@ -31,21 +31,25 @@ func setup_panel():
 	var research_label = Label.new()
 	research_label.text = "Research Speed: x%.2f" % research_mod
 	research_label.add_theme_color_override("font_color", Color.CYAN if research_mod > 1.0 else Color.RED)
+	research_label.hint_tooltip = "Modifier applied to research speed by this government."
 	container.add_child(research_label)
 	
 	var military_label = Label.new()
 	military_label.text = "Military Strength: x%.2f" % military_mod
 	military_label.add_theme_color_override("font_color", Color.CYAN if military_mod > 1.0 else Color.RED)
+	military_label.hint_tooltip = "Modifier applied to military effectiveness and recruitment."
 	container.add_child(military_label)
 	
 	var corruption_label = Label.new()
 	corruption_label.text = "Corruption: %.0f%%" % (corruption * 100)
 	corruption_label.add_theme_color_override("font_color", Color.RED if corruption > 0.3 else Color.YELLOW if corruption > 0.1 else Color.GREEN)
+	corruption_label.hint_tooltip = "Estimated corruption level; higher values leak resources."
 	container.add_child(corruption_label)
 	
 	var liberties_label = Label.new()
 	liberties_label.text = "Civil Liberties: %.0f%%" % (liberties * 100)
 	liberties_label.add_theme_color_override("font_color", Color.GREEN if liberties > 0.7 else Color.YELLOW if liberties > 0.3 else Color.RED)
+	liberties_label.hint_tooltip = "Civil liberties affect dissent, productivity, and legitimacy."
 	container.add_child(liberties_label)
 	
 	container.add_child(HSeparator.new())

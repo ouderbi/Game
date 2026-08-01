@@ -46,12 +46,14 @@ func setup_panel():
 		var header = Label.new()
 		header.text = building["name"]
 		header.add_theme_font_size_override("font_size", 11)
+		header.hint_tooltip = building.get("description", "No description")
 		container.add_child(header)
 		
 		# Building description
 		var desc = Label.new()
 		desc.text = building.get("description", "No description")
 		desc.add_theme_font_size_override("font_size", 9)
+		desc.hint_tooltip = "Detailed building information"
 		container.add_child(desc)
 		
 		# Costs
@@ -62,6 +64,7 @@ func setup_panel():
 		
 		var cost_label = Label.new()
 		cost_label.text = cost_text
+		cost_label.hint_tooltip = "Resources required to construct this building"
 		
 		# Color code if player can afford
 		var can_afford = true
@@ -87,6 +90,7 @@ func setup_panel():
 			var prod_label = Label.new()
 			prod_label.text = prod_text
 			prod_label.add_theme_color_override("font_color", Color.YELLOW)
+			prod_label.hint_tooltip = "Per-tick resource production"
 			container.add_child(prod_label)
 		
 		# Separator
