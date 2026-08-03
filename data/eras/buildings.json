@@ -1,0 +1,302 @@
+{
+  "buildings": [
+    {
+      "id": "cabin",
+      "name": "Cabin",
+      "era": "stone_age",
+      "description": "Basic shelter for inhabitants",
+      "cost": {"wood": 20, "stone": 10},
+      "build_time": 50,
+      "population_capacity": 5,
+      "size": [1, 1]
+    },
+    {
+      "id": "campfire",
+      "name": "Campfire",
+      "era": "stone_age",
+      "description": "Gather around fire for warmth and food preparation",
+      "cost": {"wood": 10, "stone": 5},
+      "build_time": 30,
+      "morale_boost": 0.1,
+      "size": [1, 1]
+    },
+    {
+      "id": "storage_basic",
+      "name": "Storage Pit",
+      "era": "stone_age",
+      "description": "Store food and resources",
+      "cost": {"wood": 15, "stone": 20},
+      "build_time": 40,
+      "storage_capacity": 100,
+      "size": [1, 1]
+    },
+    
+    {
+      "id": "village",
+      "name": "Village Center",
+      "era": "bronze_age",
+      "description": "Hub of a growing settlement",
+      "cost": {"wood": 50, "stone": 40},
+      "build_time": 100,
+      "population_capacity": 20,
+      "size": [2, 2]
+    },
+    {
+      "id": "granary",
+      "name": "Granary",
+      "era": "bronze_age",
+      "description": "Store grains and crops",
+      "cost": {"wood": 40, "stone": 50},
+      "build_time": 80,
+      "storage_capacity": 300,
+      "production": {"food": 0.5},
+      "size": [2, 2]
+    },
+    {
+      "id": "smithy_bronze",
+      "name": "Bronze Smithy",
+      "era": "bronze_age",
+      "description": "Forge bronze tools and weapons",
+      "cost": {"wood": 60, "stone": 50, "copper": 20},
+      "build_time": 120,
+      "production": {"bronze": 0.3},
+      "size": [2, 2]
+    },
+    
+    {
+      "id": "city",
+      "name": "City Center",
+      "era": "iron_age",
+      "description": "Centralized hub for growing city",
+      "cost": {"wood": 150, "stone": 200, "iron": 50},
+      "build_time": 200,
+      "population_capacity": 100,
+      "size": [3, 3]
+    },
+    {
+      "id": "fortress",
+      "name": "Fortress",
+      "era": "iron_age",
+      "description": "Defend against invaders",
+      "cost": {"stone": 300, "iron": 100},
+      "build_time": 300,
+      "defense_strength": 5.0,
+      "size": [4, 4]
+    },
+    {
+      "id": "workshop_iron",
+      "name": "Iron Workshop",
+      "era": "iron_age",
+      "description": "Forge iron tools and weapons",
+      "cost": {"wood": 100, "stone": 80, "iron": 50},
+      "build_time": 150,
+      "production": {"iron": 0.5},
+      "size": [3, 2]
+    },
+    {
+      "id": "market",
+      "name": "Market",
+      "era": "iron_age",
+      "description": "Trade hub for merchants",
+      "cost": {"wood": 80, "stone": 60},
+      "build_time": 100,
+      "trade_bonus": 0.2,
+      "size": [2, 2]
+    },
+    
+    {
+      "id": "castle",
+      "name": "Castle",
+      "era": "medieval",
+      "description": "Noble seat of power and defense",
+      "cost": {"stone": 500, "gold": 100},
+      "build_time": 400,
+      "defense_strength": 10.0,
+      "morale_boost": 0.3,
+      "population_capacity": 200,
+      "size": [5, 5]
+    },
+    {
+      "id": "monastery",
+      "name": "Monastery",
+      "era": "medieval",
+      "description": "Center of learning and faith",
+      "cost": {"stone": 300, "gold": 50},
+      "build_time": 250,
+      "research_speed": 0.5,
+      "morale_boost": 0.2,
+      "size": [3, 3]
+    },
+    {
+      "id": "mine",
+      "name": "Mine",
+      "era": "medieval",
+      "description": "Extract ore from the earth",
+      "cost": {"wood": 100, "stone": 150},
+      "build_time": 150,
+      "production": {"iron": 0.3, "gold": 0.1},
+      "size": [3, 3]
+    },
+    {
+      "id": "farm",
+      "name": "Farm",
+      "era": "medieval",
+      "description": "Cultivate crops for food",
+      "cost": {"wood": 50, "stone": 30},
+      "build_time": 80,
+      "production": {"food": 1.0, "wheat": 0.5},
+      "size": [2, 2]
+    },
+    
+    {
+      "id": "university",
+      "name": "University",
+      "era": "enlightenment",
+      "description": "Center of higher learning and science",
+      "cost": {"stone": 400, "gold": 150, "paper": 50},
+      "build_time": 300,
+      "research_speed": 1.5,
+      "size": [4, 4]
+    },
+    {
+      "id": "factory_textile",
+      "name": "Textile Factory",
+      "era": "enlightenment",
+      "description": "Mass-produce cloth and textiles",
+      "cost": {"wood": 200, "stone": 100, "iron": 80},
+      "build_time": 200,
+      "production": {"cloth": 1.0},
+      "size": [3, 3]
+    },
+    
+    {
+      "id": "factory",
+      "name": "Industrial Factory",
+      "era": "industrial",
+      "description": "Steam-powered factory for mass production",
+      "cost": {"wood": 300, "iron": 200, "coal": 100},
+      "build_time": 300,
+      "production": {"steel": 0.8},
+      "size": [4, 4]
+    },
+    {
+      "id": "railway",
+      "name": "Railway Station",
+      "era": "industrial",
+      "description": "Hub for rail transportation",
+      "cost": {"iron": 300, "stone": 100},
+      "build_time": 250,
+      "trade_bonus": 0.5,
+      "size": [3, 3]
+    },
+    {
+      "id": "coal_plant",
+      "name": "Coal Power Plant",
+      "era": "industrial",
+      "description": "Generate power from coal",
+      "cost": {"iron": 250, "stone": 200},
+      "build_time": 280,
+      "production": {"power": 2.0},
+      "pollution": 1.5,
+      "size": [4, 4]
+    },
+    
+    {
+      "id": "factory_electric",
+      "name": "Electric Factory",
+      "era": "modern",
+      "description": "Electrically-powered mass production",
+      "cost": {"iron": 400, "steel": 200, "gold": 100},
+      "build_time": 250,
+      "production": {"steel": 1.2},
+      "size": [4, 4]
+    },
+    {
+      "id": "airport",
+      "name": "Airport",
+      "era": "modern",
+      "description": "Hub for air transportation",
+      "cost": {"concrete": 300, "steel": 200, "gold": 100},
+      "build_time": 300,
+      "trade_bonus": 0.8,
+      "size": [5, 5]
+    },
+    {
+      "id": "hydroelectric_plant",
+      "name": "Hydroelectric Plant",
+      "era": "modern",
+      "description": "Generate clean power from water",
+      "cost": {"concrete": 500, "steel": 300},
+      "build_time": 400,
+      "production": {"power": 3.0},
+      "pollution": 0.0,
+      "size": [5, 5]
+    },
+    
+    {
+      "id": "nuclear_plant",
+      "name": "Nuclear Power Plant",
+      "era": "atomic",
+      "description": "Atomic fission for massive power generation",
+      "cost": {"concrete": 800, "steel": 500, "uranium": 100},
+      "build_time": 500,
+      "production": {"power": 8.0},
+      "pollution": 0.2,
+      "danger": 1.0,
+      "size": [6, 6]
+    },
+    {
+      "id": "research_center",
+      "name": "Advanced Research Center",
+      "era": "atomic",
+      "description": "Cutting-edge scientific research",
+      "cost": {"steel": 400, "gold": 300, "silicon": 150},
+      "build_time": 350,
+      "research_speed": 3.0,
+      "size": [5, 5]
+    },
+    
+    {
+      "id": "server_farm",
+      "name": "Server Farm",
+      "era": "information",
+      "description": "Data centers for the digital age",
+      "cost": {"silicon": 300, "copper": 200, "power": 50},
+      "build_time": 300,
+      "production": {"data": 2.0},
+      "size": [4, 4]
+    },
+    {
+      "id": "robot_factory",
+      "name": "Robot Factory",
+      "era": "information",
+      "description": "Manufacture autonomous robots",
+      "cost": {"steel": 400, "silicon": 200},
+      "build_time": 350,
+      "production": {"robots": 1.5},
+      "size": [5, 5]
+    },
+    
+    {
+      "id": "space_station",
+      "name": "Orbital Space Station",
+      "era": "space",
+      "description": "Research and production in orbit",
+      "cost": {"steel": 1000, "rare_earth": 500, "uranium": 200},
+      "build_time": 1000,
+      "research_speed": 5.0,
+      "size": [10, 10]
+    },
+    {
+      "id": "lunar_base",
+      "name": "Lunar Base",
+      "era": "space",
+      "description": "Settlement on the moon",
+      "cost": {"rare_earth": 800, "titanium": 500},
+      "build_time": 800,
+      "population_capacity": 500,
+      "production": {"helium3": 1.0},
+      "size": [8, 8]
+    }
+  ]
+}

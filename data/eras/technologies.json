@@ -1,0 +1,59 @@
+{
+  "technologies": [
+    {"id": "fire", "name": "Fire", "era": "stone_age", "research_time": 100, "description": "Master the use of fire"},
+    {"id": "hunting", "name": "Hunting", "era": "stone_age", "research_time": 150, "description": "Improve hunting techniques"},
+    {"id": "agriculture", "name": "Agriculture", "era": "stone_age", "research_time": 200, "description": "Domesticate plants and create farms", "unlocks_era": "bronze_age"},
+    
+    {"id": "metallurgy_bronze", "name": "Bronze Metallurgy", "era": "bronze_age", "research_time": 300, "description": "Forge bronze tools and weapons"},
+    {"id": "wheel", "name": "The Wheel", "era": "bronze_age", "research_time": 250, "description": "Invent the wheel for transportation"},
+    {"id": "domestication", "name": "Animal Domestication", "era": "bronze_age", "research_time": 280, "description": "Tame horses and oxen"},
+    
+    {"id": "metallurgy_iron", "name": "Iron Metallurgy", "era": "iron_age", "research_time": 400, "description": "Superior iron tools replace bronze", "unlocks_era": "medieval"},
+    {"id": "writing", "name": "Writing", "era": "iron_age", "research_time": 350, "description": "Develop writing systems"},
+    {"id": "trade", "name": "Organized Trade", "era": "iron_age", "research_time": 300, "description": "Establish trade routes and commerce"},
+    
+    {"id": "cavalry", "name": "Cavalry", "era": "medieval", "research_time": 500, "description": "Master mounted warfare"},
+    {"id": "feudalism", "name": "Feudalism", "era": "medieval", "research_time": 600, "description": "Organize society through feudal bonds"},
+    {"id": "religion", "name": "Organized Religion", "era": "medieval", "research_time": 400, "description": "Centralize religious authority"},
+    {"id": "education", "name": "Monastic Education", "era": "medieval", "research_time": 350, "description": "Preserve and spread knowledge"},
+    
+    {"id": "printing", "name": "Printing Press", "era": "renaissance", "research_time": 450, "description": "Mass production of books"},
+    {"id": "perspective", "name": "Perspective Drawing", "era": "renaissance", "research_time": 300, "description": "Accurate representation in art"},
+    {"id": "humanism", "name": "Humanism", "era": "renaissance", "research_time": 500, "description": "Focus on human potential and achievement"},
+    {"id": "gunpowder", "name": "Gunpowder", "era": "renaissance", "research_time": 550, "description": "Explosives for warfare", "unlocks_era": "enlightenment"},
+    
+    {"id": "reason", "name": "Age of Reason", "era": "enlightenment", "research_time": 700, "description": "Scientific method and rational thought", "unlocks_era": "industrial"},
+    {"id": "human_rights", "name": "Human Rights", "era": "enlightenment", "research_time": 600, "description": "Universal rights for all people"},
+    {"id": "scientism", "name": "Scientism", "era": "enlightenment", "research_time": 650, "description": "Science as supreme knowledge"},
+    
+    {"id": "steam_engine", "name": "Steam Engine", "era": "industrial", "research_time": 800, "description": "Power through steam", "unlocks_era": "modern"},
+    {"id": "electricity", "name": "Electricity", "era": "industrial", "research_time": 900, "description": "Harness electrical power", "unlocks_era": "atomic"},
+    {"id": "railways", "name": "Railways", "era": "industrial", "research_time": 700, "description": "Iron rails transform transport"},
+    {"id": "imperialism", "name": "Imperialism", "era": "industrial", "research_time": 600, "description": "Expand colonial empires"},
+    
+    {"id": "combustion_engine", "name": "Combustion Engine", "era": "modern", "research_time": 900, "description": "Internal combustion engines"},
+    {"id": "aviation", "name": "Aviation", "era": "modern", "research_time": 950, "description": "Flight through mechanical means"},
+    {"id": "radio", "name": "Radio", "era": "modern", "research_time": 800, "description": "Wireless communication"},
+    {"id": "chemistry", "name": "Chemistry", "era": "modern", "research_time": 850, "description": "Master chemical reactions"},
+    
+    {"id": "nuclear_energy", "name": "Nuclear Energy", "era": "atomic", "research_time": 1200, "description": "Split the atom for power", "unlocks_era": "information"},
+    {"id": "computers", "name": "Computers", "era": "atomic", "research_time": 1100, "description": "Mechanical and electronic computation"},
+    {"id": "television", "name": "Television", "era": "atomic", "research_time": 1000, "description": "Broadcast entertainment and information"},
+    {"id": "rockets_moon", "name": "Moon Rockets", "era": "atomic", "research_time": 1300, "description": "Reach the moon"},
+    
+    {"id": "internet", "name": "The Internet", "era": "information", "research_time": 1400, "description": "Global information network", "unlocks_era": "space"},
+    {"id": "ai", "name": "Artificial Intelligence", "era": "information", "research_time": 1500, "description": "Create thinking machines"},
+    {"id": "genetics", "name": "Genetic Engineering", "era": "information", "research_time": 1600, "description": "Modify DNA for enhancement"},
+    {"id": "robotics", "name": "Advanced Robotics", "era": "information", "research_time": 1500, "description": "Autonomous mechanical servants"},
+    {"id": "renewable_energy", "name": "Renewable Energy", "era": "information", "research_time": 1300, "description": "Harness sun and wind"},
+    
+    {"id": "ion_propulsion", "name": "Ion Propulsion", "era": "space", "research_time": 2000, "description": "Drive starships with ion engines", "unlocks_era": "intergalactic"},
+    {"id": "terraforming", "name": "Terraforming", "era": "space", "research_time": 2200, "description": "Shape planets to suit life"},
+    {"id": "ai_strong", "name": "Strong Artificial Intelligence", "era": "space", "research_time": 2500, "description": "Godlike AI entities"},
+    {"id": "quantum_physics", "name": "Applied Quantum Physics", "era": "space", "research_time": 2300, "description": "Manipulate quantum phenomena"},
+    
+    {"id": "hyperluminal_drive", "name": "Hyperluminal Drive", "era": "intergalactic", "research_time": 5000, "description": "Faster than light travel"},
+    {"id": "alien_diplomacy", "name": "Alien Diplomacy", "era": "intergalactic", "research_time": 4500, "description": "Communicate with extraterrestrial civilizations"},
+    {"id": "multidimensional_engineering", "name": "Multidimensional Engineering", "era": "intergalactic", "research_time": 6000, "description": "Build across multiple dimensions"}
+  ]
+}

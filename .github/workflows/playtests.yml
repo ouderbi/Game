@@ -1,0 +1,57 @@
+name: Automated Playtests
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - ouderbi-deep-strategy-game
+
+jobs:
+  run-playtests:
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python and generate art
+        run: |
+          python3 -m pip install --user Pillow || true
+          python3 tools/generate_art.py || true
+
+      - name: Setup Godot
+        uses: game-ci/godot-action@v2
+        with:
+          godot-version: '4.2.4'
+
+      - name: Run headless playtests
+        env:
+          PLAYTEST_RUNS: 10
+        run: |
+          mkdir -p playtest_reports
+          godot --headless --disable-render-loop --path . -s res://scripts/headless_playtest.gd || true
+
+      - name: Upload playtest reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: playtest-reports
+          path: playtest_reports/
+
+      - name: Run auto-balance script
+        env:
+          PLAYTEST_REPORTS_DIR: playtest_reports
+        run: |
+          # Run auto-balance using Godot headless script; this edits data/buildings.json conservatively
+          godot --headless --disable-render-loop --path . -s res://scripts/auto_balance_apply.gd || true
+
+      - name: Commit and push auto-balance changes
+        run: |
+          git config user.name "copilot-bot"
+          git config user.email "copilot@example.com"
+          if [ -n "$(git status --porcelain)" ]; then
+            git add data/eras/buildings.json
+            git commit -m "Auto-balance: apply playtest recommendations (CI)"
+            git push origin HEAD:ouderbi-deep-strategy-game
+          else
+            echo "No changes to commit"
+          fi

@@ -1,0 +1,30 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Deep Civilization"
+config/version="0.1.0"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.1", "GL_COMPATIBILITY")
+config/icon="res://assets/icon.svg"
+
+[physics]
+
+2d/default_gravity=0.0
+
+[debug]
+
+gdscript/warnings/unused_variable=1
+gdscript/warnings/unused_parameter=1
+
+[editor_plugins]
+
+enabled=PackedStringArray()
