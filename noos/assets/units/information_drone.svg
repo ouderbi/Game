@@ -12,6 +12,4 @@
   <circle cx="44" cy="28" r="8" fill="#4682B4"/>
   <rect x="28" y="24" width="8" height="8" fill="#B0C4DE"/>
   <circle cx="32" cy="28" r="3" fill="#B0C4DE"/>
-  <line x1="20" y1="36" x2="20" y2="44" stroke="#B0C4DE" stroke-width="1" opacity="0.6"/>
-  <line x1="44" y1="36" x2="44" y2="44" stroke="#B0C4DE" stroke-width="1" opacity="0.6"/>
 </svg>

@@ -19,3 +19,10 @@ var humor_medio: float = 0.6
 var saude_media: float = 0.7
 var riqueza_media: float = 0.1
 var idade_media: float = 25.0
+
+## Construções presentes nesta região (PDF 21 §1). Lista de ids de
+## Construcao — referenciadas por id, nunca por objeto direto.
+var construcoes: Array[String] = []
+
+## Recursos naturais presentes nesta região (PDF 08 §1).
+var recursos: Array[String] = []

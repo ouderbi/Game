@@ -9,6 +9,5 @@
   <polygon points="64,34 90,84 38,84" fill="#8B0000" opacity="0.7"/>
   <rect x="60" y="54" width="8" height="24" fill="#FFD700"/>
   <polygon points="60,54 68,54 64,46" fill="#FFD700"/>
-  <circle cx="64" cy="92" r="4" fill="#FF4500" opacity="0.5"/>
   <line x1="44" y1="74" x2="84" y2="74" stroke="#FFD700" stroke-width="2" opacity="0.4"/>
 </svg>

@@ -13,5 +13,4 @@
   <polygon points="56,40 72,40 64,28" fill="#4D3B6E"/>
   <circle cx="64" cy="48" r="4" fill="#FFD700"/>
   <line x1="40" y1="72" x2="88" y2="72" stroke="#1A0D2E" stroke-width="1" opacity="0.4"/>
-  <line x1="44" y1="64" x2="84" y2="64" stroke="#1A0D2E" stroke-width="0.5" opacity="0.3"/>
 </svg>

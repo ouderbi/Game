@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+<defs>
+  <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity="0.15"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0.15"/>
+  </linearGradient>
+  
+</defs>
+  <circle cx="64" cy="64" r="50" fill="none" stroke="#D0D0D0" stroke-width="2" opacity="0.3"/>
+  <circle cx="64" cy="64" r="36" fill="none" stroke="#D0D0D0" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="64" cy="64" r="22" fill="#191970" opacity="0.15"/>
+  <polygon points="64,34 80,56 72,56 72,84 56,84 56,56 48,56" fill="#D0D0D0" opacity="0.6"/>
+  <line x1="104" y1="64" x2="114" y2="64" stroke="#D0D0D0" stroke-width="1.5" opacity="0.4"/>
+  <line x1="92" y1="92" x2="99" y2="99" stroke="#D0D0D0" stroke-width="1.5" opacity="0.4"/>
+  <line x1="64" y1="104" x2="64" y2="114" stroke="#D0D0D0" stroke-width="1.5" opacity="0.4"/>
+  <line x1="36" y1="92" x2="29" y2="99" stroke="#D0D0D0" stroke-width="1.5" opacity="0.4"/>
+  <line x1="24" y1="64" x2="14" y2="64" stroke="#D0D0D0" stroke-width="1.5" opacity="0.4"/>
+  <line x1="36" y1="36" x2="29" y2="29" stroke="#D0D0D0" stroke-width="1.5" opacity="0.4"/>
+  <line x1="64" y1="24" x2="64" y2="14" stroke="#D0D0D0" stroke-width="1.5" opacity="0.4"/>
+  <line x1="92" y1="36" x2="99" y2="29" stroke="#D0D0D0" stroke-width="1.5" opacity="0.4"/>
+
+</svg>

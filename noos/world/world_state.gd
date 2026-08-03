@@ -16,6 +16,11 @@ var tipos_de_governo: Dictionary = {}  ## id (String) -> TipoDeGoverno
 var lideres: Dictionary = {}  ## id (int) -> Lider
 var polities: Dictionary = {}  ## id (int) -> Polity
 
+## Catálogos estáticos — preenchidos uma vez no _ready (PDF 06 §2).
+var construcoes: Dictionary = {}  ## id (String) -> Construcao
+var tecnologias: Dictionary = {}  ## id (String) -> Tecnologia
+var recursos_catalogo: Dictionary = {}  ## id (String) -> Recurso
+
 
 func bioma_em(x: int, y: int) -> int:
 	return biomas[y * largura + x]

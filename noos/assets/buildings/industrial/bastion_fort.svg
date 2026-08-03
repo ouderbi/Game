@@ -7,7 +7,7 @@
   
 </defs>
   <ellipse cx="64" cy="104" rx="40" ry="10" fill="#000" opacity="0.25"/>
-  <polygon points="24,96 40,56 88,56 104,96 88,56 40,56" fill="#2F2F2F"/>
+  <polygon points="24,96 40,56 88,56 104,96" fill="#2F2F2F"/>
   <polygon points="32,96 44,60 84,60 96,96" fill="#8B4513"/>
   <rect x="48" y="44" width="32" height="16" fill="#4A4A4A"/>
   <rect x="56" y="48" width="16" height="8" fill="#2F2F2F"/>

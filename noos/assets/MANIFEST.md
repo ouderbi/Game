@@ -1,207 +1,149 @@
 # Manifesto Completo de Ativos — Noós
 
-108 arquivos SVG cobrindo todas as eras, biomas e sistemas.
+500 arquivos SVG cobrindo todas as eras, biomas, sistemas e elementos visuais do jogo.
 
 ---
 
-## 1. Terreno — Isométrico (Lente Cidade) — 27 arquivos
+## Distribuição por Categoria
 
-### Tiles Planos (128×64)
-| # | Bioma | Arquivo |
+| # | Categoria | Quantidade | Localização |
+|---|---|---|---|
+| 1 | Terreno isométrico | 27 | `terrain/iso/` |
+| 2 | Terreno top-down | 9 | `terrain/topdown/` |
+| 3 | Edifícios | 120 | `buildings/<era>/` |
+| 4 | Unidades | 48 | `units/` |
+| 5 | Líderes | 60 | `leaders/` |
+| 6 | Tecnologias | 48 | `techs/` |
+| 7 | Governos | 48 | `governments/` |
+| 8 | Recursos | 24 | `resources/` |
+| 9 | Bandeiras | 24 | `flags/` |
+| 10 | Interface (UI) | 26 | `ui/` |
+| 11 | Efeitos de evento | 30 | `effects/` |
+| 12 | Decorações de mapa | 12 | `decorations/` |
+| 13 | Transições de era | 12 | `transitions/` |
+| 14 | Marcos naturais | 12 | `landmarks/` |
+| | **Total** | **500** | |
+
+---
+
+## 1. Terreno Isométrico (27) — Lente Cidade
+
+9 biomas × 3 níveis de elevação (plano, baixo, alto).
+
+Arquivos: `terrain/iso/<bioma>_{flat,low,high}.svg`
+
+Biomas: ocean, plains, forest, desert, mountain, tundra, savanna, swamp, coast.
+
+## 2. Terreno Top-Down (9) — Lente País/Planeta
+
+Arquivos: `terrain/topdown/<bioma>.svg`
+
+## 3. Edifícios (120) — 10 por era × 12 eras
+
+Cada era tem 10 edifícios únicos cobrindo 9 categorias: defense, civic, economic, cultural, religious, infrastructure, housing, military, special.
+
+Arquivos: `buildings/<era>/<id>.svg`
+
+| Era | Diretório | Exemplos |
 |---|---|---|
-| 1 | Oceano | `terrain/iso/ocean_flat.svg` |
-| 2 | Planície | `terrain/iso/plains_flat.svg` |
-| 3 | Floresta | `terrain/iso/forest_flat.svg` |
-| 4 | Deserto | `terrain/iso/desert_flat.svg` |
-| 5 | Montanha | `terrain/iso/mountain_flat.svg` |
-| 6 | Tundra | `terrain/iso/tundra_flat.svg` |
-| 7 | Savana | `terrain/iso/savanna_flat.svg` |
-| 8 | Pântano | `terrain/iso/swamp_flat.svg` |
-| 9 | Costa | `terrain/iso/coast_flat.svg` |
+| 1 Pedra | `buildings/stone_age/` | palisade, stone_circle, hunting_camp, fire_pit, shaman_hut |
+| 2 Antiguidade | `buildings/antiquity/` | mud_wall, ziggurat, granary, market_stall, scribes_school |
+| 3 Clássica | `buildings/classical/` | stone_wall, academy, agora, amphitheater, pantheon |
+| 4 Medieval | `buildings/medieval/` | castle, cathedral, windmill, tavern, monastery |
+| 5 Industrial | `buildings/industrial/` | bastion_fort, town_hall, factory, opera_house, arsenal |
+| 6 Moderna | `buildings/modern/` | bunker, parliament, power_plant, cinema, airport |
+| 7 Informação | `buildings/information/` | sam_site, data_center, solar_farm, stadium, university_modern |
+| 8 Alta Tecnologia | `buildings/high_tech/` | energy_shield, ai_lab, fusion_plant, holo_theater, arcology |
+| 9 Espacial | `buildings/space/` | orbital_defense, space_colony, rocket_launch, space_elevator |
+| 10 Interplanetária | `buildings/interplanetary/` | defense_grid, terraforming, asteroid_mine, mech_factory |
+| 11 Estelar | `buildings/stellar/` | fleet_station, stellar_assembly, trade_hub, warp_gate |
+| 12 Intergaláctica | `buildings/intergalactic/` | galactic_defense, galactic_council, wormhole_gen, dyson_sphere |
 
-### Tiles Elevados — Nível Baixo (128×96)
-| # | Bioma | Arquivo |
-|---|---|---|
-| 10 | Oceano | `terrain/iso/ocean_low.svg` |
-| 11 | Planície | `terrain/iso/plains_low.svg` |
-| 12 | Floresta | `terrain/iso/forest_low.svg` |
-| 13 | Deserto | `terrain/iso/desert_low.svg` |
-| 14 | Montanha | `terrain/iso/mountain_low.svg` |
-| 15 | Tundra | `terrain/iso/tundra_low.svg` |
-| 16 | Savana | `terrain/iso/savanna_low.svg` |
-| 17 | Pântano | `terrain/iso/swamp_low.svg` |
-| 18 | Costa | `terrain/iso/coast_low.svg` |
+## 4. Unidades (48) — 4 por era × 12 eras
 
-### Tiles Elevados — Nível Alto (128×128)
-| # | Bioma | Arquivo |
-|---|---|---|
-| 19 | Oceano | `terrain/iso/ocean_high.svg` |
-| 20 | Planície | `terrain/iso/plains_high.svg` |
-| 21 | Floresta | `terrain/iso/forest_high.svg` |
-| 22 | Deserto | `terrain/iso/desert_high.svg` |
-| 23 | Montanha | `terrain/iso/mountain_high.svg` |
-| 24 | Tundra | `terrain/iso/tundra_high.svg` |
-| 25 | Savana | `terrain/iso/savanna_high.svg` |
-| 26 | Pântano | `terrain/iso/swamp_high.svg` |
-| 27 | Costa | `terrain/iso/coast_high.svg` |
+Arquivos: `units/<id>.svg`
 
----
+Tipos: land, naval, air, special. Cada era tem uma unidade terrestre, uma de apoio, uma naval/aérea e uma especial.
 
-## 2. Terreno — Top-Down (Lente País/Planeta) — 9 arquivos
+## 5. Líderes (60) — 5 por era × 12 eras
 
-| # | Bioma | Arquivo |
-|---|---|---|
-| 28 | Oceano | `terrain/topdown/ocean.svg` |
-| 29 | Planície | `terrain/topdown/plains.svg` |
-| 30 | Floresta | `terrain/topdown/forest.svg` |
-| 31 | Deserto | `terrain/topdown/desert.svg` |
-| 32 | Montanha | `terrain/topdown/mountain.svg` |
-| 33 | Tundra | `terrain/topdown/tundra.svg` |
-| 34 | Savana | `terrain/topdown/savanna.svg` |
-| 35 | Pântano | `terrain/topdown/swamp.svg` |
-| 36 | Costa | `terrain/topdown/coast.svg` |
+Arquivos: `leaders/<id>.svg`
 
----
+Cada líder tem um retrato único com traços faciais, acessórios por era (coroa, laurel, visor, etc.) e arquétipo (sabio, agressor, autocrata, diplomata, mistico, republicano, pragmatico).
 
-## 3. Edifícios por Era — 36 arquivos
+## 6. Tecnologias (48) — 4 por era × 12 eras
 
-### Era 1 — Pedra
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 37 | Paliçada | Defensiva | `buildings/stone_age/palisade.svg` |
-| 38 | Círculo de Pedras | Cívica | `buildings/stone_age/stone_circle.svg` |
-| 39 | Acampamento de Caça | Econômica | `buildings/stone_age/hunting_camp.svg` |
+Arquivos: `techs/<id>.svg`
 
-### Era 2 — Antiguidade
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 40 | Muralha de Taipa | Defensiva | `buildings/antiquity/mud_wall.svg` |
-| 41 | Zigurate | Cívica | `buildings/antiquity/ziggurat.svg` |
-| 42 | Celeiro | Econômica | `buildings/antiquity/granary.svg` |
+4 ramos: base, military, economy, culture. Cada tecnologia tem um ícone circular com símbolo único.
 
-### Era 3 — Clássica
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 43 | Muralha de Pedra | Defensiva | `buildings/classical/stone_wall.svg` |
-| 44 | Academia | Cívica | `buildings/classical/academy.svg` |
-| 45 | Ágora | Econômica | `buildings/classical/agora.svg` |
+## 7. Governos (48) — 4 por era × 12 eras
 
-### Era 4 — Medieval
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 46 | Castelo | Defensiva | `buildings/medieval/castle.svg` |
-| 47 | Catedral | Cívica | `buildings/medieval/cathedral.svg` |
-| 48 | Moinho de Vento | Econômica | `buildings/medieval/windmill.svg` |
+Arquivos: `governments/<id>.svg`
 
-### Era 5 — Industrial
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 49 | Forte Bastionado | Defensiva | `buildings/industrial/bastion_fort.svg` |
-| 50 | Fábrica | Econômica | `buildings/industrial/factory.svg` |
-| 51 | Câmara Municipal | Cívica | `buildings/industrial/town_hall.svg` |
+Ícones representando a estrutura de governo de cada era (pirâmide, colunas, cúpula, torre, estação orbital).
 
-### Era 6 — Moderna
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 52 | Bunker | Defensiva | `buildings/modern/bunker.svg` |
-| 53 | Usina | Econômica | `buildings/modern/power_plant.svg` |
-| 54 | Parlamento | Cívica | `buildings/modern/parliament.svg` |
+## 8. Recursos (24) — 2 por era × 12 eras
 
-### Era 7 — Informação
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 55 | Bateria de Mísseis | Defensiva | `buildings/information/sam_site.svg` |
-| 56 | Centro de Dados | Cívica | `buildings/information/data_center.svg` |
-| 57 | Fazenda Solar | Econômica | `buildings/information/solar_farm.svg` |
+Arquivos: `resources/<id>.svg`
 
-### Era 8 — Alta Tecnologia
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 58 | Escudo de Energia | Defensiva | `buildings/high_tech/energy_shield.svg` |
-| 59 | Laboratório de IA | Cívica | `buildings/high_tech/ai_lab.svg` |
-| 60 | Usina de Fusão | Econômica | `buildings/high_tech/fusion_plant.svg` |
+Do sílex e couros da Idade da Pedra aos cristais do vazio e fragmentos de realidade da era Intergaláctica.
 
-### Era 9 — Espacial
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 61 | Defesa Orbital | Defensiva | `buildings/space/orbital_defense.svg` |
-| 62 | Colônia Espacial | Cívica | `buildings/space/space_colony.svg` |
-| 63 | Complexo de Lançamento | Econômica | `buildings/space/rocket_launch.svg` |
+## 9. Bandeiras (24) — 2 por era × 12 eras
 
-### Era 10 — Interplanetária
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 64 | Grade de Defesa Planetária | Defensiva | `buildings/interplanetary/defense_grid.svg` |
-| 65 | Estação de Terraformação | Cívica | `buildings/interplanetary/terraforming.svg` |
-| 66 | Mineração de Asteroides | Econômica | `buildings/interplanetary/asteroid_mine.svg` |
+Arquivos: `flags/<id>.svg`
 
-### Era 11 — Estelar
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 67 | Estação de Defesa da Frota | Defensiva | `buildings/stellar/fleet_station.svg` |
-| 68 | Assembleia Estelar | Cívica | `buildings/stellar/stellar_assembly.svg` |
-| 69 | Hub de Comércio Interestelar | Econômica | `buildings/stellar/trade_hub.svg` |
+Estandartes e bandeiras evolutivas, de totens tribais a flâmulas dimensionais.
 
-### Era 12 — Intergaláctica
-| # | Nome | Categoria | Arquivo |
-|---|---|---|---|
-| 70 | Array de Defesa Galáctica | Defensiva | `buildings/intergalactic/galactic_defense.svg` |
-| 71 | Conselho Galáctico | Cívica | `buildings/intergalactic/galactic_council.svg` |
-| 72 | Gerador de Buraco de Minhoca | Econômica | `buildings/intergalactic/wormhole_gen.svg` |
+## 10. Interface (26)
+
+Arquivos: `ui/<elemento>.svg`
+
+Painéis (dark, light, thin, wide), botões (normal, hover, pressed, small, large, icon), ícones (tesouro, estabilidade, legitimidade, população, era, comida, militar, ciência, cultura, corrupção, diplomacia, felicidade), molduras (retrato, minimapa), cursores.
+
+## 11. Efeitos de Evento (30)
+
+Arquivos: `effects/<nome>.svg`
+
+Eventos originais (12): fire, nuclear_explosion, fallout, plague, riot, famine, revolution, coup, earthquake, volcano, tech_advance, religious_schism.
+
+Novos eventos (18): boom_economy, depression, gold_rush, cultural_renaissance, golden_age, dark_age, civil_war, independence, trade_boom, embargo, flood, meteor_impact, alien_contact, ai_awakening, space_race, pandemic_modern, cyber_attack, dimensional_rift.
+
+## 12. Decorações de Mapa (12) — 1 por era
+
+Arquivos: `decorations/<id>.svg`
+
+Monumentos e marcos visuais que enriquecem o mapa: totem, obelisco, arco do triunfo, cruz de estrada, estátua industrial, memorial de guerra, mural digital, estátua holográfica, monumento espacial, farol planetário, portal estelar, pilar cósmico.
+
+## 13. Transições de Era (12) — 1 por era
+
+Arquivos: `transitions/<id>.svg`
+
+Animações visuais de progressão entre eras, com seta ascendente e raios.
+
+## 14. Marcos Naturais (12)
+
+Arquivos: `landmarks/<id>.svg`
+
+Recife de coral, rio sinuoso, árvore ancestral, oásis, pico sagrado, iceberg, baobá, mangue, arco natural, vulcão ativo, gêiser, lago de cratera.
 
 ---
 
-## 4. Unidades por Era — 12 arquivos
+## Integração com o Jogo
 
-| # | Era | Unidade | Arquivo |
-|---|---|---|---|
-| 73 | Pedra | Guerreiro com Clava | `units/stone_age_warrior.svg` |
-| 74 | Antiguidade | Hoplita | `units/antiquity_hoplite.svg` |
-| 75 | Clássica | Legionário | `units/classical_legionary.svg` |
-| 76 | Medieval | Cavaleiro | `units/medieval_knight.svg` |
-| 77 | Industrial | Fuzileiro | `units/industrial_rifleman.svg` |
-| 78 | Moderna | Infantaria Motorizada | `units/modern_infantry.svg` |
-| 79 | Informação | Drone de Combate | `units/information_drone.svg` |
-| 80 | Alta Tecnologia | Armadura de Potência | `units/high_tech_power_armor.svg` |
-| 81 | Espacial | Fuzileiro Espacial | `units/space_marine.svg` |
-| 82 | Interplanetária | Mecha Planetário | `units/interplanetary_mech.svg` |
-| 83 | Estelar | Nave Estelar | `units/stellar_starship.svg` |
-| 84 | Intergaláctica | Encouraçado Galáctico | `units/intergalactic_dreadnought.svg` |
+Os ativos estão integrados ao código GDScript:
 
----
+- **`catalogo_construcoes.gd`** — 120 construções com custo, manutenção e bônus
+- **`catalogo_tecnologias.gd`** — 48 tecnologias com bônus por ramo
+- **`catalogo_lideres.gd`** — 60 líderes com traços de personalidade
+- **`Regiao`** — agora tem campos `construcoes` e `recursos`
+- **`EstadoDoMundo`** — agora tem catálogos de construções, tecnologias e recursos
 
-## 5. Interface (UI) — 12 arquivos
+## Formato
 
-| # | Elemento | Arquivo |
-|---|---|---|
-| 85 | Painel escuro | `ui/panel_dark.svg` |
-| 86 | Painel claro | `ui/panel_light.svg` |
-| 87 | Botão normal | `ui/button_normal.svg` |
-| 88 | Botão hover | `ui/button_hover.svg` |
-| 89 | Botão pressionado | `ui/button_pressed.svg` |
-| 90 | Ícone tesouro | `ui/icon_treasury.svg` |
-| 91 | Ícone estabilidade | `ui/icon_stability.svg` |
-| 92 | Ícone legitimidade | `ui/icon_legitimacy.svg` |
-| 93 | Ícone população | `ui/icon_population.svg` |
-| 94 | Ícone era | `ui/icon_era.svg` |
-| 95 | Moldura de retrato | `ui/leader_frame.svg` |
-| 96 | Moldura de minimapa | `ui/minimap_frame.svg` |
-
----
-
-## 6. Efeitos de Evento — 12 arquivos
-
-| # | Efeito | Evento | Arquivo |
-|---|---|---|---|
-| 97 | Fogo | Destruição/colapso | `effects/fire.svg` |
-| 98 | Explosão Nuclear | Guerra nuclear | `effects/nuclear_explosion.svg` |
-| 99 | Fallout | Rescaldo nuclear | `effects/fallout.svg` |
-| 100 | Pandemia | Praga/doença | `effects/plague.svg` |
-| 101 | Motim | Revolta popular | `effects/riot.svg` |
-| 102 | Fome | Escassez de comida | `effects/famine.svg` |
-| 103 | Revolução | Revolução | `effects/revolution.svg` |
-| 104 | Golpe | Golpe de Estado | `effects/coup.svg` |
-| 105 | Terremoto | Desastre natural | `effects/earthquake.svg` |
-| 106 | Vulcão | Desastre natural | `effects/volcano.svg` |
-| 107 | Avanço Tecnológico | Salto de era | `effects/tech_advance.svg` |
-| 108 | Cisma Religioso | Divisão religiosa | `effects/religious_schism.svg` |
+Todos os ativos são SVG (gráficos vetoriais escaláveis):
+- Resolução infinita (alta fidelidade em qualquer zoom)
+- Importáveis no Godot 4 como textures
+- Leves e fáceis de versionar
+- Estilo consistente e limpo
+- Paletas de cor únicas por era e bioma

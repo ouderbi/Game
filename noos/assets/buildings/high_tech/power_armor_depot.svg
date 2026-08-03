@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+<defs>
+  <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity="0.15"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0.15"/>
+  </linearGradient>
+  
+</defs>
+  <ellipse cx="64" cy="104" rx="40" ry="10" fill="#000" opacity="0.25"/>
+  <rect x="30" y="61" width="68" height="35" fill="#00CEDD"/>
+  <rect x="30" y="57" width="4" height="4" fill="#1A1A2E"/>
+  <rect x="38" y="57" width="4" height="4" fill="#1A1A2E"/>
+  <rect x="46" y="57" width="4" height="4" fill="#1A1A2E"/>
+  <rect x="54" y="57" width="4" height="4" fill="#1A1A2E"/>
+  <rect x="62" y="57" width="4" height="4" fill="#1A1A2E"/>
+  <rect x="70" y="57" width="4" height="4" fill="#1A1A2E"/>
+  <rect x="78" y="57" width="4" height="4" fill="#1A1A2E"/>
+  <rect x="86" y="57" width="4" height="4" fill="#1A1A2E"/>
+  <rect x="94" y="57" width="4" height="4" fill="#1A1A2E"/>
+  <rect x="30" y="61" width="68" height="4" fill="#1A1A2E"/>
+  <rect x="44" y="74" width="6" height="6" fill="#20DEED" opacity="0.4"/>
+  <rect x="83" y="81" width="6" height="6" fill="#20DEED" opacity="0.4"/>
+  <rect x="79" y="80" width="6" height="6" fill="#20DEED" opacity="0.4"/>
+  <rect x="72" y="82" width="6" height="6" fill="#20DEED" opacity="0.4"/>
+  <rect x="58" y="82" width="12" height="14" fill="#1A1A2E" opacity="0.6"/>
+  <circle cx="90" cy="53" r="3" fill="#FF6B35"/>
+  <line x1="30" y1="69" x2="98" y2="69" stroke="#FF6B35" stroke-width="0.5" opacity="0.3"/>
+
+</svg>
