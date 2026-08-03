@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+<defs>
+  <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+    <stop offset="0" stop-color="#fff" stop-opacity="0.15"/>
+    <stop offset="1" stop-color="#000" stop-opacity="0.15"/>
+  </linearGradient>
+  
+</defs>
+  <ellipse cx="64" cy="104" rx="40" ry="10" fill="#000" opacity="0.25"/>
+  <polygon points="24,96 40,56 88,56 104,96 88,56 40,56" fill="#2F2F2F"/>
+  <polygon points="32,96 44,60 84,60 96,96" fill="#8B4513"/>
+  <rect x="48" y="44" width="32" height="16" fill="#4A4A4A"/>
+  <rect x="56" y="48" width="16" height="8" fill="#2F2F2F"/>
+  <line x1="40" y1="76" x2="88" y2="76" stroke="#2F2F2F" stroke-width="1" opacity="0.4"/>
+</svg>
